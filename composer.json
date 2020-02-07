@@ -1,0 +1,16 @@
+{
+    "name": "franf/papel-arroz",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Francisco S. Filho",
+            "email": "franfellipe2@hotmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "app\\": "_core/"
+        }
+    }
+}

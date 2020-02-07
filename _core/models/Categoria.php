@@ -1,8 +1,11 @@
 <?php
+namespace Models;
 
 require_once '../_core/model/Model.php';
 require_once '../_core/interfaces/ModelInterface.php';
 require_once '../_core/DB.php';
+
+
 
 /**
  * Description of Categoria
