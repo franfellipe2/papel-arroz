@@ -8,8 +8,9 @@ require 'header.php';
 
     <?php
     if (!empty($_GET['action']) && !empty($_GET['pg'])) {
-        $classController = $_GET['pg'] . 'Controller';        
-        require '../_core/controller/admin/' . $classController . '.php';
+        $classController = 'app\\controllers\\admin\\'.$_GET['pg'] . 'Controller';        
+        //require '../_core/controllers/admin/' . $classController . '.php';
+        
         $controller = new $classController;
         $controller->{$_GET['action']}();
     } else {

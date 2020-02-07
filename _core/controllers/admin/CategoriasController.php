@@ -1,9 +1,10 @@
 <?php
+namespace app\controllers\admin;
 
-require '../_core/interfaces/AdminControllerInterface.php';
-require '../_core/controller/admin/AdminController.php';
-require '../_core/model/Categoria.php';
-require '../_core/utils/CategoriasAninhadas.php';
+use app\interfaces\AdminControllerInterface;
+use app\controllers\admin\AdminController;
+use app\models\Categoria;
+use app\utils\CategoriasAninhadas;
 
 /**
  * Description of CategoriaController

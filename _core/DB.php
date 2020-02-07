@@ -1,6 +1,7 @@
 <?php
+namespace app;
 
-require 'config.php';
+use app\config;
 
 /**
  * Faz conexão com o banco de dados
@@ -23,7 +24,7 @@ class DB {
                 self::$conn = new \PDO(
                         "mysql:dbname=" . $c['dbname'] . ";host=" . $c['dbhost'], $c['dbuser'], $c['dbpass']
                 );
-                self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                self::$conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             } catch (PDOException $ex) {
 
                 echo "<p>PDO_ERROR: {$ex->getMessage()}</p>";

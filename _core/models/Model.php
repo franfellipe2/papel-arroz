@@ -1,6 +1,7 @@
 <?php
+namespace app\models;
 
-require_once '../_core/DB.php';
+use app\DB;
 
 /**
  * Description of Model

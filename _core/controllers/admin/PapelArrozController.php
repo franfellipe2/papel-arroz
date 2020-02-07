@@ -1,9 +1,10 @@
 <?php
+namespace app\controllers\admin;
 
-require '../_core/interfaces/AdminControllerInterface.php';
-require '../_core/controller/admin/AdminController.php';
-require '../_core/model/PapelArroz.php';
-require '../_core/utils/CategoriasAninhadas.php';
+use app\interfaces\AdminControllerInterface;
+use app\controllers\admin\AdminController;
+use app\models\PapelArroz;
+use app\utils\CategoriasAninhadas;
 
 /**
  * Description of CategoriaController
@@ -18,6 +19,7 @@ class PapelArrozController extends AdminController implements AdminControllerInt
     {
         $formAction = $this->pageAction('save');
         $papelArroz = new PapelArroz();
+        $categoriasAninhadas = new CategoriasAninhadas();
         $erros = [];
         require $this->getPage() . '/adicionar.php';
     }

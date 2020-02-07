@@ -1,8 +1,10 @@
 <?php
 
-require_once '../_core/model/Model.php';
-require_once '../_core/interfaces/ModelInterface.php';
-require_once '../_core/DB.php';
+namespace app\models;
+
+use app\models\Model;
+use app\interfaces\ModelInterface;
+use app\DB;
 
 /**
  * Description of Categoria
@@ -31,7 +33,7 @@ class Produto extends Model implements ModelInterface {
         $this->validPreco();
         $this->validImagem();
         $this->validCategoria();
-        $this->validPersonalizado();                
+        $this->validPersonalizado();
 
         return parent::save($excludeFields);
     }

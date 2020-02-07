@@ -50,7 +50,7 @@
                 <select name="cat_id" class="form-control <?php if (!empty($erros['cat_id'])) echo 'is-invalid'; ?>">
                     <option></option>
                     <?php
-                    $categoria = new CategoriasAninhadas();
+                    $categoria = $categoriasAninhadas;
                     $cats = $categoria->get();
                     foreach ($cats as $r => $c):
                         ?>

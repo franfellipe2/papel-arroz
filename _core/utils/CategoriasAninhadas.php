@@ -1,6 +1,7 @@
 <?php
+namespace app\utils;
 
-require_once '../_Core/model/Categoria.php';
+use app\models\Categoria;
 
 /**
  * Description of CategoriasAninhadas

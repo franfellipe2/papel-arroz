@@ -1,9 +1,9 @@
 <?php
-namespace Models;
+namespace app\models;
 
-require_once '../_core/model/Model.php';
-require_once '../_core/interfaces/ModelInterface.php';
-require_once '../_core/DB.php';
+use app\models\Model;
+use app\interfaces\ModelInterface;
+use app\DB;
 
 
 
