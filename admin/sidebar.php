@@ -1,5 +1,8 @@
+<?php 
+use app\Config; 
+?>
 <div class="sidebar p1">
-    <h3 class="title"><a href="">SITE</a></h3>
+    <h3 class="title"><a href="<?php echo appConfig('baseUrl'); ?>">SITE</a></h3>
     <hr>
     <h3 class="title">Categorias</h3>
     <ul>

@@ -1,8 +1,6 @@
 <?php
 namespace app;
 
-use app\config;
-
 /**
  * Faz conexão com o banco de dados
  *
@@ -17,10 +15,9 @@ class DB {
     {
 
         if (!self::$conn):
-            $objConfig = config::instance();
-            $c = $objConfig->getConfig();
+           
             try {
-
+                $c = appConfig();
                 self::$conn = new \PDO(
                         "mysql:dbname=" . $c['dbname'] . ";host=" . $c['dbhost'], $c['dbuser'], $c['dbpass']
                 );

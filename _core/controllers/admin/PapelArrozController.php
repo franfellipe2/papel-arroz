@@ -1,10 +1,12 @@
 <?php
+
 namespace app\controllers\admin;
 
 use app\interfaces\AdminControllerInterface;
 use app\controllers\admin\AdminController;
 use app\models\PapelArroz;
 use app\utils\CategoriasAninhadas;
+use app\utils\Images;
 
 /**
  * Description of CategoriaController
@@ -27,7 +29,7 @@ class PapelArrozController extends AdminController implements AdminControllerInt
     public function listar()
     {
         $papelArroz = new PapelArroz();
-        require $this->page.'/listar.php';
+        require $this->page . '/listar.php';
     }
 
     public function delete()
@@ -38,7 +40,7 @@ class PapelArrozController extends AdminController implements AdminControllerInt
         if (!empty($data = $papelArroz->getById($id))) {
             $papelArroz->setData($data);
         } else {
-            header('Location: ' . $this->pageAction('gerenciar'));
+            header('Location: ' . $this->pageAction('listar'));
             die();
         }
 
@@ -48,8 +50,11 @@ class PapelArrozController extends AdminController implements AdminControllerInt
             echo '<div class="alert alert-warning">Você deseja realmente deletar a categoria "' . $papelArroz->getTitulo() . '" ---->>>> ' . $linkConfirm . ' - ' . $linkCancel . '  </div>';
             return;
         }
-
+        
+        $img = $papelArroz->getImagem();
         $papelArroz->delete();
+        
+        Images::remove($img);
 
         header('Location: ' . $this->pageAction('listar'));
     }
@@ -117,15 +122,19 @@ class PapelArrozController extends AdminController implements AdminControllerInt
         $imgName = null;
         if (!empty($imagem['name'])) {
             $imgName = substr($imagem['name'], 0, strrpos($imagem['name'], '.'));
-            $imgName .= '-' . time() . substr($imagem['name'], strlen($imgName));
+            $imgName .= '-' . time();
         }
+
+        $imgUp = new Images();
+        $imagPath = $imgUp->upload($imagem, $imgName);
+
         $papelArroz = new PapelArroz();
         $papelArroz->setId(filter_input(INPUT_POST, 'id'));
         $papelArroz->setTitulo(filter_input(INPUT_POST, 'titulo'));
         $papelArroz->setDescricao(filter_input(INPUT_POST, 'descricao'));
         $papelArroz->setCategoria(filter_input(INPUT_POST, 'cat_id'));
         $papelArroz->setPreco(str_replace(',', '.', filter_input(INPUT_POST, 'preco')));
-        $papelArroz->setImagem($imgName);
+        $papelArroz->setImagem($imagPath);
 
 
         $papelArroz->save();
@@ -134,6 +143,11 @@ class PapelArrozController extends AdminController implements AdminControllerInt
 
             $formAction = $this->pageAction('save');
             $erros = $papelArroz->getErrors();
+
+            // Deleta as imagens enviadas
+            $imgUp::remove($imagPath);
+
+            $categoriasAninhadas = new CategoriasAninhadas();
 
             require $this->getPage() . '/adicionar.php';
         } else {

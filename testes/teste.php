@@ -1,7 +1,14 @@
 <?php
 
 require '../vendor/autoload.php';
-use app\models\Teste;
-$c = new Teste;
+require '../_core/functions.php';
 
-var_dump($c);
+use app\utils\ImagesUpload;
+
+$up = new ImagesUpload();
+
+var_dump($up);
+var_dump($up->upload(''));
+
+
+var_dump(scandir('C:\wamp64\www\papel-arroz\uploads\images'));

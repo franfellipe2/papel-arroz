@@ -28,7 +28,7 @@ if (isset($_SESSION['msg_success'])) {
         </div>
         <div class="card-body">
 
-            <img src="<?php echo $papelArroz->getImagem(); ?>" width="350">
+            <img src="<?php echo appImageUrl($papelArroz->getImagem(), 'thumb'); ?>" width="350">
 
             <div class="form-group">
                 <label>Imagem</label>
