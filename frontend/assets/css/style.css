@@ -1,0 +1,51 @@
+/*
+RESET
+*/
+*,*:before,*:after{
+    margin: 0;
+    padding: 0;
+}
+hr{
+    margin: 16px 0; 
+}
+.page{
+    background: #f5f5f5;    
+}
+
+
+.sidebar{
+    font-size:  12px;
+    background: #333;
+    width: 180px;
+    float: left;
+    padding: 16px;
+}
+.sidebar .title{
+    color:  aqua;
+    font-size: 18px;
+    font-weight: bold;
+}
+.sidebar a{
+    color: #fff;
+}
+
+.content-page{
+    background: #fff;
+    float: left;
+    width: calc(100% - 180px);
+    padding: 16px;
+}
+
+
+/*
+GENRENCIAR CATEGORIAS
+*/
+.gerenciar-categoria .cadastrar-editar-categoria{
+    width: 250px;
+    float: left;
+}
+.gerenciar-categoria .lista-categorias{
+    float: right;
+    width: calc(100% - 250px);     
+    padding-left: 16px;
+}
