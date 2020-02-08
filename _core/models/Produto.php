@@ -34,6 +34,7 @@ class Produto extends Model implements ModelInterface {
         $this->validImagem();
         $this->validCategoria();
         $this->validPersonalizado();
+        $this->setSlug($this->getTitulo());
 
         return parent::save($excludeFields);
     }

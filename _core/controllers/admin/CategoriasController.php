@@ -1,4 +1,5 @@
 <?php
+
 namespace app\controllers\admin;
 
 use app\interfaces\AdminControllerInterface;
@@ -40,14 +41,13 @@ class CategoriasController extends AdminController implements AdminControllerInt
         if (!isset($_GET['confirmDelete'])) {
             $linkConfirm = '<a class="btn btn-sm btn-danger" href="' . $this->pageAction('delete', ['id' => $id, 'confirmDelete' => true]) . '">SIM</a>';
             $linkCancel = '<a class="btn btn-sm btn-success" href="' . $this->pageAction('gerenciar') . '">NÃO</a>';
-            echo '<div class="alert alert-warning">Você deseja realmente deletar a categoria "'.$categoria->getNome().'" ---->>>> ' . $linkConfirm . ' - '.$linkCancel.'  </div>';
+            echo '<div class="alert alert-warning">Você deseja realmente deletar a categoria "' . $categoria->getNome() . '" ---->>>> ' . $linkConfirm . ' - ' . $linkCancel . '  </div>';
             return;
-        }        
-        
-        $categoria->delete();   
-        
+        }
+
+        $categoria->delete();
+
         header('Location: ' . $this->pageAction('gerenciar'));
-        
     }
 
     public function editar()
@@ -56,7 +56,7 @@ class CategoriasController extends AdminController implements AdminControllerInt
         $categoria = new Categoria();
 
         if (!empty($data = $categoria->getById($id))) {
-            $categoria->setData($data);
+            $categoria->setData($data);            
         }
         $formAction = $this->pageAction('save');
         $categoriasAninhadas = new CategoriasAninhadas();
@@ -72,7 +72,8 @@ class CategoriasController extends AdminController implements AdminControllerInt
         $categoria->setNome(filter_input(INPUT_POST, 'nome'));
         $categoria->setDescricao(filter_input(INPUT_POST, 'descricao'));
         $categoria->setPai(filter_input(INPUT_POST, 'cat_pai'));
-
+        
+        
         $categoria->save();
 
         if ($categoria->errorExistis()) {

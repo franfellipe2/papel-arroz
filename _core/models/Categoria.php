@@ -27,7 +27,7 @@ class Categoria extends Model implements ModelInterface {
         $this->validNome();
         $this->validDescricao();
         $this->validPai();
-
+        $this->setSlug($this->getNome());
         parent::save($excludeFields);
     }
 

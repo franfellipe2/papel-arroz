@@ -15,6 +15,11 @@ class Model {
     private $errorExistis = false;
     private $msgError;
 
+    public function setSlug($string)
+    {
+        $this->data['slug'] = appStrSlug($string);
+    }
+
     public function setData($data)
     {
         $this->data = $data;
@@ -102,8 +107,8 @@ class Model {
         $r = $sql->select('SELECT * FROM `' . $this->getTable() . '` WHERE `' . $this->getTable() . '`.`id` = \'' . $id . '\'');
         if (empty($r)) {
             return false;
-        }        
-        $this->setData($r[0]);        
+        }
+        $this->setData($r[0]);
         return $this;
     }
 

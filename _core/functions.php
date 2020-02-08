@@ -23,6 +23,10 @@ function appImageUrl($fileName, $size)
     return \app\utils\Images::getUrl($fileName, $size);
 }
 
+function appUrl($uri){
+    return appConfig('baseUrl').$uri;
+}
+
 /**
  * Subitituir acentos e letras especiais
  * @param type $string

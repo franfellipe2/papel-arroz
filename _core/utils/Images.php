@@ -58,7 +58,7 @@ class Images {
     public function upload($fileUpload, $name = '')
     {
         $ftmp = $fileUpload['tmp_name']; // arquivo temporario do arquivo na memória
-        $type = mime_content_type($ftmp);
+        $type = !empty($ftmp) ? mime_content_type($ftmp) : null;
 
         if (!$this->validFile($type)) {
             $this->setError('Aquivo inválido! Permitido somente imagens png e jpg', self::COD_ERROR_FORMT_INVALID);
@@ -108,7 +108,7 @@ class Images {
 
     static function getUrl($fileName, $size = 'full')
     {
-        return appConfig('baseUrl') .'/'. self::getPath($fileName, $size);
+        return appConfig('baseUrl') . '/' . self::getPath($fileName, $size);
     }
 
     static function getPath($fileName, $size = 'full')
@@ -122,7 +122,7 @@ class Images {
 
     static function remove($fileName)
     {
-        
+
         foreach (self::$sizes as $k => $sizes) {
             if ($k == 'full') {
                 @unlink(appConfig('baseDir') . self::getPath($fileName));
@@ -149,7 +149,6 @@ class Images {
      */
     private function validFile($mimeType)
     {
-        var_dump($mimeType);
         return in_array($mimeType, $this->imagesPermitidas);
     }
 }

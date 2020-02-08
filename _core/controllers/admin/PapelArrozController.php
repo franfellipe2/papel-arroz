@@ -101,7 +101,7 @@ class PapelArrozController extends AdminController implements AdminControllerInt
         $papelArroz->setDescricao(filter_input(INPUT_POST, 'descricao'));
         $papelArroz->setCategoria(filter_input(INPUT_POST, 'cat_id'));
         $papelArroz->setPreco(str_replace(',', '.', filter_input(INPUT_POST, 'preco')));
-
+        
         $papelArroz->save();
 
         if ($papelArroz->errorExistis()) {
@@ -154,7 +154,7 @@ class PapelArrozController extends AdminController implements AdminControllerInt
         $papelArroz->setCategoria(filter_input(INPUT_POST, 'cat_id'));
         $papelArroz->setPreco(str_replace(',', '.', filter_input(INPUT_POST, 'preco')));
         $papelArroz->setImagem($imagPath);
-
+        
 
         $papelArroz->save();
 
