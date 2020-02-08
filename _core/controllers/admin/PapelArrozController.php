@@ -17,6 +17,9 @@ class PapelArrozController extends AdminController implements AdminControllerInt
 
     private $page = 'PapelArroz';
 
+    /**
+     * 
+     */
     public function adicionar()
     {
         $formAction = $this->pageAction('save');
@@ -26,20 +29,25 @@ class PapelArrozController extends AdminController implements AdminControllerInt
         require $this->getPage() . '/adicionar.php';
     }
 
+    /**
+     * 
+     */
     public function listar()
     {
         $papelArroz = new PapelArroz();
         require $this->page . '/listar.php';
     }
 
+    /**
+     * 
+     * @return type
+     */
     public function delete()
     {
         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
         $papelArroz = new PapelArroz();
 
-        if (!empty($data = $papelArroz->getById($id))) {
-            $papelArroz->setData($data);
-        } else {
+        if (!$papelArroz->getById($id)) {           
             header('Location: ' . $this->pageAction('listar'));
             die();
         }
@@ -50,48 +58,44 @@ class PapelArrozController extends AdminController implements AdminControllerInt
             echo '<div class="alert alert-warning">Você deseja realmente deletar a categoria "' . $papelArroz->getTitulo() . '" ---->>>> ' . $linkConfirm . ' - ' . $linkCancel . '  </div>';
             return;
         }
-        
+
         $img = $papelArroz->getImagem();
         $papelArroz->delete();
-        
+
         Images::remove($img);
 
         header('Location: ' . $this->pageAction('listar'));
     }
 
+    /**
+     * 
+     */
     public function editar()
     {
         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
         $papelArroz = new PapelArroz();
-
-        if (!empty($data = $papelArroz->getById($id))) {
-            $papelArroz->setData($data);
+        if (!$papelArroz->getById($id)) {
+            echo '<h1 class="alert alert-warning">Opss.. Arquivo não encontrado!</h1>';
+        } else {
+            $formAction = $this->pageAction('update', ['id' => $id]);
+            $categoriasAninhadas = new CategoriasAninhadas();
+            require $this->getPage() . '/editar.php';
         }
-        $formAction = $this->pageAction('update', ['id' => $id]);
-        $papelArrozsAninhadas = new CategoriasAninhadas();
-        $papelArrozsAninhadas = $papelArrozsAninhadas->get();
-        $erros = [];
-        require $this->getPage() . '/editar.php';
     }
 
+    /**
+     * 
+     */
     public function update()
     {
+
+
         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
         $papelArroz = new PapelArroz();
-        if (!$id || empty($data = $papelArroz->getById($id))) {
+        if (!$id || $papelArroz->getById($id) == false) {
             header('Location: ' . $this->pageAction('adicionar'));
             die();
         }
-
-        $papelArroz->setData($data);
-
-        $imagem = $_FILES['imagem'];
-        if (!empty($imagem['name'])) {
-            $imgName = substr($imagem['name'], 0, strrpos($imagem['name'], '.'));
-            $imgName .= '-' . time() . substr($imagem['name'], strlen($imgName));
-            $papelArroz->setImagem($imgName);
-        }
-
         $papelArroz->setId($id);
         $papelArroz->setTitulo(filter_input(INPUT_POST, 'titulo'));
         $papelArroz->setDescricao(filter_input(INPUT_POST, 'descricao'));
@@ -108,6 +112,18 @@ class PapelArrozController extends AdminController implements AdminControllerInt
             require $this->getPage() . '/editar.php';
         } else {
 
+
+            $img = $_FILES['imagem'];
+            $imgName = $img['name'];
+            if ($imgName) {
+                $upload = new Images();
+                $upload::remove($papelArroz->getImagem());
+                $path = $upload->upload($img, appStrSlug($papelArroz->getTitulo()) . time());
+                $papelArroz->setImagem($path);
+                $papelArroz->save();
+            }
+
+
             $_SESSION['msg_success'] = 'Atualizado com sucesso!';
             header('Location: ' . $this->pageAction('editar', ['id' => $papelArroz->getId()]));
 
@@ -115,6 +131,9 @@ class PapelArrozController extends AdminController implements AdminControllerInt
         }
     }
 
+    /**
+     * 
+     */
     public function save()
     {
 
@@ -158,6 +177,10 @@ class PapelArrozController extends AdminController implements AdminControllerInt
         }
     }
 
+    /**
+     * 
+     * @return string
+     */
     public function getPage(): string
     {
         return $this->page;

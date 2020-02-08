@@ -1,4 +1,5 @@
 <?php
+
 namespace app\models;
 
 use app\DB;
@@ -79,9 +80,8 @@ class Model {
             unset($params[':id']);
 
             $con->query('INSERT INTO `' . $this->getTable() . '` (' . $fields . ') VALUES (' . implode(', ', array_keys($params)) . ') ', $params);
-           
+
             $this->setId($con->lastInsertId());
-            
         } else {
             $this->update($excludeFields);
         }
@@ -94,6 +94,17 @@ class Model {
          */
         $db = new DB();
         $db->query('DELETE FROM `' . $this->getTable() . '` WHERE `' . $this->getTable() . '`.`id` = :id', array(':id' => $this->getId()));
+    }
+
+    public function getById($id)
+    {
+        $sql = new DB();
+        $r = $sql->select('SELECT * FROM `' . $this->getTable() . '` WHERE `' . $this->getTable() . '`.`id` = \'' . $id . '\'');
+        if (empty($r)) {
+            return false;
+        }        
+        $this->setData($r[0]);        
+        return $this;
     }
 
     public function update($excludeFields = array())
@@ -119,10 +130,6 @@ class Model {
         /*
           UPDATE `categorias` SET `nome` = 'teste4 fdgdfg', `descricao` = 'descricao4 fdgdfgdf' WHERE `categorias`.`id` = 4;
          */
-
-        var_dump('UPDATE `' . $this->getTable() . '` SET  ' . $fields . ' WHERE `' . $this->getTable() . '`.`id` = :id');
-        var_dump($params);
-
         $con->query('UPDATE `' . $this->getTable() . '` SET  ' . $fields . ' WHERE `' . $this->getTable() . '`.`id` = :id', $params);
     }
 

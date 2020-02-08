@@ -106,16 +106,6 @@ class Produto extends Model implements ModelInterface {
         return $r[0];
     }
 
-    public function getById($id)
-    {
-        $sql = new DB();
-        $r = $sql->select('SELECT * FROM `' . $this->getTable() . '` WHERE `' . $this->getTable() . '`.`id` = \'' . $id . '\'');
-        if (empty($r)) {
-            return $r;
-        }
-        return $r[0];
-    }
-
     function getId()
     {
         return $this->data['id'];

@@ -1,4 +1,5 @@
 <?php
+$papelArroz->getImagem();
 if (isset($_SESSION['msg_success'])) {
     ?>
     <div class="alert alert-success" role="alert">
@@ -29,7 +30,7 @@ if (isset($_SESSION['msg_success'])) {
         <div class="card-body">
 
             <img src="<?php echo appImageUrl($papelArroz->getImagem(), 'thumb'); ?>" width="350">
-
+            
             <div class="form-group">
                 <label>Imagem</label>
                 <input name='imagem' type="file" class="form-control <?php if (!empty($erros['imagem'])) echo 'is-invalid'; ?>" accept=".png, .jpg, .jpeg">
@@ -67,8 +68,7 @@ if (isset($_SESSION['msg_success'])) {
                 <select name="cat_id" class="form-control <?php if (!empty($erros['cat_id'])) echo 'is-invalid'; ?>">
                     <option></option>
                     <?php
-                    $categoria = new CategoriasAninhadas();
-                    $cats = $categoria->get();
+                    $cats = $categoriasAninhadas->get();
                     foreach ($cats as $r => $c):
 
                         if ($papelArroz->getCategoria() == $c['id']) {
