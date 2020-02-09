@@ -17,12 +17,16 @@ class Model {
 
     public function setSlug($string)
     {
-        if($string){
-        $this->data['slug'] = appStrSlug($string);
+        if ($string) {
+            $this->data['slug'] = appStrSlug($string);
         }
     }
-    
-    
+
+    public function getSlug()
+    {
+        return $this->data['slug'];
+    }
+
     public function setData($data)
     {
         $this->data = $data;
@@ -70,11 +74,11 @@ class Model {
     public function save($excludeFields = array())
     {
         $result = false;
-        if ($this->errorExistis()) {           
+        if ($this->errorExistis()) {
             $this->setMsgError('Não foi possível salvar, existem erros que devem ser corrigidos!');
 
             // Cadastra
-        } elseif (empty($this->getId())) {           
+        } elseif (empty($this->getId())) {
             /*
              * INSERT INTO `categorias` (`id`, `nome`, `descricao`, `cat_pai`) VALUES (NULL, 'teste3', 'descriccao 3', NULL);
              */
@@ -89,10 +93,10 @@ class Model {
             $result = $con->query('INSERT INTO `' . $this->getTable() . '` (' . $fields . ') VALUES (' . implode(', ', array_keys($params)) . ') ', $params);
 
             $this->setId($con->lastInsertId());
-        } else {             
+        } else {
             $result = $this->update($excludeFields);
         }
-        
+
         return $result;
     }
 
@@ -115,11 +119,11 @@ class Model {
         $this->setData($r[0]);
         return $this;
     }
-    
+
     public function getBySlug($slug)
     {
         $sql = new DB();
-        $r = $sql->select('SELECT * FROM `' . $this->getTable() . '` WHERE `' . $this->getTable() . '`.`slug` = \'' . $slug . '\'');       
+        $r = $sql->select('SELECT * FROM `' . $this->getTable() . '` WHERE `' . $this->getTable() . '`.`slug` = \'' . $slug . '\'');
         if (empty($r)) {
             return false;
         }

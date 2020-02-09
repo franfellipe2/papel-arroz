@@ -2,7 +2,7 @@
 ELEMENTOS
 */
 h1, h2, h3, h4, h5, h8{
-   font-family: 'Merriweather Sans', sans-serif;
+    font-family: 'Merriweather Sans', sans-serif;
 }
 
 /*
@@ -59,7 +59,7 @@ SITE-HEADER
 CONTEUDO
 */
 .page-title{
-    color: #FF007F;
+    text-transform: capitalize;
 }
 
 /*
@@ -109,10 +109,17 @@ CARRINHO DE COMPRAS
 /*
 CARDS
 */
-
-.card-deck .card{
-    max-width: 480px;
+@media(min-width: 576px){
+    .card-columns{
+        column-count: 2;   
+    } 
 }
+@media(min-width: 980px){
+    .card-columns{
+        column-count: 3;   
+    } 
+}
+
 
 .card-papel-arroz .header-img{
     position: relative;  
@@ -136,6 +143,14 @@ CARDS
 /*
 UTILITARIOS
 */
+.msg-info{
+    padding: 24px 16px;
+}
+.msg-info.smg-info-primary{
+    background:  #FF007F;
+    color: #fff;
+}
+
 .btn-convert{
     background: #FF007F;
     color: #Fff;

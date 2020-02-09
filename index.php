@@ -24,6 +24,13 @@ switch ($page) {
         $c = FrontendCreateController('categoria');
         $c->listarProdutos($rout[2]);
         break;
+    case 'carrinho':
+        $c = FrontendCreateController('carrinho');
+        /*rota:  carrinho/add/1 */
+        if ($rout[2] == 'add' && is_numeric($rout[3])) {
+            $c->addProduto($rout[3]);
+        }
+        break;
     default :
         require appConfig('frontDir') . '404.php';
         break;
