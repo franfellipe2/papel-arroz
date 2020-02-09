@@ -17,7 +17,9 @@ class Model {
 
     public function setSlug($string)
     {
+        if($string){
         $this->data['slug'] = appStrSlug($string);
+        }
     }
     
     
@@ -67,13 +69,12 @@ class Model {
 
     public function save($excludeFields = array())
     {
-
-        if ($this->errorExistis()) {
-
+        $result = false;
+        if ($this->errorExistis()) {           
             $this->setMsgError('Não foi possível salvar, existem erros que devem ser corrigidos!');
 
             // Cadastra
-        } elseif (empty($this->getId())) {
+        } elseif (empty($this->getId())) {           
             /*
              * INSERT INTO `categorias` (`id`, `nome`, `descricao`, `cat_pai`) VALUES (NULL, 'teste3', 'descriccao 3', NULL);
              */
@@ -85,12 +86,14 @@ class Model {
             $params = $this->getBidParams();
             unset($params[':id']);
 
-            $con->query('INSERT INTO `' . $this->getTable() . '` (' . $fields . ') VALUES (' . implode(', ', array_keys($params)) . ') ', $params);
+            $result = $con->query('INSERT INTO `' . $this->getTable() . '` (' . $fields . ') VALUES (' . implode(', ', array_keys($params)) . ') ', $params);
 
             $this->setId($con->lastInsertId());
-        } else {
-            $this->update($excludeFields);
+        } else {             
+            $result = $this->update($excludeFields);
         }
+        
+        return $result;
     }
 
     public function delete()
@@ -147,7 +150,7 @@ class Model {
         /*
           UPDATE `categorias` SET `nome` = 'teste4 fdgdfg', `descricao` = 'descricao4 fdgdfgdf' WHERE `categorias`.`id` = 4;
          */
-        $con->query('UPDATE `' . $this->getTable() . '` SET  ' . $fields . ' WHERE `' . $this->getTable() . '`.`id` = :id', $params);
+        return $con->query('UPDATE `' . $this->getTable() . '` SET  ' . $fields . ' WHERE `' . $this->getTable() . '`.`id` = :id', $params);
     }
 
     /**

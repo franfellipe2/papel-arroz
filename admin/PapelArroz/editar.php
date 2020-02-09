@@ -30,7 +30,7 @@ if (isset($_SESSION['msg_success'])) {
         <div class="card-body">
 
             <img src="<?php echo appImageUrl($papelArroz->getImagem(), 'thumb'); ?>" width="350">
-            
+
             <div class="form-group">
                 <label>Imagem</label>
                 <input name='imagem' type="file" class="form-control <?php if (!empty($erros['imagem'])) echo 'is-invalid'; ?>" accept=".png, .jpg, .jpeg">
@@ -64,28 +64,30 @@ if (isset($_SESSION['msg_success'])) {
                 </div>
             </div>
             <div class="form-group">
-                <label>Categoria</label>
-                <select name="cat_id" class="form-control <?php if (!empty($erros['cat_id'])) echo 'is-invalid'; ?>">
-                    <option></option>
-                    <?php
-                    $cats = $categoriasAninhadas->get();
-                    foreach ($cats as $r => $c):
-
-                        if ($papelArroz->getCategoria() == $c['id']) {
-                            ?>
-                            <option value="<?php echo $c['id']; ?>" selected><?php echo $c['nome']; ?></option>
-                            <?php
-                        } else {
-                            ?>
-                            <option value="<?php echo $c['id']; ?>"><?php echo $c['nome']; ?></option>
-                            <?php
+                <label>Categoria</label>                
+                <?php
+                $ca = $categoriasAninhadas;
+                $catInvalid = !empty($erros['cat_ids_form']) ? 'is-invalid' : null;
+                $catIds = array_map(function($c){ return $c['id'];}, $papelArroz->getCategorias());               
+                foreach ($ca->get() as $r => $c):
+                    ?>     
+                    <div class="form-check">
+                        <input name="cat_ids_form[]" class="form-check-input <?php echo $catInvalid; ?>" type="checkbox" value=" <?php echo $c['id']; ?>" 
+                        <?php
+                        if (!empty($catIds) && in_array($c['id'], $catIds)) {
+                            echo 'checked';
                         }
-
-                    endforeach;
-                    ?>
-                </select>
-                <div class="invalid-feedback">
-                    <?php if (!empty($erros['cat_id'])) echo $erros['cat_id']; ?>
+                        ?>>
+                        <label class="form-check-label">
+                            <?php echo $c['nome']; ?>
+                        </label>                       
+                    </div>
+                    <?php
+                endforeach;
+                ?>
+                <div class="form-control <?php echo $catInvalid; ?>" style="display:none"></div>
+                <div class="invalid-feedback">                   
+                    <?php if (!empty($erros['cat_ids_form'])) echo $erros['cat_ids_form']; ?>
                 </div>
             </div>
         </div>

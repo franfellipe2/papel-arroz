@@ -47,7 +47,7 @@ class PapelArrozController extends AdminController implements AdminControllerInt
         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
         $papelArroz = new PapelArroz();
 
-        if (!$papelArroz->getById($id)) {           
+        if (!$papelArroz->getById($id)) {
             header('Location: ' . $this->pageAction('listar'));
             die();
         }
@@ -99,9 +99,9 @@ class PapelArrozController extends AdminController implements AdminControllerInt
         $papelArroz->setId($id);
         $papelArroz->setTitulo(filter_input(INPUT_POST, 'titulo'));
         $papelArroz->setDescricao(filter_input(INPUT_POST, 'descricao'));
-        $papelArroz->setCategoria(filter_input(INPUT_POST, 'cat_id'));
+        $papelArroz->setCatIdsForm(isset($_POST['cat_ids_form']) ? $_POST['cat_ids_form'] : null);
         $papelArroz->setPreco(str_replace(',', '.', filter_input(INPUT_POST, 'preco')));
-        
+
         $papelArroz->save();
 
         if ($papelArroz->errorExistis()) {
@@ -136,6 +136,7 @@ class PapelArrozController extends AdminController implements AdminControllerInt
      */
     public function save()
     {
+       
 
         $imagem = $_FILES['imagem'];
         $imgName = null;
@@ -145,19 +146,16 @@ class PapelArrozController extends AdminController implements AdminControllerInt
         }
 
         $imgUp = new Images();
-        $imagPath = $imgUp->upload($imagem, $imgName);
-
+        $imagPath = $imgUp->upload($imagem, $imgName);      
         $papelArroz = new PapelArroz();
         $papelArroz->setId(filter_input(INPUT_POST, 'id'));
         $papelArroz->setTitulo(filter_input(INPUT_POST, 'titulo'));
         $papelArroz->setDescricao(filter_input(INPUT_POST, 'descricao'));
-        $papelArroz->setCategoria(filter_input(INPUT_POST, 'cat_id'));
+        $papelArroz->setCatIdsForm(isset($_POST['cat_ids_form']) ? $_POST['cat_ids_form'] : null);
         $papelArroz->setPreco(str_replace(',', '.', filter_input(INPUT_POST, 'preco')));
         $papelArroz->setImagem($imagPath);
+        $papelArroz->save();    
         
-
-        $papelArroz->save();
-
         if ($papelArroz->errorExistis()) {
 
             $formAction = $this->pageAction('save');
@@ -169,6 +167,8 @@ class PapelArrozController extends AdminController implements AdminControllerInt
             $categoriasAninhadas = new CategoriasAninhadas();
 
             require $this->getPage() . '/adicionar.php';
+            
+            
         } else {
 
             header('Location: ' . $this->pageAction('editar', ['id' => $papelArroz->getId()]));

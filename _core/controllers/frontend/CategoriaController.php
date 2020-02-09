@@ -15,7 +15,7 @@ use app\models\Categoria;
  *
  * @author franf
  */
-class CategoriaController extends frontController{
+class CategoriaController extends frontController {
 
     private $categoria;
 
@@ -26,9 +26,13 @@ class CategoriaController extends frontController{
 
     public function listarProdutos($catSlug)
     {
-       
-       $categoria = $this->categoria->getBySlug($catSlug);
-       $produtos = $categoria->getProdutos();
-       require $this->getFilePath('categoria');
+
+        $categoria = $this->categoria->getBySlug($catSlug);
+        if ($categoria) {
+            $produtos = $categoria->getProdutos();
+            require $this->getFilePath('categoria');
+        }else{
+            require $this->getFilePath('404');
+        }
     }
 }

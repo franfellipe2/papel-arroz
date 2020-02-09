@@ -19,24 +19,35 @@ class Produto extends Model implements ModelInterface {
         'descricao'     => '',
         'preco'         => '',
         'imagem'        => '',
-        'cat_id'        => '',
         'personalizado' => 0,
         'tipo'          => '',
         'filho_id'      => null
     ];
+    private $cat_ids_form = array();
     private $table = 'produtos';
 
     public function save($excludeFields = array())
     {
+        $db = new DB();
+        $db->getPDO()->beginTransaction();
         $this->validTitulo();
         $this->validDescricao();
         $this->validPreco();
         $this->validImagem();
-        $this->validCategoria();
+        $this->validCategorias();
         $this->validPersonalizado();
         $this->setSlug($this->getTitulo());
 
-        return parent::save($excludeFields);
+        try {
+            parent::save($excludeFields) ? false : true;
+            $this->deleteCategorias();
+            $this->saveCategorias() ? false : true;
+        } catch (\PDOException $ex) {
+            $db->getPDO()->rollBack();
+            print "Erro!: " . $ex->getMessage() . "</br>";
+        }
+        $db->getPDO()->commit();
+        return true;
     }
 
     public function validTitulo()
@@ -53,6 +64,12 @@ class Produto extends Model implements ModelInterface {
             return false;
         }
         return true;
+    }
+
+    public function deleteCategorias($ids = array())
+    {
+        $db = new DB();
+        $db->query('DELETE FROM prod_cat WHERE prod_cat.prod_id = :id', [':id' => $this->getId()]);
     }
 
     public function validDescricao()
@@ -79,13 +96,27 @@ class Produto extends Model implements ModelInterface {
         return true;
     }
 
-    public function validCategoria()
+    public function validCategorias()
     {
-        if (empty($this->getCategoria())) {
-            $this->addError('cat_id', 'Categoria não definida!');
+        if (empty($this->getCatIdsForm())) {
+            $this->addError('cat_ids_form', 'Categoria não definida!');
             return false;
         }
+        foreach ($this->getCategorias() as $id) {
+            if (((int) $id) == 0) {
+                return false;
+            }
+        }
         return true;
+    }
+
+    /**
+     * Pega os ids das categorias informados no formulário de cadastro ou atualização
+     * 
+     */
+    function getCatIdsForm()
+    {
+        return $this->cat_ids_form;
     }
 
     public function validImagem()
@@ -105,6 +136,24 @@ class Produto extends Model implements ModelInterface {
             return $r;
         }
         return $r[0];
+    }
+
+    public function saveCategorias()
+    {
+        if ($this->errorExistis()) {
+            return false;
+        }
+        $db = new DB();
+        $sql = 'INSERT INTO prod_cat (prod_id, cat_id) VALUES ';
+        $params = [':p' => $this->getId()];
+        $cs = $this->getCatIdsForm();
+        for ($i = 0; $i < count($cs); $i++) {
+            $pc = ":c{$i}";
+            $sql .= "( :p, $pc ), ";
+            $params[$pc] = $cs[$i];
+        }
+        $sql = substr($sql, 0, -2);
+        $db->query($sql, $params);
     }
 
     function getId()
@@ -146,9 +195,18 @@ class Produto extends Model implements ModelInterface {
         return $this->data['tipo'];
     }
 
-    function getCategoria()
+    function getCategorias()
     {
-        return $this->data['cat_id'];
+        $sql = new DB();
+        $rsql = 'SELECT * FROM `categorias` 
+                 INNER JOIN prod_cat 
+                 ON `prod_cat`.`cat_id` = categorias.id
+                 AND prod_cat.prod_id = :id';
+        $r = $sql->select($rsql, [':id' => $this->getId()]);
+        if (empty($r)) {
+            return $r;
+        }
+        return $r;
     }
 
     function getFilho()
@@ -171,9 +229,16 @@ class Produto extends Model implements ModelInterface {
         $this->data['personalizado'] = $personalizado;
     }
 
-    function setCategoria($cat_id)
+    /**
+     * Seta os ids das categorias informados no formulario para cadastro ou atualização
+     */
+    function setCatIdsForm($ids)
     {
-        $this->data['cat_id'] = $cat_id;
+        if (is_array($ids)) {
+            $this->cat_ids_form = $ids;
+        } elseif ($ids != null) {
+            $this->cat_ids_form[] = $ids;
+        }
     }
 
     function setPreco($preco)

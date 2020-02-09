@@ -18,7 +18,7 @@ require appConfig('frontDir') . 'menu-header.php';
         <div class="card-deck">
             <?php foreach ($produtos as $p): ?>
                 <article class="card">
-                    <img src="<?php echo appUrl('/'.$p->getImagem());?>" class="card-img-top" alt="...">
+                    <img src="<?php echo appImageUrl('/'.$p->getImagem(),'media');?>" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $p->getTitulo();?></h5>
                         <p>Formato A4: 21:30cm</p>

@@ -1,4 +1,5 @@
 <?php
+
 namespace app;
 
 /**
@@ -10,12 +11,13 @@ class DB {
 
     /** @var \PDO */
     private static $conn;
+    private $statement;
 
     public function __construct()
     {
 
         if (!self::$conn):
-           
+
             try {
                 $c = appConfig();
                 self::$conn = new \PDO(
@@ -38,7 +40,6 @@ class DB {
 
     private function setParams($statement, $parameters = array())
     {
-
         foreach ($parameters as $key => $value) {
 
             $this->bindParam($statement, $key, $value);
@@ -68,7 +69,7 @@ class DB {
 
         $this->setParams($stmt, $params);
 
-        $stmt->execute();
+        $this->execute($stmt);
     }
 
     /**
@@ -85,9 +86,28 @@ class DB {
 
         $this->setParams($stmt, $params);
 
-        $stmt->execute();
+        $this->execute($stmt);
 
 
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    private function execute($statement)
+    {
+        $statement->execute();
+        $this->statement = $statement;
+    }
+
+    public function getStatement(): \PDOStatement
+    {
+        return $this->statement;
+    }
+
+    /**
+     * Retorna a instancia do PDO
+     */
+    public function getPDO(): \PDO
+    {
+        return self::$conn;
     }
 }

@@ -5,6 +5,7 @@ namespace app\models;
 use app\models\Model;
 use app\interfaces\ModelInterface;
 use app\DB;
+use app\models\Produto;
 
 /**
  * Description of Categoria
@@ -21,7 +22,7 @@ class Categoria extends Model implements ModelInterface {
     ];
     private $table = 'categorias';
     private $produtosTable = 'produtos';
-    private $produtos = array();    
+    private $produtos = array();
 
     public function save($excludeFields = array())
     {
@@ -54,14 +55,17 @@ class Categoria extends Model implements ModelInterface {
     public function getProdutos()
     {
         $db = new DB();
-        $r = $db->select('SELECT * FROM `'.$this->produtosTable.'` WHERE cat_id = :id', [':id' => $this->getId()]);
-        
-        foreach($r as $p => $data){
+        $sql = 'SELECT * FROM `produtos` 
+                INNER JOIN prod_cat
+                ON prod_cat.prod_id = `produtos`.`id`
+                AND prod_cat.cat_id = :id';       
+        $r = $db->select($sql, [':id' => $this->getId()]);
+        foreach ($r as $p => $data) {
             $p = new Produto();
             $p->setData($data);
             $this->produtos[] = $p;
         }
-        
+
         return $this->produtos;
     }
 
