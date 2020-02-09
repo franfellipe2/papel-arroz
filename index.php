@@ -17,12 +17,12 @@ switch ($page) {
         FrontendCreateController('home');
         break;
     case 'p':
-        $c = FrontendCreateController('produto');        
+        $c = FrontendCreateController('produto');
         $c->setProdutoBySlug($rout[2]);
         break;
     case 'categoria':
-        $c = FrontendCreateController('categoria');        
-        $c->setCategoriaBySlug($rout[2]);
+        $c = FrontendCreateController('categoria');
+        $c->listarProdutos($rout[2]);
         break;
     default :
         require appConfig('frontDir') . '404.php';

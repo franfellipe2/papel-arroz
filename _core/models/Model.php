@@ -19,7 +19,8 @@ class Model {
     {
         $this->data['slug'] = appStrSlug($string);
     }
-
+    
+    
     public function setData($data)
     {
         $this->data = $data;
@@ -105,6 +106,17 @@ class Model {
     {
         $sql = new DB();
         $r = $sql->select('SELECT * FROM `' . $this->getTable() . '` WHERE `' . $this->getTable() . '`.`id` = \'' . $id . '\'');
+        if (empty($r)) {
+            return false;
+        }
+        $this->setData($r[0]);
+        return $this;
+    }
+    
+    public function getBySlug($slug)
+    {
+        $sql = new DB();
+        $r = $sql->select('SELECT * FROM `' . $this->getTable() . '` WHERE `' . $this->getTable() . '`.`slug` = \'' . $slug . '\'');       
         if (empty($r)) {
             return false;
         }

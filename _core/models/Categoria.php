@@ -1,11 +1,10 @@
 <?php
+
 namespace app\models;
 
 use app\models\Model;
 use app\interfaces\ModelInterface;
 use app\DB;
-
-
 
 /**
  * Description of Categoria
@@ -21,6 +20,8 @@ class Categoria extends Model implements ModelInterface {
         'cat_pai'   => '',
     ];
     private $table = 'categorias';
+    private $produtosTable = 'produtos';
+    private $produtos = array();    
 
     public function save($excludeFields = array())
     {
@@ -45,6 +46,23 @@ class Categoria extends Model implements ModelInterface {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Retornas todos os produtos
+     */
+    public function getProdutos()
+    {
+        $db = new DB();
+        $r = $db->select('SELECT * FROM `'.$this->produtosTable.'` WHERE cat_id = :id', [':id' => $this->getId()]);
+        
+        foreach($r as $p => $data){
+            $p = new Produto();
+            $p->setData($data);
+            $this->produtos[] = $p;
+        }
+        
+        return $this->produtos;
     }
 
     public function validDescricao()
