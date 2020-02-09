@@ -1,6 +1,5 @@
 <?php
 require appConfig('frontDir') . '/header.php';
-require appConfig('frontDir') . 'menu-header.php';
 ?>
 
 <div class="page-sidebar">

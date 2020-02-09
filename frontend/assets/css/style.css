@@ -1,22 +1,146 @@
+/*
+ELEMENTOS
+*/
+h1, h2, h3, h4, h5, h8{
+   font-family: 'Merriweather Sans', sans-serif;
+}
+
+/*
+SITE-HEADER
+*/
 .page-header{
     background: #333;
     color: #fff;
     padding: 16px;
 }
 
-.page-header .logo{
+.page-header .menu-header{
+    float: left;
+}
+.page-header .menu-header{
+
+}
+
+.navbar-header .logo img{
     float: left;
     margin-right: 32px;
+    max-height: 60px;
 }
 
-.page-header .menu-header{
-    float: left;
+.site-header .buscar{
+    background: #33001A;
+    padding: 16px;
+    text-align: center;
 }
-.page-header .menu-header{
+.site-header .buscar form{
+    display: inline-block;
+    width: 100%;
+}
+.site-header .buscar input,.site-header .buscar button{
+    border: none;
+    height: 42px;
+}
+.site-header .buscar input{
+    width: 250px;
+    display: inline-block;
+}
+.site-header .buscar button{
+    display: inline-block;   
+}
+
+@media(min-width: 600px){
+    .site-header .buscar input{
+        width: 350px;
+        display: inline-block;
+    }
+}
+
+/*
+CONTEUDO
+*/
+.page-title{
+    color: #FF007F;
+}
+
+/*
+CARRINHO DE COMPRAS
+*/
+.carrinho{
+    position: relative;
 
 }
+.carrinho, .carrinho a{
+    color: #FF007F;
+    font-size: 22px;
+}
+.carrinho .icon{
+    position: absolute;
+    bottom: -16px;
+    left: -35px;
+    z-index: 2;    
+}
+.carrinho .total{
+    position: absolute;
+    right: 0;
+    top:-25px;
+    font-size: 11px;
+    background: #Fff;
+    border: solid 1px #FF007F;
+    padding: 4px 6px;
+    border-radius: 50px;
+    z-index: 1;
+}
+.carrinho.nav-lg{
+    display: none;
+}
+.carrinho.nav-sm{
+    display: block;
+}
 
-.card-deck{
+@media (min-width: 992px){
+    .carrinho.nav-lg{
+        display: block;
+    }
+    .carrinho.nav-sm{
+        display: none;
+    }
+}
+
+/*
+CARDS
+*/
+
+.card-deck .card{
     max-width: 480px;
 }
 
+.card-papel-arroz .header-img{
+    position: relative;  
+    width: calc(100% + 2px);
+    background: #fff;
+    margin: -1px 0 0 -1px;
+
+}
+
+.card-papel-arroz .bg-papel-dobrado{
+    background: url(../images/bg-papel-dobrado.png) no-repeat;
+    background-size: cover;
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 80px;
+    height: 80px;
+}
+
+
+/*
+UTILITARIOS
+*/
+.btn-convert{
+    background: #FF007F;
+    color: #Fff;
+}
+.btn-convert:hover{
+    color: #fff;
+    background: #C10061;
+}

@@ -1,8 +1,17 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">LOGO</a>
+<nav class="navbar-header navbar navbar-expand-lg navbar-light bg-light">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
+    <a class="navbar-brand logo" href="#">
+        <img src="<?php echo appUrl('/frontend/assets/images/logo.png'); ?>">
+    </a>   
+
+    <div class="carrinho nav-sm">
+        <a class="carrinho" href="#">
+            <div class="total">55</div>
+            <i class="fas fa-shopping-cart icon"></i>
+        </a>
+    </div>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
@@ -14,14 +23,14 @@
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                   Categorias
+                    Categorias
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <?php
                     $c = new app\utils\CategoriasAninhadas();
                     foreach ($c->get() as $r => $c) {
                         ?>
-                        <a class="dropdown-item" href="<?php echo appUrl('/categoria').'/'. appStrSlug($c['nome']);?>"><?php echo $c['nome'];?></a>
+                        <a class="dropdown-item" href="<?php echo appUrl('/categoria') . '/' . appStrSlug($c['nome']); ?>"><?php echo $c['nome']; ?></a>
                     <?php } ?>          
                 </div>
             </li>
@@ -29,9 +38,19 @@
                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-    </div>
+
+        <div class="carrinho nav-lg" style="margin-right: 32px">
+            <a class="carrinho" href="#">
+                <div class="total">55</div>
+                <i class="fas fa-shopping-cart icon"></i>
+            </a>
+        </div>
+
+    </div>    
 </nav>
+<div class="buscar">
+    <form class="form-inline my-2 my-lg-0">
+        <input class="form-control" type="search" placeholder="Pesquise aqui..." aria-label="Search">
+        <button class="btn btn-primary my-2 my-sm-0" type="submit">Pesquisar</button>
+    </form>
+</div>

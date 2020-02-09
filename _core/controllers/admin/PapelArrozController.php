@@ -106,7 +106,8 @@ class PapelArrozController extends AdminController implements AdminControllerInt
 
         if ($papelArroz->errorExistis()) {
 
-            $formAction = $this->pageAction('save');
+            $formAction = $this->pageAction('update',['id' => $papelArroz->getId()]);
+            $categoriasAninhadas = new CategoriasAninhadas();
             $erros = $papelArroz->getErrors();
 
             require $this->getPage() . '/editar.php';
