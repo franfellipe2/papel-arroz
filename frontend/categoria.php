@@ -23,11 +23,11 @@
                         </div>
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $p->getTitulo(); ?></h5>
-                            <p>Formato A4: 21:30cm</p>
+                            <p>Formato A4: 21:30cm</p>                           
                         </div>
                         <div class="card-footer">
-                            <a class="btn btn-sm btn-convert"  href="<?php echo appUrl('/carrinho/add/') . $p->getId(); ?>">Comprar <i class="fas fa-shopping-cart"></i></a>
-                            <a class="btn btn-sm btn-success float-right" href="#">Personalizar</a>
+                            <a class="btn btn-sm btn-convert"  href="<?php echo appUrl('/carrinho/'.$p->getId().'/add') ; ?>#produtos">Comprar <i class="fas fa-shopping-cart"></i></a>
+                            <a class="btn btn-sm btn-outline-secondary float-right" href="<?php echo appUrl('/produto/').$p->getSlug(); ?>">Ver Detalhes</a>
                         </div>
                     </article>       
                 <?php endforeach; ?>

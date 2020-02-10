@@ -4,34 +4,76 @@ session_start();
 require __DIR__ . '/vendor/autoload.php';
 require __DIR__ . '/_core/functions.php';
 
-$rout = explode('/', isset($_GET['route']) ? $_GET['route'] : '/home');
-$page = $rout[1];
+// Create and configure Slim app
+$config = ['settings' => [
+        'addContentLengthHeader' => false,
+    ],
+    'settings' => [
+        'displayErrorDetails' => true,
+    ],
+];
+$app = new \Slim\App($config);
 
-function FrontendCreateController($controllerPrifix)
+function controllerFactory($controllerPrifix, $request, $response)
 {
     $c = 'app\\controllers\\frontend\\' . $controllerPrifix . 'Controller';
-    return new $c;
+    return new $c($request, $response);
 }
-switch ($page) {
-    case 'home':
-        FrontendCreateController('home');
-        break;
-    case 'p':
-        $c = FrontendCreateController('produto');
-        $c->setProdutoBySlug($rout[2]);
-        break;
-    case 'categoria':
-        $c = FrontendCreateController('categoria');
-        $c->listarProdutos($rout[2]);
-        break;
-    case 'carrinho':
-        $c = FrontendCreateController('carrinho');
-        /*rota:  carrinho/add/1 */
-        if ($rout[2] == 'add' && is_numeric($rout[3])) {
-            $c->addProduto($rout[3]);
-        }
-        break;
-    default :
-        require appConfig('frontDir') . '404.php';
-        break;
-}
+// ======================================
+// ROTAS
+// ======================================
+
+// Pagina incial
+$app->get('/', function ($request, $response) {
+    $c = controllerFactory('home', $request, $response);
+});
+
+// Mostrar produtos por categoria
+$app->get('/categoria/{slug}', function($request, $response, $args) {
+    extract($args);
+    $c = controllerFactory('categoria', $request, $response);
+    $c->listarProdutos($slug);
+});
+
+// Mostrar produtos(detalhes)
+$app->get('/produto/{slug}', function($request, $response, $args) {
+    extract($args);
+    $c = controllerFactory('Produto', $request, $response);
+    $c->show($slug);
+});
+
+// ================================
+// CARRINHO >>>
+// ================================
+
+// Adicinar o produto ao carrinho
+$app->get('/carrinho/{id}/add', function($request, $response, $args) {
+    extract($args);
+    $c = controllerFactory('carrinho', $request, $response);
+    $c->addProduto($id);
+});
+
+// Diminuir produto do carrinho
+$app->get('/carrinho/{id}/minus', function($request, $response, $args) {
+    extract($args);
+    $c = controllerFactory('carrinho', $request, $response);
+    $c->minusProduto($id);
+});
+
+// Remover o produto ao carrinho
+$app->get('/carrinho/{id}/remove', function($request, $response, $args) {
+    extract($args);
+    $c = controllerFactory('carrinho', $request, $response);
+    $c->removeProduto($id);
+});
+
+// Mostrar carrinho
+$app->get('/carrinho', function($request, $response, $args) {
+    extract($args);
+    $c = controllerFactory('carrinho', $request, $response);
+    $c->mostrar();
+});
+
+
+// Run app
+$app->run();

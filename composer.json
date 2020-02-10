@@ -7,7 +7,9 @@
             "email": "franfellipe2@hotmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "slim/slim": "3.*"
+    },
     "autoload": {
         "psr-4": {
             "app\\": "_core/"

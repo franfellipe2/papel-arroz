@@ -8,30 +8,28 @@
 
 namespace app\controllers\frontend;
 
-use app\models\Categoria;
+use app\models\Produto;
 
 /**
  * Description of CategoriaController
  *
  * @author franf
  */
-class CategoriaController extends frontController {
+class ProdutoController extends frontController {
 
-    private $categoria;
+    private $produto;
 
     public function __construct($request, $response)
     {
-        $this->categoria = new Categoria;
+        $this->produto = new Produto;
         parent::__construct($request, $response);
     }
 
-    public function listarProdutos($catSlug)
+    public function show($slug)
     {
 
-        $categoria = $this->categoria->getBySlug($catSlug);
-        if ($categoria) {
-            $produtos = $categoria->getProdutos();
-            require $this->getFilePath('categoria');
+        if (($produto = $this->produto->getBySlug($slug))) {            
+            require $this->getFilePath('produto');
         } else {                     
             $this->getPage404();
         }

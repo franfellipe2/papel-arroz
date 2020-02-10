@@ -11,7 +11,7 @@ class homeController extends frontController{
 
     function __construct()
     {
-        require $this->getFilePath('home');       
+        require $this->getFilePath('home');            
     }    
     
 }

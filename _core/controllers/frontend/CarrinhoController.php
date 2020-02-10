@@ -24,9 +24,22 @@ class CarrinhoController extends frontController {
         $this->categoria = new Categoria;
     }
 
+    /**
+     * Adicionar Produto ao carrinho
+     * @param type $produtoId
+     */
     public function addProduto($produtoId)
     {
+        header('Location: '. appUrl('/carrinho'));
+        die();
+    }
+   
+    /**
+     * Mostrar Carrinho
+     * @param type $produtoId
+     */
+    public function mostrar()
+    {
         require $this->getFilePath('carrinho');
-       
     }
 }

@@ -1,7 +1,9 @@
 <?php
-header("HTTP/1.0 404 Not Found");
 require appConfig('frontDir') . '/header.php';
 ?>
-<h1>Pagina não encontrada</h1>
+<DIV class="container text-center py-5">
+    <h1>ERRO 404 <br> Pagina não encontrada!</h1>
+    <p>Faça uma busca ou utilize o menu para encontrar o que você está producrando.</p>
+</DIV>
 <?php
 require appConfig('frontDir') . '/footer.php';
