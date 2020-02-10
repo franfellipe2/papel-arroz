@@ -3,20 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/wamp64/www/papel-arroz/frontend/produto.php</file>
             <file>file:/C:/wamp64/www/papel-arroz/frontend/assets/css/style.css</file>
-            <file>file:/C:/wamp64/www/papel-arroz/frontend/404.php</file>
-            <file>file:/C:/wamp64/www/papel-arroz/frontend/menu-header.php</file>
-            <file>file:/C:/wamp64/www/papel-arroz/frontend/categoria.php</file>
-            <file>file:/C:/wamp64/www/papel-arroz/frontend/header.php</file>
-            <file>file:/C:/wamp64/www/papel-arroz/frontend/home.php</file>
-            <file>file:/C:/wamp64/www/papel-arroz/frontend/assets/css/fontawesome.min.css</file>
-            <file>file:/C:/wamp64/www/papel-arroz/_core/controllers/frontend/CarrinhoController.php</file>
             <file>file:/C:/wamp64/www/papel-arroz/_core/models/Model.php</file>
-            <file>file:/C:/wamp64/www/papel-arroz/admin/PapelArroz/editar.php</file>
             <file>file:/C:/wamp64/www/papel-arroz/index.php</file>
-            <file>file:/C:/wamp64/www/papel-arroz/_core/controllers/admin/PapelArrozController.php</file>
-            <file>file:/C:/wamp64/www/papel-arroz/frontend/carrinho.php</file>
-            <file>file:/C:/wamp64/www/papel-arroz/_core/models/Produto.php</file>
+            <file>file:/C:/wamp64/www/papel-arroz/_core/models/Carrinho.php</file>
+            <file>file:/C:/wamp64/www/papel-arroz/frontend/categoria.php</file>
+            <file>file:/C:/wamp64/www/papel-arroz/_core/models/Comprador.php</file>
+            <file>file:/C:/wamp64/www/papel-arroz/_core/validates/CompradorValidate.php</file>
+            <file>file:/C:/wamp64/www/papel-arroz/_core/interfaces/ModelInterface.php</file>
+            <file>file:/C:/wamp64/www/papel-arroz/_core/controllers/frontend/CarrinhoController.php</file>
         </group>
     </open-files>
 </project-private>

@@ -13,9 +13,5 @@ namespace app\interfaces;
  */
 interface ModelInterface {
 
-    public function getData(): array;
-
-    public function getId();
-
-    public function getTable(): string;
+   
 }
