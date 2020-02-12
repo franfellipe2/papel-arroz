@@ -12,7 +12,7 @@ use app\models\Produto;
  *
  * @author franf
  */
-class Comprador extends Model implements ModelInterface {
+class Pessoa extends Model implements ModelInterface {
 
     protected $data = [
         'id'       => null,

@@ -43,4 +43,14 @@ class frontController {
     {
         require $this->getFilePath('404');
     }
+
+    public function getSeverParam($param)
+    {
+        return $this->request->getServerParams()[$param];
+    }
+
+    public function getServerParams()
+    {
+        return $this->request->getServerParams();
+    }
 }

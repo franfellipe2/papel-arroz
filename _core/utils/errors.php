@@ -1,5 +1,5 @@
 <?php
-namespace app;
+namespace app\utils;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

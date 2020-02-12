@@ -100,6 +100,16 @@ class Model {
         return $result;
     }
 
+    public function getId()
+    {
+        return $this->data['id'];
+    }
+
+    public function getTable()
+    {
+        return $this->table;
+    }
+
     public function delete()
     {
         /*
@@ -178,5 +188,10 @@ class Model {
     public function getData(): array
     {
         return $this->data;
+    }
+
+    public function setId($id)
+    {
+        $this->data['id'] = $id;
     }
 }
