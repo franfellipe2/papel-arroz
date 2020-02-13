@@ -9,7 +9,8 @@
 namespace app\controllers\frontend;
 
 use app\utils\MensageFromSession;
-use \app\models\Carrinho;
+use app\models\Carrinho;
+use app\models\Produto;
 
 /**
  * Description of CategoriaController
@@ -22,7 +23,7 @@ class CarrinhoController extends frontController {
 
     public function __construct($request, $response)
     {
-        $this->carrinho = new Carrinho;
+        $this->carrinho = new Carrinho;       
         parent::__construct($request, $response);
     }
 
@@ -32,9 +33,9 @@ class CarrinhoController extends frontController {
      */
     public function addProduto($produtoId)
     {
-
-        $prodId = (int) $produtoId;
-        //$this->carrinho->addProduto();                
+        unset($_SESSION[Carrinho::CAR_SESSION]);
+        $carrinho = $this->carrinho->get();
+        var_dump($carrinho);
         header('Location: ' . appUrl('/carrinho'));
     }
 

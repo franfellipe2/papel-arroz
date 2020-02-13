@@ -24,83 +24,108 @@ class Carrinho extends Model implements ModelInterface {
         'vltotal'     => 0,
     ];
     protected $table = 'carrinho';
-    private $itens;
-    private $cliente;
 
-    public function __construct()
+    public function create()
     {
+        $this->setIdSession(session_id());
+        $this->setDtRegistro(date('Y-m-d H:i:s', time()));
+        $this->save();
+    }
 
-        if (!$this->existisCar()) {
-            $this->save();
+    // ============================================================
+    // GETERS
+    // ============================================================
+
+    public function get()
+    {
+        if (($c = $this->getFromSession())) {
+            return $c;
+        } else {
+            if (($c = $this->getByIdSession())) {
+                $this->setToSession($c);
+            } else {
+                $this->create();
+                $this->setToSession($this);
+            }
+        }        
+        return $this->getFromSession();
+    }
+
+    public function getFromSession()
+    {
+        if (isset($_SESSION[self::CAR_SESSION])) {
+            $c = unserialize($_SESSION[self::CAR_SESSION]);
+            if (empty($c->getId())) {
+                return false;
+            }
+            return $c;
         }
+        return false;
     }
 
-    function save($excludeFields = array())
-    {
-        $this->data['id_session'] = session_id();
-        $this->data['dt_registro'] = date('Y-m-d H:i:s', time());
-        parent::save($excludeFields);
-    }
-
-    public function calcValorTotal()
-    {
-        foreach ($this->produtos as $p):
-            $this->data['vltotal'] += $p->vltotal();
-        endforeach;
-    }
-
-    /**
-     * Adicionar produto ao carrinho
-     * @param Produto $protudo
-     */
-    public function addProduto(Produto $protudo = null)
-    {
-        $this->carrinhoItem->add($protudo);
-    }
-
-    /**
-     * Verfica se o carrinho existe
-     * @return type
-     */
-    public function existisCar()
-    {
-        return isset($_SESSION[self::CAR_SESSION]['id']);
-    }
-
-    /**
-     * Retornas todos os produtos
-     */
-    public function getProdutos()
+    public function getByIdSession()
     {
         $db = new DB();
-        $sql = 'SELECT * FROM `produtos` 
-                INNER JOIN prod_carrinho p
-                ON p.id_produto = `produtos`.`id`
-                AND p.id_carrinho = :id';
+        $r = $db->select('SELECT * FROM `' . $this->getTable() . '` WHERE id_session = :id', array(':id' => session_id()));
 
-        $r = $db->select($sql, [':id' => $this->getId()]);
-
-        foreach ($r as $p => $data) {
-            $p = new Produto();
-            $p->setData($data);
-            $this->produtos[] = $p;
-        }
-
-        return $this->produtos;
-    }
-
-    public function getComprador()
-    {
-        $db = new DB();
-        $sql = 'SELECT * FROM `compradores` WHERE `compradores`.`id` = :id';
-        $r = $db->select($sql, [':id' => $this->getId()]);
-
-        if (!empty($r[0])) {
-            $this->comprador = new Comprador();
-            $this->comprador->setData($r[0]);
-            return $this->comprador;
+        if (!empty($r)) {
+            $this->setData($r[0]);
+            return $this;
         } else {
             return false;
         }
+    }
+
+    function getId_session()
+    {
+        return $this->data['id_session'];
+    }
+
+    function getDt_registro()
+    {
+        return $this->data['dt_registro'];
+    }
+
+    function getVltotal()
+    {
+        return $this->data['vltotal'];
+    }
+
+    function getId()
+    {
+        return $this->data['id'];
+    }
+
+    // ============================================================
+    // SETERS
+    // ============================================================
+    public function setToSession($carrinho)
+    {
+        $_SESSION[self::CAR_SESSION] = serialize($carrinho);
+    }
+
+    function setIdSession($id_session)
+    {
+        $this->data['id_session'] = $id_session;
+    }
+
+    function setDtRegistro($dt_registro)
+    {
+        $this->data['dt_registro'] = $dt_registro;
+    }
+
+    function setVltotal($vltotal)
+    {
+        $this->data['vltotal'] = $vltotal;
+    }
+
+    function setId($id)
+    {
+        $this->data['id'] = $id;
+    }
+
+    function setTable($table)
+    {
+        $this->table = $table;
     }
 }
