@@ -89,6 +89,23 @@ CONTEUDO
     width: 45px;
     background: #333;
 }
+
+
+.secao .titulo-secao{
+    color: #FF007F;
+    font-weight: bold;
+    font-size: 32px;
+    text-transform: capitalize;
+    margin-bottom: 32px;
+}
+.secao .titulo-secao:after{
+    display: block;
+    content: "";
+    height: 4px;
+    width: 45px;
+    background: #FF007F;
+}
+
 /*
 CARRINHO DE COMPRAS
 */

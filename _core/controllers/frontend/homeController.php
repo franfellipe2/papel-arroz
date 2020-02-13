@@ -7,11 +7,12 @@ namespace app\controllers\frontend;
  *
  * @author franf
  */
-class homeController extends frontController{
+class homeController extends frontController {
 
     function __construct()
     {
-        require $this->getFilePath('home');            
-    }    
-    
+        $p = new \app\models\Produto();
+        $produtos = $p->getAll();       
+        require $this->getFilePath('home');
+    }
 }

@@ -19,12 +19,16 @@ function controllerFactory($controllerPrifix, $request, $response)
     $c = 'app\\controllers\\frontend\\' . $controllerPrifix . 'Controller';
     return new $c($request, $response);
 }
+
+
+
+
 // ======================================
 // ROTAS
 // ======================================
 
 // Pagina incial
-$app->get('/', function ($request, $response) {
+$app->get('/', function ($request, $response) {    
     $c = controllerFactory('home', $request, $response);
 });
 

@@ -15,6 +15,24 @@ class Model {
     private $errorExistis = false;
     private $msgError;
 
+    public function getAll()
+    {
+        $DB = new DB();
+        $r = $DB->select('SELECT * FROM `' . $this->getTable() . '`');
+
+        if (!empty($r)) {
+            $produtos = array();
+            foreach ($r as $row) {
+                $p = new Produto();
+                $p->setData($row);
+                $produtos[] = $p;
+            }
+            return $produtos;            
+        } else {
+            return false;
+        }
+    }
+
     public function setSlug($string)
     {
         if ($string) {
