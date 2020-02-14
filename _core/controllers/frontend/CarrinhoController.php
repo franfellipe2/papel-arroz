@@ -8,7 +8,6 @@
 
 namespace app\controllers\frontend;
 
-use app\utils\MensageFromSession;
 use app\models\Carrinho;
 use app\models\Produto;
 
@@ -23,7 +22,7 @@ class CarrinhoController extends frontController {
 
     public function __construct($request, $response)
     {
-        $this->carrinho = new Carrinho;       
+        $this->carrinho = Carrinho::getFromSession();
         parent::__construct($request, $response);
     }
 
@@ -33,10 +32,23 @@ class CarrinhoController extends frontController {
      */
     public function addProduto($produtoId)
     {
-        unset($_SESSION[Carrinho::CAR_SESSION]);
-        $carrinho = $this->carrinho->get();
-        var_dump($carrinho);
+        $qtdPost = filter_input(INPUT_POST, 'quatindade_produto', FILTER_VALIDATE_INT);
+        $qtd = $qtdPost ? $qtdPost : 1;        
+        $produto = (new Produto())->getById(filter_var($produtoId, FILTER_VALIDATE_INT));
+        $this->carrinho->addProduto($produto, $qtd);
         header('Location: ' . appUrl('/carrinho'));
+        die();
+    }
+
+    /**
+     * Diminuir Produto ao carrinho
+     * @param type $produtoId
+     */
+    public function minusProduto($produtoId)
+    {
+        $this->carrinho->minusProduto(filter_var($produtoId, FILTER_VALIDATE_INT));   
+        header('Location: '. appUrl('/carrinho'));
+        die();
     }
 
     /**
@@ -45,6 +57,8 @@ class CarrinhoController extends frontController {
      */
     public function mostrar()
     {
+        //unset($_SESSION[Carrinho::SESSION]);
+        $carrinho = $this->carrinho->getFromSession();
         require $this->getFilePath('carrinho');
     }
 }

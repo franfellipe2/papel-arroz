@@ -6,7 +6,6 @@ use app\models\Model;
 use app\interfaces\ModelInterface;
 use app\DB;
 use app\models\Produto;
-use app\models\Pessoa;
 
 /**
  * Description of Categoria
@@ -15,7 +14,7 @@ use app\models\Pessoa;
  */
 class Carrinho extends Model implements ModelInterface {
 
-    CONST CAR_SESSION = 'carrinho';
+    CONST SESSION = 'carrinho';
 
     protected $data = [
         'id'          => '',
@@ -24,53 +23,162 @@ class Carrinho extends Model implements ModelInterface {
         'vltotal'     => 0,
     ];
     protected $table = 'carrinho';
+    private $itens = array();
+
+    public function getProdutos()
+    {
+        $db = new DB();
+        $result = $db->select('SELECT * FROM produtos
+                                        INNER JOIN prod_carrinho
+                                        ON produtos.`id` = prod_carrinho.id_produto
+                                        WHERE prod_carrinho.id_carrinho = :idc
+                                        AND prod_carrinho.dtdelete IS NULL
+                                        GROUP BY produtos.id', [
+            ':idc' => $this->getId()
+        ]);
+
+        return isset($result) ? $result : array();
+    }
+
+    public function minusProduto($produtoId)
+    {
+        $db = new DB();
+        $result = $db->select('SELECT produtos.*, prod_carrinho.quantidade, prod_carrinho.id_produto FROM prod_carrinho  
+                                        INNER JOIN produtos
+                                        ON prod_carrinho.id_produto = produtos.id
+                                        WHERE prod_carrinho.id_carrinho = :idc 
+                                        AND prod_carrinho.id_produto = :idp', [
+            ':idc' => $this->getId(),
+            ':idp' => (int) $produtoId
+        ]);
+
+        if (empty($result)) {
+            return false;
+        } elseif ($result[0]['quantidade'] > 1) {
+            $p = new Produto;
+            $p->setData($result[0]);            
+            $this->incrementProduto($p, - 1);
+        } else {            
+            $this->removeProduto($produtoId);
+        }
+    }
+
+    public function getProduto($produtoId)
+    {
+        $db = new DB();
+        $result = $db->select('SELECT * FROM produtos
+                                        INNER JOIN prod_carrinho
+                                        ON produtos.`id` = prod_carrinho.id_produto
+                                        WHERE prod_carrinho.id_carrinho = :idc 
+                                        AND prod_carrinho.id_produto = :idp
+                                        GROUP BY produtos.id', [
+            ':idc' => $this->getId(),
+            ':idp' => (int) $produtoId
+        ]);
+
+        return isset($result) ? $result[0] : false;
+    }
+
+    public function addProduto(Produto $p, $qtd, $desconto = 0, $juros = 0)
+    {
+        if (!$this->hasProduto($p)) {
+            $this->InsertProduto($p, $qtd, $desconto, $juros);
+        } else {
+            $this->incrementProduto($p, $qtd, $desconto, $juros);
+        }
+    }
+
+    public function hasProduto(Produto $p)
+    {
+        $db = new DB();
+        $result = $db->select('SELECT id_produto FROM prod_carrinho WHERE id_produto = :idp AND id_carrinho = :idc', [':idp' => $p->getId(), ':idc' => $this->getId()]);
+        return !empty($result);
+    }
+
+    private function InsertProduto(Produto $p, $qtd, $desconto = 0, $juros = 0)
+    {
+        $db = new DB();
+        $db->query('INSERT INTO prod_carrinho ( id_produto, id_carrinho,  quantidade, desconto, juros, vltotal, dtdelete = null )
+                                       VALUES(:id_produto, :id_carrinho,  :quantidade, :desconto, :juros, :vltotal)', [
+            ':id_produto'  => $p->getId(),
+            ':id_carrinho' => $this->getId(),
+            ':quantidade'  => $qtd,
+            ':desconto'    => (float) $desconto,
+            ':juros'       => (float) $juros,
+            ':vltotal'     => $this->calculateTotal($qtd, $p->getPreco(), $desconto, $juros)
+        ]);
+    }
+
+    private function incrementProduto(Produto $p, $qtd, $desconto = 0, $juros = 0)
+    {
+        $db = new DB();
+        $db->query('UPDATE prod_carrinho SET quantidade = quantidade + :quantidade,
+                                             desconto = :desconto, 
+                                             juros = :juros, 
+                                             vltotal = vltotal + :vltotal,
+                                             dtdelete = null
+                                             WHERE id_produto = :id_produto AND id_carrinho = :id_carrinho', [
+            ':id_produto'  => $p->getId(),
+            ':id_carrinho' => $this->getId(),
+            ':quantidade'  => $qtd,
+            ':desconto'    => (float) $desconto,
+            ':juros'       => (float) $juros,
+            ':vltotal'     => $this->calculateTotal($qtd, $p->getPreco(), $desconto, $juros)
+        ]);
+    }
+
+    public function removeProduto($produtoId)
+    {
+        $db = new DB();
+        return $db->query('UPDATE prod_carrinho SET dtdelete = :now WHERE prod_carrinho.id_produto = :id', [':id' => $produtoId,':now' =>date('Y-m-d H:i:s', time())]);
+    }
+
+    public function calculateTotal($qtd, $preco, $desconto, $juros)
+    {
+        return (($qtd * $preco ) - $desconto) * (($juros / 100) + 1);
+    }
 
     public function create()
     {
         $this->setIdSession(session_id());
         $this->setDtRegistro(date('Y-m-d H:i:s', time()));
-        $this->save();
+        parent::save();
+        $_SESSION[self::SESSION] = $this->getData();
     }
 
     // ============================================================
     // GETERS
     // ============================================================
 
-    public function get()
+    public static function getFromSession()
     {
-        if (($c = $this->getFromSession())) {
-            return $c;
-        } else {
-            if (($c = $this->getByIdSession())) {
-                $this->setToSession($c);
-            } else {
-                $this->create();
-                $this->setToSession($this);
-            }
-        }        
-        return $this->getFromSession();
-    }
+        $car = new Carrinho;
 
-    public function getFromSession()
-    {
-        if (isset($_SESSION[self::CAR_SESSION])) {
-            $c = unserialize($_SESSION[self::CAR_SESSION]);
-            if (empty($c->getId())) {
-                return false;
-            }
-            return $c;
+        // Verfica se o carrinho já existe na seção
+        if (($d = $car->getSession()) || ($d = $car->getByIdSession())) {
+            $car->setData($d);
+        } else {
+            $car->create();
         }
-        return false;
+        return $car;
     }
 
     public function getByIdSession()
     {
         $db = new DB();
-        $r = $db->select('SELECT * FROM `' . $this->getTable() . '` WHERE id_session = :id', array(':id' => session_id()));
-
-        if (!empty($r)) {
-            $this->setData($r[0]);
+        $result = $db->select("SELECT * FROM `{$this->getTable()}` WHERE id_session = :id_session", array(':id_session' => session_id()));
+        if (!empty($result)) {
+            $_SESSION[self::SESSION] = $result[0];
+            $this->setData($result[0]);
             return $this;
+        }
+        return false;
+    }
+
+    public function getSession()
+    {
+        if (isset($_SESSION[self::SESSION])) {
+            return $_SESSION[self::SESSION];
         } else {
             return false;
         }
@@ -99,9 +207,9 @@ class Carrinho extends Model implements ModelInterface {
     // ============================================================
     // SETERS
     // ============================================================
-    public function setToSession($carrinho)
+    public function setToSession()
     {
-        $_SESSION[self::CAR_SESSION] = serialize($carrinho);
+        $_SESSION[self::CAR_SESSION] = serialize($this);
     }
 
     function setIdSession($id_session)
@@ -129,3 +237,6 @@ class Carrinho extends Model implements ModelInterface {
         $this->table = $table;
     }
 }
+
+//cascunho------------------------------------------------------------>>>>
+

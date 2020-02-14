@@ -1,5 +1,4 @@
 <?php require appConfig('frontDir') . '/header.php'; ?>
-
 <section class="page-content">
     <div class="jumbotron jumbotron-fluid">
         <header class="container text-center">
@@ -21,24 +20,24 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        <?php for ($i = 0; $i < 5; $i++) { ?>
+                                        <?php foreach ($carrinho->getProdutos() as $p) { ?>
                                             <tr>
                                                 <td><a class="btn btn-sm btn-danger" href="#" title="Excluir">x</a></td>
                                                 <td class="clearfix">
-                                                    <img class="float-left mr-1" width="50" src="https://img.elo7.com.br/product/zoom/1B4BA72/painel-homen-aranha-1-80-x-1-20m-decoracao-de-festa.jpg">
-                                                    <a href="<?php echo appUrl('/produto/papel-arroz-homem-aranha'); ?>">Papel de arroz do homem aranha</a>
+                                                    <img class="float-left mr-1" width="50" src="<?php echo appImageUrl($p['imagem'], 'thumb'); ?>">
+                                                    <a href="<?php echo appUrl('/produto/' . $p['slug']); ?>"><?php echo $p['titulo']; ?></a>
                                                 </td>
-                                                <td>12,00</td>
+                                                <td><?php echo $p['preco']; ?></td>
                                                 <td>
                                                     <form action="" method="post">
                                                         <div class="btn-group">
-                                                            <a class="btn btn-sm btn-dark" href="#">-</a>
-                                                            <input type="text" class="form-control form-control-sm" value="4" style="max-width: 50px">
-                                                            <a class="btn btn-sm btn-dark" href="#">+</a>
+                                                            <a class="btn btn-sm btn-dark" href="<?php echo appUrl('/carrinho/' . $p['id'] . '/minus') ?>">-</a>
+                                                            <input type="text" class="form-control form-control-sm" value="<?php echo $p['quantidade']; ?>" style="max-width: 50px">
+                                                            <a class="btn btn-sm btn-dark" href="<?php echo appUrl('/carrinho/' . $p['id'] . '/add') ?>">+</a>
                                                         </div>
                                                     </form>
                                                 </td>
-                                                <td class="text-right">48,00</td>
+                                                <td class="text-right"><?php echo $p['vltotal']; ?></td>
                                             </tr>
 
                                         <?php } ?>
@@ -55,7 +54,7 @@
                                     </tfoot>
                                     </table>
                                     </div><!-- /.carrinho-list -->
-                                    
+
                                     <div class="carrinho-tomar-decisao text-center">
                                         <h2>Valor Total <b>a pagar</b></h2>
                                         <h3>R$240,00 </h3>

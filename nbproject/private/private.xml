@@ -3,13 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/wamp64/www/papel-arroz/_core/models/PapelArroz.php</file>
             <file>file:/C:/wamp64/www/papel-arroz/_core/models/Model.php</file>
-            <file>file:/C:/wamp64/www/papel-arroz/index.php</file>
             <file>file:/C:/wamp64/www/papel-arroz/_core/models/Carrinho.php</file>
-            <file>file:/C:/wamp64/www/papel-arroz/_core/controllers/frontend/frontController.php</file>
-            <file>file:/C:/wamp64/www/papel-arroz/_core/models/CarrinhoItem.php</file>
+            <file>file:/C:/wamp64/www/papel-arroz/index.php</file>
+            <file>file:/C:/wamp64/www/papel-arroz/_core/models/Categoria.php</file>
             <file>file:/C:/wamp64/www/papel-arroz/_core/controllers/frontend/CarrinhoController.php</file>
-            <file>file:/C:/wamp64/www/papel-arroz/_core/models/Pessoa.php</file>
+            <file>file:/C:/wamp64/www/papel-arroz/frontend/carrinho.php</file>
+            <file>file:/C:/wamp64/www/papel-arroz/_core/models/Produto.php</file>
         </group>
     </open-files>
 </project-private>
