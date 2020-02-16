@@ -111,22 +111,23 @@ CARRINHO DE COMPRAS
 */
 .carrinho{
     position: relative;
-
+    height: 30px;
 }
 .carrinho, .carrinho a{
     color: #FF007F;
-    font-size: 22px;
+    font-size: 22px;    
+    position: relative;
+    height: 100%;
 }
-.carrinho .icon{
-    position: absolute;
-    bottom: -16px;
-    left: -35px;
+.carrinho .icon{    
+    bottom: 0;
+    margin-left: -35px;
     z-index: 2;    
 }
 .carrinho .total{
     position: absolute;
     right: 0;
-    top:-25px;
+    top: -15px;
     font-size: 11px;
     background: #Fff;
     border: solid 1px #FF007F;
