@@ -22,7 +22,8 @@ class CarrinhoController extends frontController {
 
     public function __construct($request, $response)
     {
-        $this->carrinho = Carrinho::getFromSession();        
+
+        $this->carrinho = new Carrinho();
         parent::__construct($request, $response);
     }
 
@@ -32,20 +33,23 @@ class CarrinhoController extends frontController {
      */
     public function addProduto($produtoId)
     {
+        // Tenta pegar o carrinho da sessão, se não tiver cria um
+        $this->carrinho = Carrinho::getFromSession();
+
         $id = (int) $produtoId;
-        $qtd = filter_input(INPUT_POST, 'quantidade', FILTER_VALIDATE_INT);       
+        $qtd = filter_input(INPUT_POST, 'quantidade', FILTER_VALIDATE_INT);
         $increment = filter_input(INPUT_POST, 'increment', FILTER_VALIDATE_BOOLEAN);
         $pnc = $this->carrinho->getProduto($id, true); // produto no carrinho
         $p = new Produto();
-        
-        if ($qtd == 0) {            
+
+        if ($qtd == 0) {
             $this->carrinho->removeProduto($id);
-        } elseif (!$pnc) {            
+        } elseif (!$pnc) {
             $p = (new Produto())->getById($id);
             $this->carrinho->InsertProduto($p, 1);
         } elseif ($pnc) {
-            $p->setData($pnc);           
-            $this->carrinho->updateProduto($p, ( $increment ? $pnc['quantidade'] + $qtd : $qtd) );
+            $p->setData($pnc);
+            $this->carrinho->updateProduto($p, ( $increment ? $pnc['quantidade'] + $qtd : $qtd));
         }
         header('Location: ' . appUrl('/carrinho'));
         die();
@@ -57,17 +61,19 @@ class CarrinhoController extends frontController {
      */
     public function minusProduto($produtoId)
     {
+        $this->carrinho->setData($this->carrinho->getSession());
         $this->carrinho->minusProduto(filter_var($produtoId, FILTER_VALIDATE_INT));
         header('Location: ' . appUrl('/carrinho'));
         die();
     }
-    
+
     /**
      * Diminuir Produto ao carrinho
      * @param type $produtoId
      */
     public function removeProduto($produtoId)
     {
+        $this->carrinho->setData($this->carrinho->getSession());
         $this->carrinho->removeProduto(filter_var($produtoId, FILTER_VALIDATE_INT));
         header('Location: ' . appUrl('/carrinho'));
         die();
@@ -79,9 +85,12 @@ class CarrinhoController extends frontController {
      */
     public function mostrar()
     {
-        //unset($_SESSION[Carrinho::SESSION]);
-        $carrinho = $this->carrinho->getFromSession();
-        $backUrl = $this->getRequest()->getServerParams()['HTTP_REFERER'];       
+        $carrinho = new Carrinho();
+        if (($data = $carrinho->getSession())) {
+            $carrinho->setData($data);
+        } elseif (( $car = (new Carrinho())->getByIdSession(session_id()))) {
+            $carrinho = $car;
+        }
         require $this->getFilePath('carrinho');
     }
 }

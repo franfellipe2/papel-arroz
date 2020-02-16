@@ -66,7 +66,7 @@
                                         <h3>R$ <?php echo appFormPrice($carrinho->getPrecoCarrinho());?></h3>
                                         <br>
                                         <a class="btn btn-convert" href="#" title="Ir para finalizar compra.">Fechar Pedido</a>                                                                             
-                                        <a class="btn btn-outline-primary" href="<?php echo $backUrl;?>">Continuar Comprando</a>
+                                        <a class="btn btn-outline-primary" href="<?php echo appUrl('/');?>">Continuar Comprando</a>
                                     </div>
 
                                     </div><!-- ./container -->
