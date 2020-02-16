@@ -20,7 +20,8 @@ class Carrinho extends Model implements ModelInterface {
         'id'          => '',
         'id_session'  => '',
         'dt_registro' => null,
-        'vltotal'     => 0,
+        'total_produtos'     => 0,
+        'preco_total'     => 0,
     ];
     protected $table = 'carrinho';
     private $itens = array();
@@ -143,6 +144,8 @@ class Carrinho extends Model implements ModelInterface {
     {
         $this->setIdSession(session_id());
         $this->setDtRegistro(date('Y-m-d H:i:s', time()));
+        unset($this->data['total_produtos']);
+        unset($this->data['preco_carrinho']);
         parent::save();
         $_SESSION[self::SESSION] = $this->getData();
     }
@@ -158,12 +161,20 @@ class Carrinho extends Model implements ModelInterface {
         // Verfica se o carrinho já existe na seção
         if (($d = $car->getSession()) && !empty($d['id'])) {
             $car->setData($d);
-        } elseif ($car->getByIdSession()) {
+        } elseif (($c = $car->getByIdSession()) && !empty($c->getId())) {
+            echo 'pega da sessão';
             $car = $car->getByIdSession();
-        } else {
+        } else {           
             $car->create();
         }
         return $car;
+    }
+    
+    public function getTotalProdutos(){
+        return isset($this->data['total_produtos']) ? $this->data['total_produtos'] : 0;
+    }
+    public function getPrecoCarrinho(){
+        return isset($this->data['preco_carrinho']) ? $this->data['preco_carrinho'] : 0;
     }
 
     public function getByIdSession()
@@ -242,7 +253,8 @@ class Carrinho extends Model implements ModelInterface {
     function setTable($table)
     {
         $this->table = $table;
-    }
+    }    
+
 }
 
 //cascunho------------------------------------------------------------>>>>

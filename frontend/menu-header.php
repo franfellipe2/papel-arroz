@@ -11,8 +11,8 @@ $car = car::getFromSession();
     </a>   
 
     <div class="carrinho nav-sm">
-        <a class="carrinho" href="#">
-            <div class="total">55</div>
+        <a class="carrinho" href="<?php echo appUrl('/carrinho');?>">
+            <div class="total"><?php echo $car->getTotalProdutos();?></div>
             <i class="fas fa-shopping-cart icon"></i>
         </a>
     </div>
@@ -45,7 +45,7 @@ $car = car::getFromSession();
 
         <div class="carrinho nav-lg" style="margin-right: 32px">
             <a class="carrinho" href="<?php echo appUrl('/carrinho');?>">
-                <span class="total"><?php echo $car->getData()['total_produtos'];?></span>
+                <span class="total"><?php echo $car->getTotalProdutos();?></span>
                 <i class="fas fa-shopping-cart icon"></i>
             </a>
         </div>
