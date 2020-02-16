@@ -1,7 +1,9 @@
 <?php
+
 use app\models\Carrinho as car;
+
 $TotalProdutosCarrinho = 0;
-if(car::hasSessionValid()){
+if (car::hasSessionValid()) {
     $car = car::getFromSession();
     $TotalProdutosCarrinho = $car->getTotalProdutos();
 }
@@ -15,8 +17,8 @@ if(car::hasSessionValid()){
     </a>   
 
     <div class="carrinho nav-sm">
-        <a class="carrinho" href="<?php echo appUrl('/carrinho');?>">
-            <div class="total"><?php echo $TotalProdutosCarrinho;?></div>
+        <a class="carrinho" href="<?php echo appUrl('/carrinho'); ?>">
+            <div class="total"><?php echo $TotalProdutosCarrinho; ?></div>
             <i class="fas fa-shopping-cart icon"></i>
         </a>
     </div>
@@ -39,7 +41,7 @@ if(car::hasSessionValid()){
                     foreach ($c->get() as $r => $c) {
                         ?>
                         <a class="dropdown-item" href="<?php echo appUrl('/categoria') . '/' . appStrSlug($c['nome']); ?>"><?php echo $c['nome']; ?></a>
-                    <?php } ?>          
+<?php } ?>          
                 </div>
             </li>
             <li class="nav-item">
@@ -48,8 +50,8 @@ if(car::hasSessionValid()){
         </ul>
 
         <div class="carrinho nav-lg" style="margin-right: 32px">
-            <a class="carrinho" href="<?php echo appUrl('/carrinho');?>">
-                <span class="total"><?php echo $TotalProdutosCarrinho;?></span>
+            <a class="carrinho" href="<?php echo appUrl('/carrinho'); ?>">
+                <span class="total"><?php echo $TotalProdutosCarrinho; ?></span>
                 <i class="fas fa-shopping-cart icon"></i>
             </a>
         </div>
@@ -57,8 +59,8 @@ if(car::hasSessionValid()){
     </div>    
 </nav>
 <div class="buscar">
-    <form class="form-inline my-2 my-lg-0">
-        <input class="form-control" type="search" placeholder="Pesquise aqui..." aria-label="Search">
+    <form class="form-inline my-2 my-lg-0" action="<?php echo appUrl('/pesquisa'); ?>" method="get">
+        <input name="pesquisa" class="form-control" type="search" placeholder="Pesquise aqui..." aria-label="Search">
         <button class="btn btn-primary my-2 my-sm-0" type="submit">Pesquisar</button>
     </form>
 </div>

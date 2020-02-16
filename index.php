@@ -45,6 +45,12 @@ $app->get('/produto/{slug}', function($request, $response, $args) {
     $c->show($slug);
 });
 
+// Pesquisar produtos
+$app->get('/pesquisa', function($request, $response, $args) {
+    $c = controllerFactory('Produto', $request, $response);
+    $c->pesquisa();
+});
+
 // ================================
 // CARRINHO >>>
 // ================================

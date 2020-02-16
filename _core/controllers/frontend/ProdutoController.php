@@ -28,10 +28,18 @@ class ProdutoController extends frontController {
     public function show($slug)
     {
 
-        if (($produto = $this->produto->getBySlug($slug))) {            
+        if (($produto = $this->produto->getBySlug($slug))) {
             require $this->getFilePath('produto');
-        } else {                     
+        } else {
             $this->getPage404();
         }
+    }
+
+    public function pesquisa()
+    {
+        $pesquisa = filter_input(INPUT_GET, 'pesquisa');
+        $produtos = $this->produto->getSearch($pesquisa);
+        
+        require $this->getFilePath('pesquisa');
     }
 }

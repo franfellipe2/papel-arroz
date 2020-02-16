@@ -26,6 +26,24 @@ class Produto extends Model implements ModelInterface {
     private $cat_ids_form = array();
     private $table = 'produtos';
 
+    public function getSearch($text)
+    {
+       $db = new DB();
+       $sql = 'SELECT * FROM produtos WHERE titulo LIKE :text';
+       $r = $db->select($sql,[':text' => "%$text%"]);      
+       if($r){
+           $produtos = array();
+           foreach($r as $data){
+               $p = new Produto();
+               $p->setData($data);
+               $produtos[] = $p;               
+           }
+           return $produtos;
+       }else{
+           return false;
+       }
+    }
+
     public function save($excludeFields = array())
     {
         $db = new DB();
