@@ -50,5 +50,6 @@
 <div class="page-footer">
     rodape
 </div>
-<?php
-require appConfig('frontDir') . '/footer.php';
+<?php require appConfig('frontDir') . '/footer.php'; ?>
+    </body>
+</html>

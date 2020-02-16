@@ -52,40 +52,35 @@ class Carrinho extends Model implements ModelInterface {
             ':idp' => (int) $produtoId
         ]);
 
+        $qtd = $result[0]['quantidade'];
+
         if (empty($result)) {
             return false;
-        } elseif ($result[0]['quantidade'] > 1) {
+        } elseif ($qtd > 1) {
             $p = new Produto;
-            $p->setData($result[0]);            
-            $this->incrementProduto($p, - 1);
-        } else {            
+            $p->setData($result[0]);
+            $this->updateProduto($p, $qtd - 1);
+        } else {
             $this->removeProduto($produtoId);
         }
+        unset($_SESSION[self::SESSION]);
     }
 
-    public function getProduto($produtoId)
+    public function getProduto($produtoId, $deleted = false)
     {
         $db = new DB();
+        $d = !$deleted ? ' AND dtdelete IS NULL ' : '';
         $result = $db->select('SELECT * FROM produtos
                                         INNER JOIN prod_carrinho
                                         ON produtos.`id` = prod_carrinho.id_produto
                                         WHERE prod_carrinho.id_carrinho = :idc 
                                         AND prod_carrinho.id_produto = :idp
-                                        GROUP BY produtos.id', [
+                                        ' . $d, [
             ':idc' => $this->getId(),
             ':idp' => (int) $produtoId
         ]);
 
-        return isset($result) ? $result[0] : false;
-    }
-
-    public function addProduto(Produto $p, $qtd, $desconto = 0, $juros = 0)
-    {
-        if (!$this->hasProduto($p)) {
-            $this->InsertProduto($p, $qtd, $desconto, $juros);
-        } else {
-            $this->incrementProduto($p, $qtd, $desconto, $juros);
-        }
+        return !empty($result) ? $result[0] : false;
     }
 
     public function hasProduto(Produto $p)
@@ -95,10 +90,12 @@ class Carrinho extends Model implements ModelInterface {
         return !empty($result);
     }
 
-    private function InsertProduto(Produto $p, $qtd, $desconto = 0, $juros = 0)
+    public function InsertProduto(Produto $p, $qtd, $desconto = 0, $juros = 0)
+            
     {
+        var_dump($this);
         $db = new DB();
-        $db->query('INSERT INTO prod_carrinho ( id_produto, id_carrinho,  quantidade, desconto, juros, vltotal, dtdelete = null )
+        $db->query('INSERT INTO prod_carrinho ( id_produto, id_carrinho,  quantidade, desconto, juros, vltotal )
                                        VALUES(:id_produto, :id_carrinho,  :quantidade, :desconto, :juros, :vltotal)', [
             ':id_produto'  => $p->getId(),
             ':id_carrinho' => $this->getId(),
@@ -107,30 +104,34 @@ class Carrinho extends Model implements ModelInterface {
             ':juros'       => (float) $juros,
             ':vltotal'     => $this->calculateTotal($qtd, $p->getPreco(), $desconto, $juros)
         ]);
+        unset($_SESSION[self::SESSION]);
     }
 
-    private function incrementProduto(Produto $p, $qtd, $desconto = 0, $juros = 0)
+    public function updateProduto(Produto $p, $qtd, $desconto = 0, $juros = 0)
     {
         $db = new DB();
-        $db->query('UPDATE prod_carrinho SET quantidade = quantidade + :quantidade,
+        $db->query('UPDATE prod_carrinho SET quantidade = :quantidade,
                                              desconto = :desconto, 
                                              juros = :juros, 
-                                             vltotal = vltotal + :vltotal,
-                                             dtdelete = null
+                                             vltotal = :vltotal,
+                                             dtdelete = :dtdelete
                                              WHERE id_produto = :id_produto AND id_carrinho = :id_carrinho', [
             ':id_produto'  => $p->getId(),
             ':id_carrinho' => $this->getId(),
             ':quantidade'  => $qtd,
             ':desconto'    => (float) $desconto,
             ':juros'       => (float) $juros,
+            ':dtdelete'    => NULL,
             ':vltotal'     => $this->calculateTotal($qtd, $p->getPreco(), $desconto, $juros)
         ]);
+        unset($_SESSION[self::SESSION]);
     }
 
     public function removeProduto($produtoId)
     {
         $db = new DB();
-        return $db->query('UPDATE prod_carrinho SET dtdelete = :now WHERE prod_carrinho.id_produto = :id', [':id' => $produtoId,':now' =>date('Y-m-d H:i:s', time())]);
+        unset($_SESSION[self::SESSION]);
+        return $db->query('UPDATE prod_carrinho SET dtdelete = :now, quantidade = 0, vltotal = 0 WHERE prod_carrinho.id_produto = :id', [':id' => $produtoId, ':now' => date('Y-m-d H:i:s', time())]);
     }
 
     public function calculateTotal($qtd, $preco, $desconto, $juros)
@@ -155,8 +156,10 @@ class Carrinho extends Model implements ModelInterface {
         $car = new Carrinho;
 
         // Verfica se o carrinho já existe na seção
-        if (($d = $car->getSession()) || ($d = $car->getByIdSession())) {
+        if (($d = $car->getSession()) && !empty($d['id'])) {
             $car->setData($d);
+        } elseif ($car->getByIdSession()) {
+            $car = $car->getByIdSession();
         } else {
             $car->create();
         }
@@ -166,7 +169,11 @@ class Carrinho extends Model implements ModelInterface {
     public function getByIdSession()
     {
         $db = new DB();
-        $result = $db->select("SELECT * FROM `{$this->getTable()}` WHERE id_session = :id_session", array(':id_session' => session_id()));
+        $result = $db->select("SELECT a.*, SUM(b.quantidade) as total_produtos, SUM(b.vltotal) as preco_carrinho                        
+                               FROM `{$this->getTable()}` as a
+                               INNER JOIN  prod_carrinho as b
+                               ON a.id = b.id_carrinho 
+                               WHERE id_session = :id_session", array(':id_session' => session_id()));
         if (!empty($result)) {
             $_SESSION[self::SESSION] = $result[0];
             $this->setData($result[0]);

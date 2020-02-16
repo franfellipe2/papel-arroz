@@ -22,7 +22,6 @@ function controllerFactory($controllerPrifix, $request, $response)
 
 
 
-
 // ======================================
 // ROTAS
 // ======================================
@@ -50,8 +49,21 @@ $app->get('/produto/{slug}', function($request, $response, $args) {
 // CARRINHO >>>
 // ================================
 
+// Mostrar carrinho
+$app->get('/carrinho', function($request, $response, $args) {
+    extract($args);
+    $c = controllerFactory('carrinho', $request, $response);
+    $c->mostrar();
+});
+
+$app->post('/carrinho/atualiza-quantidade-produto/{id}', function($request, $response, $args) {
+    extract($args);
+    $c = controllerFactory('carrinho', $request, $response);
+    $c->updateQuantidade($id);
+});
+
 // Adicinar o produto ao carrinho
-$app->get('/carrinho/{id}/add', function($request, $response, $args) {
+$app->post('/carrinho/{id}/add', function($request, $response, $args) {
     extract($args);
     $c = controllerFactory('carrinho', $request, $response);
     $c->addProduto($id);
@@ -70,14 +82,4 @@ $app->get('/carrinho/{id}/remove', function($request, $response, $args) {
     $c = controllerFactory('carrinho', $request, $response);
     $c->removeProduto($id);
 });
-
-// Mostrar carrinho
-$app->get('/carrinho', function($request, $response, $args) {
-    extract($args);
-    $c = controllerFactory('carrinho', $request, $response);
-    $c->mostrar();
-});
-
-
-// Run app
 $app->run();

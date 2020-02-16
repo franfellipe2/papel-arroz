@@ -8,7 +8,11 @@
         <p>Formato A4: 21:30cm</p>                           
     </div>
     <div class="card-footer">
-        <a class="btn btn-sm btn-convert"  href="<?php echo appUrl('/carrinho/' . $papelArroz->getId() . '/add'); ?>#produtos">Comprar <i class="fas fa-shopping-cart"></i></a>
-        <a class="btn btn-sm btn-outline-secondary float-right" href="<?php echo appUrl('/produto/') . $papelArroz->getSlug(); ?>">Ver Detalhes</a>
+        <form action="<?php echo appUrl('/carrinho/' . $papelArroz->getId() . '/add'); ?>" method="post">
+            <input type="hidden" name="increment" value="true"> 
+            <button name="quantidade" value="1" class="btn btn-sm btn-convert d-inline-block">Comprar <i class="fas fa-shopping-cart"></i></button>
+            <a class="btn btn-sm btn-outline-secondary float-right" href="<?php echo appUrl('/produto/') . $papelArroz->getSlug(); ?>">Ver Detalhes</a>
+        </form>
+        
     </div>
 </article>
