@@ -94,7 +94,6 @@ class Carrinho extends Model implements ModelInterface {
     public function InsertProduto(Produto $p, $qtd, $desconto = 0, $juros = 0)
             
     {
-        var_dump($this);
         $db = new DB();
         $db->query('INSERT INTO prod_carrinho ( id_produto, id_carrinho,  quantidade, desconto, juros, vltotal )
                                        VALUES(:id_produto, :id_carrinho,  :quantidade, :desconto, :juros, :vltotal)', [
@@ -161,8 +160,7 @@ class Carrinho extends Model implements ModelInterface {
         // Verfica se o carrinho já existe na seção
         if (($d = $car->getSession()) && !empty($d['id'])) {
             $car->setData($d);
-        } elseif (($c = $car->getByIdSession()) && !empty($c->getId())) {
-            echo 'pega da sessão';
+        } elseif (($c = $car->getByIdSession()) && !empty($c->getId())) {            
             $car = $car->getByIdSession();
         } else {           
             $car->create();
