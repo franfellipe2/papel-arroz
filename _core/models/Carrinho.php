@@ -162,7 +162,12 @@ class Carrinho extends Model implements ModelInterface {
     // GETERS
     // ============================================================
 
-    public static function getFromSession()
+    /**
+     * Pega o carrinho da sessação. Se $create for true, ele cria se não existir carrinho na sessão
+     * @param boolean $create Se não tiver um carrinho na seção, cria
+     * @return Carrinho
+     */
+    public static function getFromSession($create = true)
     {
         $car = new Carrinho;
 
@@ -171,7 +176,7 @@ class Carrinho extends Model implements ModelInterface {
             $car->setData($d);
         } elseif (($c = $car->getByIdSession()) && !empty($c->getId())) {
             $car = $car->getByIdSession();
-        } else {
+        } elseif ($create) {
             $car->create();
         }
         return $car;
@@ -195,6 +200,22 @@ class Carrinho extends Model implements ModelInterface {
                                INNER JOIN  prod_carrinho as b
                                ON a.id = b.id_carrinho 
                                WHERE id_session = :id_session", array(':id_session' => session_id()));
+        if (!empty($result)) {
+            $_SESSION[self::SESSION] = $result[0];
+            $this->setData($result[0]);
+            return $this;
+        }
+        return false;
+    }
+
+    public function getById($id)
+    {
+        $db = new DB();
+        $result = $db->select("SELECT a.*, SUM(b.quantidade) as total_produtos, SUM(b.vltotal) as preco_carrinho                        
+                               FROM `{$this->getTable()}` as a
+                               INNER JOIN  prod_carrinho as b
+                               ON a.id = b.id_carrinho 
+                               WHERE id = :id", array(':id' => $id));
         if (!empty($result)) {
             $_SESSION[self::SESSION] = $result[0];
             $this->setData($result[0]);

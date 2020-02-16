@@ -7,7 +7,7 @@
         </header>
     </div>
     <div class="container" id="produtos">
-        <p><?php echo $carrinho->getTotalProdutos();?> produtos adicinados ao carrinho:</p>
+        <p><?php echo $carrinho->getTotalProdutos(); ?> produtos adicinados ao carrinho:</p>
         <div class="carrinho-list">
             <table class="table table-sm table-hover">
                 <thead>
@@ -22,7 +22,7 @@
                                     <tbody>
                                         <?php foreach ($carrinho->getProdutos() as $p) { ?>
                                             <tr>
-                                                <td><a class="btn btn-sm btn-danger" href="<?php echo appUrl('/carrinho/'.$p['id'].'/remove') ?>" title="Excluir">x</a></td>
+                                                <td><a class="btn btn-sm btn-danger" href="<?php echo appUrl('/carrinho/' . $p['id'] . '/remove') ?>" title="Excluir">x</a></td>
                                                 <td class="clearfix">
                                                     <img class="float-left mr-1" width="50" src="<?php echo appImageUrl($p['imagem'], 'thumb'); ?>">
                                                     <a href="<?php echo appUrl('/produto/' . $p['slug']); ?>"><?php echo $p['titulo']; ?></a>
@@ -32,12 +32,12 @@
                                                     <?php $formName = "formQuantidade" . $p['id']; ?>
                                                     <div class="btn-group">
                                                         <div>
-                                                        <a class="btn btn-sm btn-dark" href="<?php echo appUrl('/carrinho/' . $p['id'] . '/minus') ?>">-</a>
+                                                            <a class="btn btn-sm btn-dark" href="<?php echo appUrl('/carrinho/' . $p['id'] . '/minus') ?>">-</a>
                                                         </div>
-                                                        <form name="<?php echo $formName; ?>" action="<?php echo appUrl('/carrinho/' . $p['id']).'/add'; ?>" method="post">
+                                                        <form name="<?php echo $formName; ?>" action="<?php echo appUrl('/carrinho/' . $p['id']) . '/add'; ?>" method="post">
                                                             <input name="quantidade" onchange="upQtd('<?php echo $formName; ?>')" type="text" class="form-control form-control-sm" value="<?php echo $p['quantidade']; ?>" style="max-width: 50px">
                                                         </form>
-                                                        <form name="<?php echo $formName; ?>" action="<?php echo appUrl('/carrinho/' . $p['id']).'/add'; ?>" method="post">
+                                                        <form name="<?php echo $formName; ?>" action="<?php echo appUrl('/carrinho/' . $p['id']) . '/add'; ?>" method="post">
                                                             <input type="hidden" name="increment" value="true">
                                                             <button name="quantidade" type="submit" value="1" class="btn btn-sm btn-dark">+</button>                                      
                                                         </form>
@@ -54,7 +54,7 @@
                                                 Soma Total
                                             </th>
                                             <th class="text-right" colspan="3">
-                                                R$ <?php echo appFormPrice($carrinho->getPrecoCarrinho());?>
+                                                R$ <?php echo appFormPrice($carrinho->getPrecoCarrinho()); ?>
                                             </th>
                                         </tr>
                                     </tfoot>
@@ -63,10 +63,12 @@
 
                                     <div class="carrinho-tomar-decisao text-center">
                                         <h2>Valor Total <b>a pagar</b></h2>
-                                        <h3>R$ <?php echo appFormPrice($carrinho->getPrecoCarrinho());?></h3>
+                                        <h3>R$ <?php echo appFormPrice($carrinho->getPrecoCarrinho()); ?></h3>
                                         <br>
-                                        <a class="btn btn-convert" href="#" title="Ir para finalizar compra.">Fechar Pedido</a>                                                                             
-                                        <a class="btn btn-outline-primary" href="<?php echo appUrl('/');?>">Continuar Comprando</a>
+                                        <?php if ($carrinho->getPrecoCarrinho() > 0) { ?>
+                                            <a class="btn btn-convert" href="<?php echo appUrl('/fechar-pedido/'); ?>" title="Ir para finalizar compra.">Fechar Pedido</a>                                                                             
+                                        <?php } ?>
+                                        <a class="btn btn-outline-primary" href="<?php echo appUrl('/'); ?>">Continuar Comprando</a>
                                     </div>
 
                                     </div><!-- ./container -->
