@@ -2,6 +2,11 @@
 
 use app\utils\Config;
 
+function appFormPrice($float)
+{
+    return number_format((int)$float, 2, ",",'.');
+}
+
 function appConfig($index = null, $file = 'app')
 {
     $con = Config::instance();
@@ -23,8 +28,9 @@ function appImageUrl($fileName, $size)
     return \app\utils\Images::getUrl($fileName, $size);
 }
 
-function appUrl($uri){
-    return appConfig('baseUrl').$uri;
+function appUrl($uri)
+{
+    return appConfig('baseUrl') . $uri;
 }
 
 /**
@@ -57,9 +63,9 @@ function appStrSlug($text)
         throw new Exception('Não foi possível criar o Slug, o texto passado está vasio');
         die();
     }
-    
+
     $text = appRemoverAcentos($text);
-    
+
     // replace non letter or digits by -
     $text = preg_replace('~[^\pL\d]+~u', '-', $text);
 

@@ -1,6 +1,10 @@
 <?php
 use app\models\Carrinho as car;
-$car = car::getFromSession();
+$TotalProdutosCarrinho = 0;
+if(car::hasSessionValid()){
+    $car = car::getFromSession();
+    $TotalProdutosCarrinho = $car->getTotalProdutos();
+}
 ?>
 <nav class="navbar-header navbar navbar-expand-lg navbar-light bg-light">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,7 +16,7 @@ $car = car::getFromSession();
 
     <div class="carrinho nav-sm">
         <a class="carrinho" href="<?php echo appUrl('/carrinho');?>">
-            <div class="total"><?php echo $car->getTotalProdutos();?></div>
+            <div class="total"><?php echo $TotalProdutosCarrinho;?></div>
             <i class="fas fa-shopping-cart icon"></i>
         </a>
     </div>
@@ -45,7 +49,7 @@ $car = car::getFromSession();
 
         <div class="carrinho nav-lg" style="margin-right: 32px">
             <a class="carrinho" href="<?php echo appUrl('/carrinho');?>">
-                <span class="total"><?php echo $car->getTotalProdutos();?></span>
+                <span class="total"><?php echo $TotalProdutosCarrinho;?></span>
                 <i class="fas fa-shopping-cart icon"></i>
             </a>
         </div>

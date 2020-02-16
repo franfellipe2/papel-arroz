@@ -27,7 +27,7 @@
                                                     <img class="float-left mr-1" width="50" src="<?php echo appImageUrl($p['imagem'], 'thumb'); ?>">
                                                     <a href="<?php echo appUrl('/produto/' . $p['slug']); ?>"><?php echo $p['titulo']; ?></a>
                                                 </td>
-                                                <td><?php echo $p['preco']; ?></td>
+                                                <td>R$ <?php echo appFormPrice($p['preco']); ?></td>
                                                 <td>
                                                     <?php $formName = "formQuantidade" . $p['id']; ?>
                                                     <div class="btn-group">
@@ -43,7 +43,7 @@
                                                         </form>
                                                     </div>
                                                 </td>
-                                                <td class="text-right"><?php echo $p['vltotal']; ?></td>
+                                                <td class="text-right">R$ <?php echo appFormPrice($p['vltotal']); ?></td>
                                             </tr>
 
                                         <?php } ?>
@@ -54,7 +54,7 @@
                                                 Soma Total
                                             </th>
                                             <th class="text-right" colspan="3">
-                                                <?php echo $carrinho->getPrecoCarrinho();?>
+                                                R$ <?php echo appFormPrice($carrinho->getPrecoCarrinho());?>
                                             </th>
                                         </tr>
                                     </tfoot>
@@ -63,10 +63,10 @@
 
                                     <div class="carrinho-tomar-decisao text-center">
                                         <h2>Valor Total <b>a pagar</b></h2>
-                                        <h3><?php echo $carrinho->getPrecoCarrinho();?></h3>
+                                        <h3>R$ <?php echo appFormPrice($carrinho->getPrecoCarrinho());?></h3>
                                         <br>
                                         <a class="btn btn-convert" href="#" title="Ir para finalizar compra.">Fechar Pedido</a>                                                                             
-                                        <a class="btn btn-outline-primary" href="#">Continuar Comprando</a>
+                                        <a class="btn btn-outline-primary" href="<?php echo $backUrl;?>">Continuar Comprando</a>
                                     </div>
 
                                     </div><!-- ./container -->

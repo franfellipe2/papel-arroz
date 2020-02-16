@@ -15,29 +15,15 @@
         } else {
             ?>
             <div class="card-columns">
-                <?php foreach ($produtos as $p): ?>
-                    <article class="card card-papel-arroz">
-                        <div class="header-img card-img-top">
-                            <div class="bg-papel-dobrado"></div>
-                            <img src="<?php echo appImageUrl('/' . $p->getImagem(), 'media'); ?>" class="card-img-top" alt="...">
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title"><?php echo $p->getTitulo(); ?></h5>
-                            <p>Formato A4: 21:30cm</p>                           
-                        </div>
-                        <div class="card-footer">
-                            <a class="btn btn-sm btn-convert"  href="<?php echo appUrl('/carrinho/'.$p->getId().'/add') ; ?>#produtos">Comprar <i class="fas fa-shopping-cart"></i></a>
-                            <a class="btn btn-sm btn-outline-secondary float-right" href="<?php echo appUrl('/produto/').$p->getSlug(); ?>">Ver Detalhes</a>
-                        </div>
-                    </article>       
-                <?php endforeach; ?>
+                <?php
+                foreach ($produtos as $papelArroz):
+                    require __DIR__ . '/template_parts/card-papel-arroz.php';                    
+                endforeach;
+                ?>
             </div>
         <?php } ?>
     </div><!-- ./container -->
 </section>
-<div class="page-footer">
-    rodape
-</div>
 <?php require appConfig('frontDir') . '/footer.php'; ?>
-    </body>
+</body>
 </html>

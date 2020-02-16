@@ -17,14 +17,24 @@ class Carrinho extends Model implements ModelInterface {
     CONST SESSION = 'carrinho';
 
     protected $data = [
-        'id'          => '',
-        'id_session'  => '',
-        'dt_registro' => null,
-        'total_produtos'     => 0,
-        'preco_total'     => 0,
+        'id'             => '',
+        'id_session'     => '',
+        'dt_registro'    => null,
+        'total_produtos' => 0,
+        'preco_total'    => 0,
     ];
     protected $table = 'carrinho';
     private $itens = array();
+
+    /**
+     * Verifica se existe um carrinho válido na sessão
+     */
+    public static function hasSessionValid()
+    {
+        $car = new self;
+        // Verfica se o carrinho já existe na seção
+        return ($d = $car->getSession()) && !empty($d['id']);
+    }
 
     public function getProdutos()
     {
@@ -92,7 +102,6 @@ class Carrinho extends Model implements ModelInterface {
     }
 
     public function InsertProduto(Produto $p, $qtd, $desconto = 0, $juros = 0)
-            
     {
         $db = new DB();
         $db->query('INSERT INTO prod_carrinho ( id_produto, id_carrinho,  quantidade, desconto, juros, vltotal )
@@ -160,18 +169,21 @@ class Carrinho extends Model implements ModelInterface {
         // Verfica se o carrinho já existe na seção
         if (($d = $car->getSession()) && !empty($d['id'])) {
             $car->setData($d);
-        } elseif (($c = $car->getByIdSession()) && !empty($c->getId())) {            
+        } elseif (($c = $car->getByIdSession()) && !empty($c->getId())) {
             $car = $car->getByIdSession();
-        } else {           
+        } else {
             $car->create();
         }
         return $car;
     }
-    
-    public function getTotalProdutos(){
+
+    public function getTotalProdutos()
+    {
         return isset($this->data['total_produtos']) ? $this->data['total_produtos'] : 0;
     }
-    public function getPrecoCarrinho(){
+
+    public function getPrecoCarrinho()
+    {
         return isset($this->data['preco_carrinho']) ? $this->data['preco_carrinho'] : 0;
     }
 
@@ -251,8 +263,7 @@ class Carrinho extends Model implements ModelInterface {
     function setTable($table)
     {
         $this->table = $table;
-    }    
-
+    }
 }
 
 //cascunho------------------------------------------------------------>>>>

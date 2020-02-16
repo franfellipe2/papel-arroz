@@ -55,7 +55,7 @@ class Categoria extends Model implements ModelInterface {
     public function getProdutos()
     {
         $db = new DB();
-        $sql = 'SELECT * FROM `produtos` 
+        $sql = 'SELECT produtos.* FROM `produtos` 
                 INNER JOIN prod_cat
                 ON prod_cat.prod_id = `produtos`.`id`
                 AND prod_cat.cat_id = :id';       

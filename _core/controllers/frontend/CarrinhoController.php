@@ -81,6 +81,7 @@ class CarrinhoController extends frontController {
     {
         //unset($_SESSION[Carrinho::SESSION]);
         $carrinho = $this->carrinho->getFromSession();
+        $backUrl = $this->getRequest()->getServerParams()['HTTP_REFERER'];       
         require $this->getFilePath('carrinho');
     }
 }

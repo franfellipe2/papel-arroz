@@ -50,8 +50,8 @@ $app->get('/produto/{slug}', function($request, $response, $args) {
 // ================================
 
 // Mostrar carrinho
-$app->get('/carrinho', function($request, $response, $args) {
-    extract($args);
+$app->get('/carrinho', function($request, $response, $args) {   
+    extract($args);    
     $c = controllerFactory('carrinho', $request, $response);
     $c->mostrar();
 });

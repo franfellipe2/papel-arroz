@@ -39,8 +39,11 @@
                             <?php } ?>
                         </ul>  
                     </section>
-                    <a class="btn btn-convert" href="<?php echo appUrl('/carrinho/'.$produto->getId().'/add');?>">Comprar <i class="fa fa-shopping-cart"></i></a>
-                    <p><small>Adiciona o produto ao carrinho</small></p>
+                    <form action="<?php echo appUrl('/carrinho/' . $produto->getId() . '/add'); ?>" method="post">
+                        <input type="hidden" name="increment" value="true"> 
+                        <button name="quantidade" value="1" class="btn btn-sm btn-convert d-inline-block">Comprar <i class="fas fa-shopping-cart"></i></button>
+                        <p><small>Adiciona o produto ao carrinho</small></p>
+                    </form>
                 </div>
             </div><!-- /.row -->
         </article>
@@ -51,5 +54,5 @@
     rodape
 </div>
 <?php require appConfig('frontDir') . '/footer.php'; ?>
-    </body>
+</body>
 </html>

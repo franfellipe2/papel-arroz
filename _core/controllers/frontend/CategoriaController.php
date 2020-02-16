@@ -30,7 +30,7 @@ class CategoriaController extends frontController {
 
         $categoria = $this->categoria->getBySlug($catSlug);
         if ($categoria) {
-            $produtos = $categoria->getProdutos();
+            $produtos = $categoria->getProdutos();           
             require $this->getFilePath('categoria');
         } else {                     
             $this->getPage404();
