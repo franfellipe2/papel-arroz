@@ -26,8 +26,8 @@ class PedidoFacade {
     private $endereco;
     private $carrinho;
     private $CanSavePessoa = true; // Se é ou não necessário salvar ou atualizar a pessoa no banco de dados
-    private $CanSaveEndereco = true; // se é ou não necessário salvar ou atualizar o endereço no banco de dados
-
+    private $CanSaveEndereco = true; // se é ou não necessário salvar ou atualizar o endereço no banco de dados    
+    
     public function __construct()
     {
         $this->carrinho = new Carrinho();
