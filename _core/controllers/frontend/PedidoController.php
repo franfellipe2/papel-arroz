@@ -12,7 +12,7 @@ use app\models\Carrinho;
 use app\models\Pedido;
 use app\models\Pessoa;
 use app\models\Endereco;
-use app\DB;
+use app\facades\PedidoFacade;
 
 /**
  * Description of PedidoController
@@ -32,11 +32,6 @@ class PedidoController extends frontController {
         require $this->getFilePath('fechar-pedido');
     }
 
-    public function checkoutPedido()
-    {
-        
-    }
-
     public function execFecharPedido()
     {
         $nome = filter_input(INPUT_POST, 'nome');
@@ -49,35 +44,49 @@ class PedidoController extends frontController {
         $bairro = filter_input(INPUT_POST, 'bairro');
 
         $pessoa = new Pessoa();
-        $endero = new Endereco();
-        $pedido = new Pedido();
+        $endereco = new Endereco();
 
-        if (($p = $pessoa->getByCpf($cpf))) {
-            $pessoa = $p;
-        }
         $pessoa->setNome($nome);
         $pessoa->setSenha(time());
         $pessoa->setCpf($cpf);
         $pessoa->setEmail($email);
         $pessoa->setWhatssap($whatssap);
 
-        $endero->setLongradouro($longradouro);
-        $endero->setNumero($numero);
-        $endero->setComplemento($complemento);
-        $endero->setBairro($bairro);
-        
-      
+        $endereco->setLongradouro($longradouro);
+        $endereco->setNumero($numero);
+        $endereco->setComplemento($complemento);
+        $endereco->setBairro($bairro);
 
-        $db = new DB();
-        $db->getPDO()->beginTransaction();
 
-        try {
-            
-        } catch (\PDOException $ex) {
-            
+
+        $pedidoFacade = new PedidoFacade();
+        $pedidoFacade->setPedido($_SESSION[Carrinho::SESSION]['id'], $pessoa, $endereco);
+
+        if ($pedidoFacade->save()) {
+
+            $_SESSION['pedido_cadastrado'] = $pedidoFacade->getPedido()->getData();
+            header('Location: ' . appUrl('/pedido/cadastrado'));
+            die();
         }
+    }
+
+    /**
+     * Pagina de sucesso de pedido cadastrado
+     */
+    public function pedidoCadastrado()
+    {
+        if (!isset($_SESSION['pedido_cadastrado'])) {
+            header('Location: ' . appUrl('/'));
+            die();
+        }
+        
+        $dataPedido = $_SESSION['pedido_cadastrado'];
+        unset($_SESSION['pedido_cadastrado']);
+        
+        $pedido = new Pedido();        
+        $pedido->setData($dataPedido);
 
 
-        var_dump($pedido);
+        require $this->getFilePath('pedido-cadastrado');
     }
 }

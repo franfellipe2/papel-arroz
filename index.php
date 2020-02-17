@@ -109,5 +109,12 @@ $app->post('/executar-fechar-pedido/', function($request, $response, $args) {
     $c->execFecharPedido();
 });
 
+// Pedido cadastrado
+$app->get('/pedido/cadastrado', function($request, $response, $args) {
+    extract($args);
+    $c = controllerFactory('Pedido', $request, $response);
+    $c->pedidoCadastrado();
+});
+
 
 $app->run();

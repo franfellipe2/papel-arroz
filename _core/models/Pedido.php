@@ -27,7 +27,7 @@ class Pedido extends Model {
         'enviado'        => null,
         'entregue'       => null
     ];
-    protected $table = 'pessoas';
+    protected $table = 'pedidos';
 
     public function setStatus($tipo, $date)
     {
@@ -65,14 +65,14 @@ class Pedido extends Model {
         return $this->data['vl_total'];
     }
 
-    public function setDtRegistro($dt_registro)
+    public function setRecebido($dt_registro)
     {
-        $this->data['dt_registro'] = $dt_registro;
+        $this->data['recebido'] = $dt_registro;
     }
 
-    public function getDtRegistro()
+    public function getRecebido()
     {
-        return $this->data['dt_registro'];
+        return $this->data['recebido'];
     }
 
     public function setEntregaStatus($entrega_status)
@@ -100,7 +100,7 @@ class Pedido extends Model {
         $this->data['id_pessoa'] = $id_pessoa;
     }
 
-    public function getIdpessoa($id_pessoa)
+    public function getIdpessoa()
     {
         return $this->data['id_pessoa'];
     }

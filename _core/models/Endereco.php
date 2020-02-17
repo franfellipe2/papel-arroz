@@ -1,12 +1,8 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace app\models;
+
+use app\DB;
 
 /**
  * Description of Endereco
@@ -27,6 +23,46 @@ class Endereco extends Model {
         'uf'          => 'mg',
         'cep'         => '38200-000'
     ];
+
+    public function setCep($cep)
+    {
+        $this->data['cep'] = $cep;
+    }
+
+    public function getCep()
+    {
+        return $this->data['cep'];
+    }
+
+    public function setUf($uf)
+    {
+        $this->data['uf'] = $uf;
+    }
+
+    public function getUf()
+    {
+        return $this->data['uf'];
+    }
+
+    public function setEstado($estado)
+    {
+        $this->data['estado'] = $estado;
+    }
+
+    public function getEstado()
+    {
+        return $this->data['estado'];
+    }
+
+    public function setCidade($cidade)
+    {
+        $this->data['cidade'] = $cidade;
+    }
+
+    public function getCidade()
+    {
+        return $this->data['cidade'];
+    }
 
     public function setBairro($bairro)
     {
@@ -63,8 +99,38 @@ class Endereco extends Model {
         $this->data['longradouro'] = $longradouro;
     }
 
-    public function get()
+    public function getLongradouro()
     {
         return $this->data['longradouro'];
+    }
+
+    /**
+     * Busca no banco de dados os endereços que correspodem aos argumentos dos campos infomados
+     * @param array $fields exemplo: ['longradouro' => 'Rua santos dumont', 'numero' => 65, ...]
+     */
+    public function getBy(array $fieldsArgs)
+    {
+        $db = new DB();
+        $criterios = [];
+        $params = [];
+        foreach ($fieldsArgs as $k => $v) {
+            $criterios [] = "$k = :$k";
+            $params[":$k"] = $v;
+        }
+        $criterios = implode(' AND ', $criterios);
+        $sql = 'SELECT * FROM `' . $this->getTable() . '` WHERE ' . $criterios;
+        $r = $db->select($sql, $params);
+
+        if (empty($r)) {
+            return false;
+        } else {
+            $array = [];
+            foreach ($r as $data) {
+                $e = new Endereco();
+                $e->setData($data);
+                $array[] = $e;
+            }
+            return $array;
+        }
     }
 }

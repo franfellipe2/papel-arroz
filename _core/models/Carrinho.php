@@ -216,8 +216,8 @@ class Carrinho extends Model implements ModelInterface {
                                INNER JOIN  prod_carrinho as b
                                ON a.id = b.id_carrinho 
                                WHERE id = :id", array(':id' => $id));
-        if (!empty($result)) {
-            $_SESSION[self::SESSION] = $result[0];
+                               
+        if (!empty($result) && !empty($result[0]['id'])) {            
             $this->setData($result[0]);
             return $this;
         }
