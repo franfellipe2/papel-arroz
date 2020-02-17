@@ -18,22 +18,26 @@ require appConfig('frontDir') . '/header.php';
                 <tr>
                     <th></th>
                     <th>Produtos</th>
+                    <th>Tipo</th>
                     <th class="text-center">Quantidade</th>
                     <th class="text-center">Total</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td><img src="http://localhost/papel-arroz/uploads/images/the-walking-dead-1581279691-size(thumb).jpg" style="width: 60px"></td>
-                    <td>Papel arroz do homem aranha</td>
-                    <td class="text-center">3</td>
-                    <td class="text-center">R$ 48,00</td>
-                </tr>
+                <?php foreach ($carrinho->getProdutos() as $p): ?>
+                    <tr>
+                        <td><img src="<?php echo appImageUrl($p['imagem'],'thumb');?>" style="width: 60px"></td>
+                        <td><?php echo $p['titulo'];?></td>
+                        <td><?php echo str_replace('_',' ', $p['tipo']);?></td>
+                        <td class="text-center"><?php echo $p['quantidade'];?></td>
+                        <td class="text-center">R$ <?php echo appFormPrice($p['vltotal']);?></td>
+                    </tr>
+                <?php endforeach; ?>
             </tbody>                
             <tfoot>
                 <tr>
-                    <td colspan="2"><strong class="h1">Total a pagar: </strong></td>                    
-                    <td colspan="2" class="text-right"><strong class="h1">R$ 48,00</strong></td>
+                    <td colspan="2"><strong class="h3">Total a pagar: </strong></td>                    
+                    <td colspan="3" class="text-right"><strong class="h3">R$ <?php echo appFormPrice($carrinho->getPrecoCarrinho());?></strong></td>
                 </tr>
             </tfoot>
         </table>        
@@ -43,38 +47,38 @@ require appConfig('frontDir') . '/header.php';
             <p>Os campos com (*) são obrigatórios.</p>
             <div class="form-row">
                 <div class="col-7 mb-3">
-                    <label for="validationServer01">Nome Completo(*):</label>
-                    <input name="nome" type="text" class="form-control" id="validationServer01" value="Mark" >
+                    <label>Nome Completo(*):</label>
+                    <input name="nome" type="text" class="form-control" value="" placeholder="Nome Completo...">
                     <div class="valid-feedback">
                         Looks good!
                     </div>
                 </div>
                 <div class="col-5 mb-3">
-                    <label for="validationServer01">CPF(*):</label>
-                    <input name="cpf" type="text" class="form-control " id="validationServer01" value="Mark" >
+                    <label>CPF(*):</label>
+                    <input name="cpf" type="text" class="form-control " placeholder="CPF...">
                     <div class="valid-feedback">
                         Looks good!
                     </div>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="validationServerUsername">Email:</label>                    
+                    <label>Email:</label>                    
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="inputGroupPrepend3">@</span>
+                            <span class="input-group-text">@</span>
                         </div>
-                        <input name="email" type="email" class="form-control " id="validationServerUsername" aria-describedby="inputGroupPrepend3">
+                        <input name="email" type="email" class="form-control ">
                         <div class="invalid-feedback">
                             Please choose a username.
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="validationServerUsername">Whatssap:</label>
+                    <label>Whatssap:</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="inputGroupPrepend3">@</span>
+                            <span class="input-group-text"><i class="fab fa-whatsapp"></i></span>
                         </div>
-                        <input name="email" type="text" class="form-control " id="validationServerUsername" aria-describedby="inputGroupPrepend3">
+                        <input name="whatssap" type="text" class="form-control ">
                         <div class="invalid-feedback">
                             Please choose a username.
                         </div>
@@ -83,29 +87,29 @@ require appConfig('frontDir') . '/header.php';
             </div>
             <div class="form-row">
                 <div class="col-md-10 mb-3">
-                    <label for="validationServer03">Endereço(*):</label>
-                    <input name="longradouro" type="text" class="form-control " id="validationServer03" >
+                    <label>Endereço(*):</label>
+                    <input name="longradouro" type="text" class="form-control ">
                     <div class="invalid-feedback">
                         Please provide a valid city.
                     </div>
                 </div>
                 <div class="col-md-2 mb-3">
-                    <label for="validationServer03">Número(*):</label>
-                    <input name="longradouro" type="text" class="form-control " id="validationServer03" >
+                    <label>Número(*):</label>
+                    <input name="numero" type="text" class="form-control ">
                     <div class="invalid-feedback">
                         Please provide a valid city.
                     </div>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="validationServer03">Complemento:</label>
-                    <input name="longradouro" type="text" class="form-control " id="validationServer03" >
+                    <label>Complemento:</label>
+                    <input name="complemento" type="text" class="form-control ">
                     <div class="invalid-feedback">
                         Please provide a valid city.
                     </div>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="validationServer03">Bairro(*):</label>
-                    <input name="longradouro" type="text" class="form-control " id="validationServer03" >
+                    <label>Bairro(*):</label>
+                    <input name="bairro" type="text" class="form-control ">
                     <div class="invalid-feedback">
                         Please provide a valid city.
                     </div>

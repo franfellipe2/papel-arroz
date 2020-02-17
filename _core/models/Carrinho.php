@@ -245,7 +245,7 @@ class Carrinho extends Model implements ModelInterface {
 
     function getVltotal()
     {
-        return $this->data['vltotal'];
+        return $this->data['preco_carrinho'];
     }
 
     function getId()

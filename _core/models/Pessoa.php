@@ -16,17 +16,61 @@ class Pessoa extends Model implements ModelInterface {
 
     protected $data = [
         'id'       => null,
-        'nome'     => null,        
+        'nome'     => null,
         'senha'    => null,
-        'contatos' => null        
+        'cpf'      => null,
+        'email'    => null,
+        'whatssap' => null
     ];
-    private $table = 'compradores';
+    protected $table = 'pessoas';
+
+    public function getByCpf($cpf)
+    {
+        $db = new DB();
+        $r = $db->select('SELECT * FROM ' . $this->getTable() . ' WHERE cpf = :cpf', array(':cpf' => $cpf));
+        if (!empty($r)) {
+            $this->setData($r[0]);
+            return $this;
+        } else {
+            return false;
+        }
+    }
 
     public function save($excludeFields = array())
     {
         parent::save($excludeFields);
     }
-   
+
+    public function getWhatssap()
+    {
+        return $this->data['whatssap'];
+    }
+
+    public function setWhatssap($whatssap)
+    {
+        return $this->data['whatssap'] = $whatssap;
+    }
+
+    public function getEmail()
+    {
+        return $this->data['email'];
+    }
+
+    public function setEmail($email)
+    {
+        return $this->data['email'] = $email;
+    }
+
+    public function getCpf()
+    {
+        return $this->data['cpf'];
+    }
+
+    public function setCpf($cpf)
+    {
+        $this->data['cpf'] = $cpf;
+    }
+
     public function getId()
     {
         return $this->data['id'];
@@ -36,7 +80,7 @@ class Pessoa extends Model implements ModelInterface {
     {
         return $this->data['id'] = $id;
     }
-    
+
     public function getNome()
     {
         return $this->data['nome'];
@@ -46,36 +90,24 @@ class Pessoa extends Model implements ModelInterface {
     {
         return $this->data['nome'] = $nome;
     }
-    
-    
+
     public function getNumero()
     {
-        return $this->data['Numero'];
+        return $this->data['numero'];
     }
 
     public function setNumero($Numero)
     {
-        return $this->data['Numero'] = $Numero;
+        return $this->data['numero'] = $Numero;
     }
-   
+
     public function getSenha()
     {
-        return $this->data['Senha'];
+        return $this->data['senha'];
     }
 
     public function setSenha($Senha)
     {
-        return $this->data['Senha'] = $Senha;
+        return $this->data['senha'] = $Senha;
     }
-    
-    public function getContatos()
-    {
-        return $this->data['Contatos'];
-    }
-
-    public function setContatos($Contatos)
-    {
-        return $this->data['Contatos'] = $Contatos;
-    }
-  
 }
