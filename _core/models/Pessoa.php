@@ -5,7 +5,7 @@ namespace app\models;
 use app\models\Model;
 use app\interfaces\ModelInterface;
 use app\DB;
-use app\models\Produto;
+use app\validates\PessoaValidate;
 
 /**
  * Description of Categoria
@@ -38,6 +38,11 @@ class Pessoa extends Model implements ModelInterface {
 
     public function save($excludeFields = array())
     {
+        $valid = new PessoaValidate($this);
+        $valid->nome();
+        $valid->email();
+        $valid->cpf();
+        $valid->whatssap();
         parent::save($excludeFields);
     }
 

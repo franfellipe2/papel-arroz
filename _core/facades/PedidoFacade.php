@@ -26,8 +26,9 @@ class PedidoFacade {
     private $endereco;
     private $carrinho;
     private $CanSavePessoa = true; // Se é ou não necessário salvar ou atualizar a pessoa no banco de dados
-    private $CanSaveEndereco = true; // se é ou não necessário salvar ou atualizar o endereço no banco de dados    
-    
+    private $CanSaveEndereco = true; // se é ou não necessário salvar ou atualizar o endereço no banco de dados   
+    private $errors = array();
+
     public function __construct()
     {
         $this->carrinho = new Carrinho();
@@ -35,10 +36,16 @@ class PedidoFacade {
         $this->endereco = new Endereco();
         $this->pessoa = new Pessoa();
     }
-    
-    public function getPedido(): Pedido{
+
+    public function getErrors()
+    {
+        return $this->errors;
+    }
+
+    public function getPedido(): Pedido
+    {
         return $this->pedido;
-    }    
+    }
 
     public function save()
     {
@@ -59,18 +66,23 @@ class PedidoFacade {
             if ($this->CanSaveEndereco) {
                 $this->endereco->save();
             }
+            if ($this->pessoa->errorExistis() || $this->endereco->errorExistis()) {
+                $this->errors['pessoa'] = $this->pessoa->getErrors();
+                $this->errors['endereco'] = $this->endereco->getErrors();  
+                return false;                
+            }           
             $this->pedido->setIdpessoa($this->pessoa->getId());
             $this->pedido->setIdEndereco($this->endereco->getId());
             $this->pedido->setRecebido(date('Y-m-d H:s:s', time()));
+
             $this->pedido->save();
-            
         } catch (\PDOException $ex) {
             echo '<p>' . $ex->getMessage() . '</p>';
             echo '<p><i>' . $ex->getFile() . ' - LINHA [ ' . $ex->getLine() . ' ]</i></p>';
             $pdo->rollBack();
         }
         $pdo->commit();
-        
+
         // Retira o carrinho da sessão e gera um novo id de sessão
         unset($_SESSION[Carrinho::SESSION]);
         session_regenerate_id();
@@ -132,6 +144,5 @@ class PedidoFacade {
         } else {
             $this->endereco = $endereco;
         }
-    }    
-    
+    }
 }

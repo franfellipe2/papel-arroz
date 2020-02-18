@@ -1,5 +1,7 @@
 <?php
 
+namespace app\validates;
+
 use app\models\Endereco;
 
 /**
@@ -18,20 +20,20 @@ class EnderecoValidate {
 
     public function longradouro()
     {
-        $v = $this->objt->getBairro();
-        if (!empty($v)) {
-            return 'Endereço em branco';
+        $v = $this->objt->getLongradouro();
+        if (empty($v)) {
+            $this->objt->addError('longradouro', 'Endereço em branco');
         }
         return true;
     }
 
     public function numero()
     {
-        $v = $this->objt->getNumero();
-        if (!empty($v)) {
-            return 'Número em branco';
+        $v = $this->objt->getNumero();        
+        if (empty($v)) {
+            $this->objt->addError('numero', 'Número em branco');
         } elseif (( (int) $v ) <= 0) {
-            return 'Número inválido';
+            $this->objt->addError('numero', 'Número inválido');
         }
         return true;
     }
@@ -40,7 +42,7 @@ class EnderecoValidate {
     {
         $v = $this->objt->getComplemento();
         if (strlen($v) > 60) {
-            return 'Complemento maior que 60 caracteres!';
+            $this->objt->addError('complemento', 'Complemento maior que 60 caracteres!');
         }
         return true;
     }
@@ -48,10 +50,10 @@ class EnderecoValidate {
     public function bairro()
     {
         $v = $this->objt->getBairro();
-        if (!empty($v)) {
-            return 'Bairro em branco!';
+        if (empty($v)) {
+            $this->objt->addError('bairro', 'Bairro em branco!');
         } elseif (strlen($v) > 255) {
-            return 'Bairro inválido!';
+            $this->objt->addError('bairro', 'Bairro inválido!');
         }
         return true;
     }
@@ -59,10 +61,10 @@ class EnderecoValidate {
     public function cidade()
     {
         $v = $this->objt->getCidade();
-        if (!empty($v)) {
-            return 'Cidade em branco!';
+        if (empty($v)) {
+            $this->objt->addError('cidade', 'Cidade em branco!');
         } elseif (strlen($v) > 255) {
-            return 'Cidade inválida!';
+            $this->objt->addError('cidade', 'Cidade inválida!');
         }
         return true;
     }
@@ -70,10 +72,10 @@ class EnderecoValidate {
     public function estado()
     {
         $v = $this->objt->getEstado();
-        if (!empty($v)) {
-            return 'Estado em branco!';
+        if (empty($v)) {
+            $this->objt->addError('estado', 'Estado em branco!');
         } elseif (strlen($v) > 120) {
-            return 'Estado inválido!';
+            $this->objt->addError('estado', 'Estado inválido!');
         }
         return true;
     }
@@ -81,10 +83,10 @@ class EnderecoValidate {
     public function uf()
     {
         $v = $this->objt->getUf();
-        if (!empty($v)) {
-            return 'UF em branco!';
+        if (empty($v)) {
+            $this->objt->addError('uf', 'UF em branco!');
         } elseif (strlen($v) > 120) {
-            return 'UF inválido!';
+            $this->objt->addError('uf', 'UF inválido!');
         }
         return true;
     }
@@ -92,10 +94,10 @@ class EnderecoValidate {
     public function cep()
     {
         $v = $this->objt->getCep();
-        if (!empty($v)) {
-            return 'CEP em branco!';
+        if (empty($v)) {
+            $this->objt->addError('cep', 'CEP em branco!');
         } elseif (!appValidaCep($v)) {
-            return 'cep inválido!';
+            $this->objt->addError('cep', 'cep inválido!');
         }
         return true;
     }

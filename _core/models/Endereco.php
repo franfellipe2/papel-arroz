@@ -3,6 +3,7 @@
 namespace app\models;
 
 use app\DB;
+use app\validates\EnderecoValidate;
 
 /**
  * Description of Endereco
@@ -23,6 +24,21 @@ class Endereco extends Model {
         'uf'          => 'mg',
         'cep'         => '38200-000'
     ];
+
+    public function save($excludeFields = array())
+    {
+        $validate = new EnderecoValidate($this);
+        
+        $validate->longradouro();
+        $validate->numero();     
+        $validate->complemento();
+        $validate->bairro();                
+        $validate->estado();        
+        $validate->cidade();
+        $validate->uf();
+        $validate->cep();
+        parent::save($excludeFields);
+    }
 
     public function setCep($cep)
     {

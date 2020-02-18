@@ -28,6 +28,9 @@ class Pedido extends Model {
         'entregue'       => null
     ];
     protected $table = 'pedidos';
+    private $cliente;
+    private $endereco;
+    private $carrinho;
 
     public function setStatus($tipo, $date)
     {
@@ -43,6 +46,30 @@ class Pedido extends Model {
             'enviado'        => $this->data['enviado'],
             'entregue'       => $this->data['entregue']
         ];
+    }
+
+    public function carrinho(): Carrinho
+    {
+        if ($this->carrinho == null) {
+            $this->carrinho = (new Carrinho)->getById($this->getIdCarrinho());
+        }        
+        return $this->carrinho;
+    }
+
+    public function cliente(): Pessoa
+    {
+        if ($this->cliente == null) {
+            $this->cliente = (new Pessoa())->getById($this->getIdpessoa());
+        }
+        return $this->cliente;
+    }
+
+    public function endereco(): Endereco
+    {
+        if ($this->endereco == null) {
+            $this->endereco = (new Endereco())->getById($this->getIdEndereco());
+        }
+        return $this->endereco;
     }
 
     public function setIdEndereco($idEndereco)

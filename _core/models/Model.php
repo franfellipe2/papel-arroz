@@ -71,7 +71,9 @@ class Model {
 
     public function getError($erro)
     {
-        return $this->errors[$erro];
+        if(isset($this->errors[$erro])){
+            return $this->errors[$erro];
+        }        
     }
 
     public function errorExistis()

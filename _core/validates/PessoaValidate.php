@@ -1,5 +1,7 @@
 <?php
 
+namespace app\validates;
+
 use app\models\Pessoa;
 
 /**
@@ -10,50 +12,59 @@ use app\models\Pessoa;
 class PessoaValidate {
 
     private $pessoa;
+    private $errors;
 
     public function __construct(Pessoa $pessoa)
     {
         $this->pessoa = $pessoa;
     }
- 
+
+    public function getErros()
+    {
+        return $this->pessoa->getErrors();
+    }
+
+    public function getError($campoErro)
+    {
+        return $this->pessoa->getError($campoErro);
+    }
+
     public function nome()
     {
         $v = $this->pessoa->getNome();
-        if (!empty($v)) {
-            return 'Nome não pode estar em branco';
+        if (empty($v)) {
+            $this->pessoa->addError('nome', 'Nome em branco');
         } elseif (strlen($v) > 255) {
-            return 'Verifique se o nome estão correto. Existem mais de 255 caracteres';
+            $this->pessoa->addError('nome', 'Verifique se o nome estão correto. Existem mais de 255 caracteres');
         }
-        return true;
     }
 
     public function cpf()
     {
-        $v = $this->pessoa->getCpf();
-        if (!empty($v)) {
-            return 'CPF não pode estar em branco';
+        $v = str_replace(['-', '.', ' '], '', $this->pessoa->getCpf());
+        $this->pessoa->setCpf($v);
+
+        if (empty($v)) {
+            $this->pessoa->addError('cpf', 'CPF em branco');
         } elseif (!appValidaCPF($v)) {
-            return 'CPF inválido';
+            $this->pessoa->addError('cpf', 'CPF inválido');
         }
-        return true;
     }
 
     public function email()
     {
         $v = $this->pessoa->getEmail();
-        if (!filter_var($v, FILTER_VALIDATE_EMAIL)) {
-            return 'Email inválido';
+        if (!empty($v) && !filter_var($v, FILTER_VALIDATE_EMAIL)) {
+            $this->pessoa->addError('email', 'Email inválido');
         }
-        return true;
     }
 
     public function whatssap()
     {
         $v = $this->pessoa->getWhatssap();
         $v = str_replace(['.', '-', ' ', '(', ')'], '', $v);
-        if (((int) $v) <= 0) {
-            return 'Telefone inválido';
+        if (!empty($v) && ((int) $v) <= 0) {
+            $this->pessoa->addError('whatssap', 'Telefone inválido');
         }
-        return true;
     }
 }

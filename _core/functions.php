@@ -10,6 +10,15 @@ function appValidaCep($cep)
     return false;
 }
 
+function appFormCPF($cpf)
+{
+    $formt = substr($cpf, 0, 3) . '.';
+    $formt .= substr($cpf, 3, 3) . '.';
+    $formt .= substr($cpf, 6, 3) . '-';
+    $formt .= substr($cpf, 9);
+    return $formt;
+}
+
 function appValidaCPF($cpf)
 {
 
