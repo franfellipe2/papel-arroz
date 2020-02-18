@@ -69,11 +69,7 @@ class PedidoController extends frontController {
         $endereco->setLongradouro($longradouro);
         $endereco->setNumero($numero);
         $endereco->setComplemento($complemento);
-        $endereco->setBairro($bairro);
-
-
-        var_dump($pessoa);
-        var_dump($endereco);
+        $endereco->setBairro($bairro);       
 
         $pedidoFacade = new PedidoFacade();
         $pedidoFacade->setPedido($carrinho->getId(), $pessoa, $endereco);
@@ -107,5 +103,10 @@ class PedidoController extends frontController {
         $pedido->setData($dataPedido);
 
         require $this->getFilePath('pedido-cadastrado');
+    }
+
+    public function acompanhar()
+    {
+        require $this->getFilePath('pedido-acompanhar');
     }
 }

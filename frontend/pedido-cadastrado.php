@@ -1,19 +1,23 @@
-<?php
-require appConfig('frontDir') . '/header.php';
-?>
+<?php require appConfig('frontDir') . '/header.php';?>
 <div class="page-content pb-4">    
     <div class="jumbotron jumbotron-fluid bg-success text-white">
         <header class="container text-center">
             <h1 class="display-6 page-title">Pedido Cadastrado com sucesso!</h1>           
             <br>
             <h3><i class="fas fa-money-bill-wave"></i> Pagamento</h3>
-            <p>Por enquanto só estamos aceitando dinheiro vivo.</p>              
+            <p>Por enquanto só estamos aceitando dinheiro vivo.</p>             
         </header>
     </div>
     <div class="container">
         <div class="alert alert-success text-center">
             <h3>Valor a Pagar: <br><span class="h1">R$ <?php echo appFormPrice($pedido->getVlTotal()); ?></span></h3>
             <p><b>ANTENÇÃO!</b> Receberemos o pagamento no ato da entrega. </p>
+        </div>
+        <div class="alert alert-warning text-center">
+            <h4>Atenção!</h4>
+            <p><strong>Guarde esses dados para acompanhar seu pedido:</strong></p>
+            <p>Número do pedido: <b><?php echo $pedido->getId(); ?></b> - Senha de Acesso: <b><?php echo $pedido->cliente()->getSenha(); ?></b></p>
+            <a class="btn btn-sm btn-primary" href="#">Acompanhar Pedido</a>
         </div>
         <article class="container text-center" style="text-transform: capitalize"> 
             <h2 class="mb-4">Dados do pedido</h2>      
@@ -47,7 +51,7 @@ require appConfig('frontDir') . '/header.php';
                     </thead>
 
                     <tbody>
-                        <?php foreach ($pedido->carrinho()->getProdutos()as $item) { ?>
+                        <?php foreach ($pedido->carrinho()->getProdutos() as $item) { ?>
                             <tr>
                                 <td><?php echo $item['titulo']; ?></td>
                                 <td><?php echo str_replace(['-', '_'], ' ', $item['tipo']); ?></td>

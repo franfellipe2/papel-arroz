@@ -140,7 +140,13 @@ class Carrinho extends Model implements ModelInterface {
     {
         $db = new DB();
         unset($_SESSION[self::SESSION]);
-        return $db->query('UPDATE prod_carrinho SET dtdelete = :now, quantidade = 0, vltotal = 0 WHERE prod_carrinho.id_produto = :id', [':id' => $produtoId, ':now' => date('Y-m-d H:i:s', time())]);
+        return $db->query('UPDATE prod_carrinho SET dtdelete = :now, quantidade = 0, vltotal = 0
+                           WHERE prod_carrinho.id_produto = :idp
+                           AND prod_carrinho.id_carrinho = :idc', [
+                    ':idp' => $produtoId,
+                    ':idc' => $this->getId(),
+                    ':now' => date('Y-m-d H:i:s', time()),
+        ]);
     }
 
     public function calculateTotal($qtd, $preco, $desconto, $juros)
@@ -157,7 +163,6 @@ class Carrinho extends Model implements ModelInterface {
         parent::save();
         $_SESSION[self::SESSION] = $this->getData();
     }
-
     // ============================================================
     // GETERS
     // ============================================================
@@ -216,8 +221,8 @@ class Carrinho extends Model implements ModelInterface {
                                INNER JOIN  prod_carrinho as b
                                ON a.id = b.id_carrinho 
                                WHERE id = :id", array(':id' => $id));
-                               
-        if (!empty($result) && !empty($result[0]['id'])) {            
+
+        if (!empty($result) && !empty($result[0]['id'])) {
             $this->setData($result[0]);
             return $this;
         }

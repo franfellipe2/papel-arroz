@@ -19,15 +19,11 @@ function controllerFactory($controllerPrifix, $request, $response)
     $c = 'app\\controllers\\frontend\\' . $controllerPrifix . 'Controller';
     return new $c($request, $response);
 }
-
-
-
 // ======================================
 // ROTAS
 // ======================================
-
 // Pagina incial
-$app->get('/', function ($request, $response) {    
+$app->get('/', function ($request, $response) {
     $c = controllerFactory('home', $request, $response);
 });
 
@@ -54,10 +50,9 @@ $app->get('/pesquisa', function($request, $response, $args) {
 // ================================
 // CARRINHO >>>
 // ================================
-
 // Mostrar carrinho
-$app->get('/carrinho', function($request, $response, $args) {   
-    extract($args);    
+$app->get('/carrinho', function($request, $response, $args) {
+    extract($args);
     $c = controllerFactory('Carrinho', $request, $response);
     $c->mostrar();
 });
@@ -95,25 +90,28 @@ $app->get('/carrinho/{id}/remove', function($request, $response, $args) {
 // PEDIDO >>>
 // ================================
 
-// Fechar pedido
 $app->get('/fechar-pedido/', function($request, $response, $args) {
     extract($args);
     $c = controllerFactory('Pedido', $request, $response);
     $c->fechar();
 });
 
-// Executar Fechar Pedido
 $app->post('/executar-fechar-pedido/', function($request, $response, $args) {
     extract($args);
     $c = controllerFactory('Pedido', $request, $response);
     $c->execFecharPedido();
 });
 
-// Pedido cadastrado
 $app->get('/pedido/cadastrado', function($request, $response, $args) {
     extract($args);
     $c = controllerFactory('Pedido', $request, $response);
     $c->pedidoCadastrado();
+});
+
+$app->get('/pedido/acompanhar', function($request, $response, $args) {
+    extract($args);
+    $c = controllerFactory('Pedido', $request, $response);
+    $c->acompanhar();
 });
 
 

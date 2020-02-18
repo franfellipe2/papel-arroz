@@ -1,4 +1,8 @@
 <?php require appConfig('frontDir') . '/header.php'; ?>
+<div class="msg-info smg-info-primary text-center">
+    <p>Frutal - MG.    Por Enquanto estamos vendendo somente para a cidade de Frutal - MG.</p>
+    <p>Entregas de Segunda a Sexta, das 14:00 as 17:00; e Sábado das 8:00 as 11:00</p>
+</div>
 <div class="page-content pb-4">    
     <?php if (isset($errors) && !empty($errors)) { ?>
         <div class="jumbotron jumbotron-fluid bg-warning text-white">

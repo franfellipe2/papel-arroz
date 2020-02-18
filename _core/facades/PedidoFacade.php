@@ -76,6 +76,8 @@ class PedidoFacade {
             $this->pedido->setRecebido(date('Y-m-d H:s:s', time()));
 
             $this->pedido->save();
+            
+            
         } catch (\PDOException $ex) {
             echo '<p>' . $ex->getMessage() . '</p>';
             echo '<p><i>' . $ex->getFile() . ' - LINHA [ ' . $ex->getLine() . ' ]</i></p>';
