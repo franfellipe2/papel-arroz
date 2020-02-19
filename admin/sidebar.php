@@ -17,8 +17,8 @@ use app\Config;
     <hr>
     <h3 class="title">Pedidos</h3>
     <ul>        
-        <li><a href="#"><a href="#">Listar</a></a></li>
-        <li><a href="#"><a href="#">Cadastrar</a></a></li>
+        <li><a href="?pg=Pedidos&action=listar">Listar</a></a></li>
+        <li><a href="#">Cadastrar</a></a></li>
     </ul>
     <hr>
 </div><!-- /.sidebar -->
