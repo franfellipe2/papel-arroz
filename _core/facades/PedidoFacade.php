@@ -68,16 +68,17 @@ class PedidoFacade {
             }
             if ($this->pessoa->errorExistis() || $this->endereco->errorExistis()) {
                 $this->errors['pessoa'] = $this->pessoa->getErrors();
-                $this->errors['endereco'] = $this->endereco->getErrors();  
-                return false;                
-            }           
+                $this->errors['endereco'] = $this->endereco->getErrors();
+                return false;
+            }
             $this->pedido->setIdpessoa($this->pessoa->getId());
             $this->pedido->setIdEndereco($this->endereco->getId());
             $this->pedido->setRecebido(date('Y-m-d H:s:s', time()));
+            $this->pedido->setSenhaAcesso(time());
 
             $this->pedido->save();
             
-            
+            //
         } catch (\PDOException $ex) {
             echo '<p>' . $ex->getMessage() . '</p>';
             echo '<p><i>' . $ex->getFile() . ' - LINHA [ ' . $ex->getLine() . ' ]</i></p>';
@@ -116,7 +117,10 @@ class PedidoFacade {
     private function setPessoa(Pessoa $pessoa)
     {
         // Recupera a pessoa e atualiza os dados ou cria uma nova
-        if (($p = $this->pessoa->getByCpf($pessoa->getCpf()))) {
+
+        $cpf = str_replace(['-', '.', '_', ' '], '', $pessoa->getCpf());
+
+        if (($p = $this->pessoa->getByCpf($cpf))) {
             $pessoa->setId($p->getId());
             $this->pessoa = $p;
         } else {

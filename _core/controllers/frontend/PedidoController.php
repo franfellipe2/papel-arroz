@@ -69,7 +69,7 @@ class PedidoController extends frontController {
         $endereco->setLongradouro($longradouro);
         $endereco->setNumero($numero);
         $endereco->setComplemento($complemento);
-        $endereco->setBairro($bairro);       
+        $endereco->setBairro($bairro);
 
         $pedidoFacade = new PedidoFacade();
         $pedidoFacade->setPedido($carrinho->getId(), $pessoa, $endereco);
@@ -98,7 +98,7 @@ class PedidoController extends frontController {
         }
 
         $dataPedido = $_SESSION['pedido_cadastrado'];
-        
+
         $pedido = new Pedido();
         $pedido->setData($dataPedido);
 
@@ -107,6 +107,26 @@ class PedidoController extends frontController {
 
     public function acompanhar()
     {
+        require $this->getFilePath('pedido-acompanhar');
+    }
+
+    public function acompanharForm()
+    {
+        $pedido = (new Pedido())->getById(filter_input(INPUT_POST, 'id_pedido'));
+        $senha = filter_input(INPUT_POST, 'senha');
+        $cpf = str_replace(['-', '_', '.', ' '], '', filter_input(INPUT_POST, 'cpf'));
+
+        $erros = null;
+        if (!$pedido) {
+            $erros = 'Pedido não encontrado!';
+        } elseif (empty($senha) || empty($cpf)) {
+            $erros = 'Informe a senha de acesso ou o CPF do comprador';
+        } else {
+            if ($pedido->getSenhaAcesso() != $senha || $pedido->cliente()->getCpf() != $cpf) {
+                $erros = 'Senha ou CPF não corresponde ao numero do pedido';
+            }
+        }
+
         require $this->getFilePath('pedido-acompanhar');
     }
 }

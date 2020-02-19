@@ -21,6 +21,7 @@ class Pedido extends Model {
         'id_pessoa'      => null,
         'id_endereco'    => null,
         'vl_total'       => null,
+        'senha_acesso'   => null,
         'recebido'       => null,
         'em_producao'    => null,
         'pronto_entrega' => null,
@@ -32,27 +33,41 @@ class Pedido extends Model {
     private $endereco;
     private $carrinho;
 
+    public function setSenhaAcesso($senha)
+    {
+        return $this->data['senha_acesso'] = $senha;
+    }
+
+    public function getSenhaAcesso()
+    {
+        return $this->data['senha_acesso'];
+    }
+
     public function setStatus($tipo, $date)
     {
         $this->data[$tipo] = $date;
     }
 
-    public function getStatus()
+    public function getStatus($index = null)
     {
-        return [
-            'recebido'       => $this->data['recebido'],
-            'em_producao'    => $this->data['em_producao'],
-            'pronto_entrega' => $this->data['pronto_entrega'],
-            'enviado'        => $this->data['enviado'],
-            'entregue'       => $this->data['entregue']
-        ];
+        if ($index) {
+            return $this->data[$index];
+        } else {
+            return [
+                'recebido'       => $this->data['recebido'],
+                'em_producao'    => $this->data['em_producao'],
+                'pronto_entrega' => $this->data['pronto_entrega'],
+                'enviado'        => $this->data['enviado'],
+                'entregue'       => $this->data['entregue']
+            ];
+        }
     }
 
     public function carrinho(): Carrinho
     {
         if ($this->carrinho == null) {
             $this->carrinho = (new Carrinho)->getById($this->getIdCarrinho());
-        }        
+        }
         return $this->carrinho;
     }
 

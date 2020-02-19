@@ -10,7 +10,7 @@ function appValidaCep($cep)
     return false;
 }
 
-function appFormCPF($cpf)
+function appFormatCPF($cpf)
 {
     $formt = substr($cpf, 0, 3) . '.';
     $formt .= substr($cpf, 3, 3) . '.';

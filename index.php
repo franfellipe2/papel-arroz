@@ -114,5 +114,11 @@ $app->get('/pedido/acompanhar', function($request, $response, $args) {
     $c->acompanhar();
 });
 
+$app->post('/pedido/acompanhar/form', function($request, $response, $args) {
+    extract($args);
+    $c = controllerFactory('Pedido', $request, $response);
+    $c->acompanharForm();
+});
+
 
 $app->run();

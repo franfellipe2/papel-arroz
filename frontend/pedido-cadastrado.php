@@ -16,14 +16,14 @@
         <div class="alert alert-warning text-center">
             <h4>Atenção!</h4>
             <p><strong>Guarde esses dados para acompanhar seu pedido:</strong></p>
-            <p>Número do pedido: <b><?php echo $pedido->getId(); ?></b> - Senha de Acesso: <b><?php echo $pedido->cliente()->getSenha(); ?></b></p>
-            <a class="btn btn-sm btn-primary" href="#">Acompanhar Pedido</a>
+            <p>Número do pedido: <b><?php echo $pedido->getId(); ?></b> - Senha de Acesso: <b><?php echo $pedido->getSenhaAcesso(); ?></b></p>
+            <a class="btn btn-sm btn-primary" href="<?php echo appUrl('/pedido/acompanhar');?>">Acompanhar Pedido</a>
         </div>
         <article class="container text-center" style="text-transform: capitalize"> 
             <h2 class="mb-4">Dados do pedido</h2>      
             <section class="mb-4">            
                 <h3 class="mb-3 h4 text-muted">Comprador(a):</h3>
-                <p style="text-transform: capitalize;"><b>Nome:</b> <?php echo $pedido->cliente()->getNome(); ?> - <b>CPF:</b> <?php echo appFormCPF($pedido->cliente()->getCpf()); ?></p>
+                <p style="text-transform: capitalize;"><b>Nome:</b> <?php echo $pedido->cliente()->getNome(); ?> - <b>CPF:</b> <?php echo appFormatCPF($pedido->cliente()->getCpf()); ?></p>
                 <p><b>Email:</b> <?php echo $pedido->cliente()->getEmail(); ?></p>
                 <p><b>Telefone/Whatssap:</b> <?php echo $pedido->cliente()->getWhatssap(); ?></p>
             </section>

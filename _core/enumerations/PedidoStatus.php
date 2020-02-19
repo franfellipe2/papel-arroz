@@ -15,4 +15,21 @@ class PedidoStatus {
     const ENVIADO = 'enviado';
     const ENTREGUE = 'entregue';
 
+    static public function getLabel($index)
+    {
+        $labels = [
+            self::RECEBIDO       => 'Recebido',
+            self::EM_PRODUCAO    => 'Em produção',
+            self::PRONTO_ENTREGA => 'Pronto para entrega',
+            self::ENVIADO        => 'Enviado para o destinatário',
+            self::ENTREGUE       => 'Pedido Entregue',
+        ];
+        return $labels[$index];
+    }
+
+    static function getConstants()
+    {
+        $oClass = new \ReflectionClass(__CLASS__);
+        return $oClass->getConstants();
+    }
 }
