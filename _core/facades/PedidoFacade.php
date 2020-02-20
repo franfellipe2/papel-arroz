@@ -77,7 +77,7 @@ class PedidoFacade {
             $this->pedido->setSenhaAcesso(time());
 
             $this->pedido->save();
-            
+
             //
         } catch (\PDOException $ex) {
             echo '<p>' . $ex->getMessage() . '</p>';
@@ -119,13 +119,17 @@ class PedidoFacade {
         // Recupera a pessoa e atualiza os dados ou cria uma nova
 
         $cpf = str_replace(['-', '.', '_', ' '], '', $pessoa->getCpf());
+        
 
         if (($p = $this->pessoa->getByCpf($cpf))) {
+            
+            if (strtolower($p->getNome()) != strtolower($pessoa->getNome())) {
+                $pessoa->addError('cpf', 'Existe um nome diferente cadastrado para este CPF! Para dúvidas entre em contato.');
+            }
+            
             $pessoa->setId($p->getId());
-            $this->pessoa = $p;
-        } else {
-            $this->pessoa = $pessoa;
-        }
+        }        
+        $this->pessoa = $pessoa;
     }
 
     private function setEndereco(Endereco $endereco)
