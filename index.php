@@ -108,16 +108,16 @@ $app->get('/pedido/cadastrado', function($request, $response, $args) {
     $c->pedidoCadastrado();
 });
 
+$app->post('/pedido/acompanhar', function($request, $response, $args) {
+    extract($args);
+    $c = controllerFactory('Pedido', $request, $response);
+    $c->acompanharForm();
+});
+
 $app->get('/pedido/acompanhar', function($request, $response, $args) {
     extract($args);
     $c = controllerFactory('Pedido', $request, $response);
     $c->acompanhar();
-});
-
-$app->post('/pedido/acompanhar/form', function($request, $response, $args) {
-    extract($args);
-    $c = controllerFactory('Pedido', $request, $response);
-    $c->acompanharForm();
 });
 
 

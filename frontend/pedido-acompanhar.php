@@ -14,7 +14,7 @@ require appConfig('frontDir') . '/header.php';
     </div>
     <div class="container">
 
-        <form action="<?php echo appUrl('/pedido/acompanhar/form#pedido'); ?>" method="post">
+        <form action="<?php echo appUrl('/pedido/acompanhar#pedido'); ?>" method="post">
             <div class="row">
                 <div class="col col-12">
                     <div class="form-group">                
@@ -39,12 +39,12 @@ require appConfig('frontDir') . '/header.php';
             <input class="btn btn-primary" type="submit" value="Mostrar Pedido">
         </form>
 
-        <?php if (!empty($errors)) { ?>
+<?php if (!empty($erros)) { ?>
             <hr>
             <div class="alert alert-warning">
-                <?php echo $errors; ?>
+            <?php echo $erros; ?>
             </div>
-        <?php } else { ?>
+<?php } elseif (!empty($pedido)) { ?>
             <hr>
             <div id="pedido" class="card">
 
@@ -54,7 +54,7 @@ require appConfig('frontDir') . '/header.php';
                 <div class="card-body">
                     <h5>STATUS:</h5>
                     <ul>         
-                        <?php foreach (pStatus::getConstants() as $k => $status) { ?>
+                            <?php foreach (pStatus::getConstants() as $k => $status) { ?>
                             <li>
                                 <?php
                                 if (!empty(($date = $pedido->getStatus($status)))) {
@@ -62,15 +62,15 @@ require appConfig('frontDir') . '/header.php';
                                 } else {
                                     ?>
                                     <span class="text-muted"><?php echo pStatus::getLabel($status); ?></span>
-                                <?php } ?>
+                            <?php } ?>
                             </li>
-                        <?php } ?>
+    <?php } ?>
                     </ul>
                     <h5>DETALHES:</h5>
                     <p><?php echo $pedido->cliente()->getNome(); ?> - CPF <?php echo appFormatCPF($pedido->cliente()->getCpf()); ?></p>
                     <p style="text-transform: capitalize;">
                         <b>Endereço para entrega:</b><br>
-                        <?php echo $pedido->endereco()->getLongradouro() . ', ' . $pedido->endereco()->getNumero() . ' - ' . $pedido->endereco()->getComplemento(); ?>                        
+    <?php echo $pedido->endereco()->getLongradouro() . ', ' . $pedido->endereco()->getNumero() . ' - ' . $pedido->endereco()->getComplemento(); ?>                        
                         <span> | </span>
                         Bairro: <?php echo $pedido->endereco()->getBairro() . ' - ' . $pedido->endereco()->getCidade() . ' / <span style="text-transform: uppercase">' . $pedido->endereco()->getUf() . '</span>'; ?>                        
                         <span> - </span>
@@ -90,16 +90,16 @@ require appConfig('frontDir') . '/header.php';
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($pedido->carrinho()->getProdutos() as $p): ?>
+    <?php foreach ($pedido->carrinho()->getProdutos() as $p): ?>
                             <tr>
                                 <td>
-                                    <img src="<?php echo appImageUrl($p['imagem'], 'thumb');?>" height="45px">
-                                    <?php echo $p['titulo'] ?>
+                                    <img src="<?php echo appImageUrl($p['imagem'], 'thumb'); ?>" height="45px">
+        <?php echo $p['titulo'] ?>
                                 </td>
                                 <td><?php echo $p['tipo'] == 'papel_arroz' ? 'Papel Arroz' : null; ?></td>
                                 <td><?php echo $p['quantidade']; ?></td>
                             </tr>
-                        <?php endforeach; ?>
+    <?php endforeach; ?>
                     </tbody>
                     <tfoot>
                         <tr>
@@ -108,7 +108,7 @@ require appConfig('frontDir') . '/header.php';
                     </tfoot>
                 </table>
             </div>
-        <?php } ?>
+<?php } ?>
     </div><!-- ./container -->
 </section>
 <?php require appConfig('frontDir') . '/footer.php'; ?>

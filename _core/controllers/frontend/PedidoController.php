@@ -117,16 +117,15 @@ class PedidoController extends frontController {
         $cpf = str_replace(['-', '_', '.', ' '], '', filter_input(INPUT_POST, 'cpf'));
 
         $erros = null;
+
         if (!$pedido) {
             $erros = 'Pedido não encontrado!';
-        } elseif (empty($senha) || empty($cpf)) {
+        } elseif (empty($senha) && empty($cpf)) {
             $erros = 'Informe a senha de acesso ou o CPF do comprador';
-        } else {
-            if ($pedido->getSenhaAcesso() != $senha || $pedido->cliente()->getCpf() != $cpf) {
-                $erros = 'Senha ou CPF não corresponde ao numero do pedido';
-            }
+        } elseif ($pedido->getSenhaAcesso() != $senha && $pedido->cliente()->getCpf() != $cpf) {
+            $erros = 'Senha ou CPF não corresponde ao número do pedido';
         }
-
-        require $this->getFilePath('pedido-acompanhar');
+        
+       require $this->getFilePath('pedido-acompanhar');
     }
 }

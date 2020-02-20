@@ -1,4 +1,4 @@
-<?php require appConfig('frontDir') . '/header.php';?>
+<?php require appConfig('frontDir') . '/header.php'; ?>
 <div class="page-content pb-4">    
     <div class="jumbotron jumbotron-fluid bg-success text-white">
         <header class="container text-center">
@@ -17,7 +17,12 @@
             <h4>Atenção!</h4>
             <p><strong>Guarde esses dados para acompanhar seu pedido:</strong></p>
             <p>Número do pedido: <b><?php echo $pedido->getId(); ?></b> - Senha de Acesso: <b><?php echo $pedido->getSenhaAcesso(); ?></b></p>
-            <a class="btn btn-sm btn-primary" href="<?php echo appUrl('/pedido/acompanhar');?>">Acompanhar Pedido</a>
+            <p>Link: <a href="<?php echo appUrl('/pedido/acompanhar'); ?>"><b><?php echo appUrl('/pedido/acompanhar'); ?></b></a></p>
+            <form action="<?php echo appUrl('/pedido/acompanhar'); ?>" method="post">
+                <input name="id_pedido" type="hidden" value="<?php echo $pedido->getId(); ?>">
+                <input name="senha" type="hidden" value="<?php echo $pedido->getSenhaAcesso(); ?>">
+                <button type="submit" class="btn btn-sm btn-primary">Acompanhar Pedido</button>
+            </form>
         </div>
         <article class="container text-center" style="text-transform: capitalize"> 
             <h2 class="mb-4">Dados do pedido</h2>      
