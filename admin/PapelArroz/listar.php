@@ -18,7 +18,7 @@ require __DIR__ . '/../sidebar.php';
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($papelArroz->listAll() as $r => $p): ?>
+            <?php foreach ($papelArroz->listAll(false) as $r => $p): ?>
                 <tr>
                     <th scope="row"><?php echo $p['id']; ?></th>
                     <td>                    

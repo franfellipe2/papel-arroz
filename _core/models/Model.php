@@ -27,7 +27,7 @@ class Model {
                 $p->setData($row);
                 $produtos[] = $p;
             }
-            return $produtos;            
+            return $produtos;
         } else {
             return false;
         }
@@ -71,9 +71,9 @@ class Model {
 
     public function getError($erro)
     {
-        if(isset($this->errors[$erro])){
+        if (isset($this->errors[$erro])) {
             return $this->errors[$erro];
-        }        
+        }
     }
 
     public function errorExistis()
@@ -199,10 +199,22 @@ class Model {
         return $bindPrams;
     }
 
-    public function listAll()
+    public function listAll($returnObjts = true)
     {
         $db = new DB();
-        return $db->select('SELECT * FROM `' . $this->getTable() . '`');
+        $r = $db->select('SELECT * FROM `' . $this->getTable() . '`');
+        $objts = array();
+        if (empty($r)) {
+            return false;
+        } elseif ($returnObjts) {
+            foreach ($r as $data) {
+                $p = new Pedido();
+                $p->setData($data);
+                $objts[] = $p;
+            }
+            return $objts;
+        }
+        return $r;
     }
 
     public function getData(): array

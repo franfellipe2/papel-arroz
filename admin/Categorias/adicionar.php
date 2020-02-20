@@ -29,7 +29,7 @@
                 <select name="cat_pai" class="form-control <?php if (!empty($erros['cat_pai'])) echo 'is-invalid'; ?>">
                     <option></option>
                     <?php
-                    $cats = $categoria->listAll();
+                    $cats = $categoria->listAll(false);
                     foreach ($cats as $r => $c):
                         ?>
                         <option value="<?php echo $c['id']; ?>"><?php echo $c['nome']; ?></option>

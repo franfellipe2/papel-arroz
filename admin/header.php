@@ -11,6 +11,7 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css"  type="text/css"/>
         <link rel="stylesheet" type="text/css" href="assets/css/datatables.min.css"/>
+        <link rel="stylesheet" type="text/css" href="assets/css/fontawesome.min.css"  type="text/css"/>        
         <link rel="stylesheet" type="text/css" href="assets/css/style.css"  type="text/css"/>        
     </head>
     <body>

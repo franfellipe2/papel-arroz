@@ -1,36 +1,59 @@
 <?php
+
+use app\enumerations\PedidoStatus;
+
 $tituloPage = 'Pedidos';
 require __DIR__ . '/../header.php';
 require __DIR__ . '/../sidebar.php';
 ?>
 <div class="content-page py-4">
-    
+
     <h1 class="h3">Pedidos</h1>
     <hr>
     <table id="table-listar" class="display">
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Cliente</th>
-                <th scope="col">Status</th>                                  
+                <th scope="col">Status</th> 
+                <th scope="col">Cliente</th>  
+                <th scope="col">cpf</th>
+                <th scope="col">email</th>
+                <th scope="col">telefone</th>
+                <th scope="col">endereco</th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($pedidos->listAll() as $r => $p): ?>
+            <?php foreach ($pedidos as $p): ?>
                 <tr>
-                    <th scope="row"><?php echo $p->getId(); ?></th>
+                    <th scope="row"><?php echo $p->getId(); ?></th>                   
+                    <td>
+                        <?php
+                        foreach (PedidoStatus::getConstants() as $status):
+                            $label = PedidoStatus::getLabel($status);
+                            $link = $this->pageAction('checkStatus', array(
+                                'pedido-id' => $p->getId(),
+                                'status'    => $status
+                            ));
+                            $date = $p->getStatus($status);
+                            if (!empty($p->getStatus($status))) {
+                                echo '<span style="display:none">1</span>';
+                                echo "<a class=\"text-success\" href=\"$link\" title=\"$date\"><i class=\"fas fa-check\"></i> {$label}</a><br>";
+                            } else {
+                                echo "<a class=\"text-muted\" href=\"$link\"><i class=\"fas fa-check\"></i> {$label}</a><br>";
+                            }
+                        endforeach;
+                        ?>
+                    </td> 
                     <td>                    
-                        <?php echo $p->cliente()->getNome(); ?>
-                        <div class="float-right">
-                            <a class="btn btn-sm btn-primary pl-2" href="#">Editar</a>
-                            <a class="btn btn-sm btn-danger pl-2" href="#">X</a>                        
-                        </div>
+                        <?php echo $p->cliente()->getNome(); ?>                        
                     </td>
-                    <td><?php 
-                    foreach($p->):
-                        
-                    endforeach;
-                    ?></td>                                      
+                    <td><?php echo $p->cliente()->getCpf(); ?></td>
+                    <td><?php echo $p->cliente()->getEmail(); ?></td>
+                    <td><?php echo $p->cliente()->getWhatssap(); ?></td>
+                    <td><?php
+                        $e = $p->endereco();
+                        echo $e->getLongradouro() . ', ' . $e->getNumero() . ' - Bairro: ' . $e->getBairro() . ' - ' . $e->getCidade() . '/' . $e->getUf();
+                        ?></td>
                 </tr>        
             <?php endforeach; ?>
         </tbody>

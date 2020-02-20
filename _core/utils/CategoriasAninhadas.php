@@ -41,7 +41,7 @@ class CategoriasAninhadas {
 
         if (empty(self::$categorias)) {
             $cat = new Categoria();
-            self::$categorias = $cat->listAll();
+            self::$categorias = $cat->listAll( false);
         }
         return self::$categorias;
     }
