@@ -49,3 +49,9 @@ GENRENCIAR CATEGORIAS
     width: calc(100% - 250px);     
     padding-left: 16px;
 }
+
+@media print {
+    .nao-imprimir{
+        display: none;
+    }
+}
