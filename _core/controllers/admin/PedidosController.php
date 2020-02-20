@@ -24,6 +24,15 @@ class PedidosController extends AdminController {
 
     /**
      * 
+     */
+    public function mostrar()
+    {
+        $pedido = (new Pedido)->getById(filter_input(INPUT_GET, 'id'));        
+        require $this->page . '/mostrar.php';
+    }
+
+    /**
+     * 
      * @return string
      */
     public function getPage(): string
@@ -43,6 +52,6 @@ class PedidosController extends AdminController {
         }
         $pedido->save();
 
-        header('Location: ' . $this->pageAction('listar'));
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
 }

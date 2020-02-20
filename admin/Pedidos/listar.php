@@ -25,7 +25,7 @@ require __DIR__ . '/../sidebar.php';
         <tbody>
             <?php foreach ($pedidos as $p): ?>
                 <tr>
-                    <th scope="row"><?php echo $p->getId(); ?></th>                   
+                    <th scope="row"><a href="<?php echo $this->pageAction('mostrar', ['id' => $p->getId() ]); ?>"><?php echo $p->getId(); ?></a></th>                   
                     <td>
                         <?php
                         foreach (PedidoStatus::getConstants() as $status):
@@ -52,7 +52,7 @@ require __DIR__ . '/../sidebar.php';
                     <td><?php echo $p->cliente()->getWhatssap(); ?></td>
                     <td><?php
                         $e = $p->endereco();
-                        echo $e->getLongradouro() . ', ' . $e->getNumero() . ' - Bairro: ' . $e->getBairro() . ' - ' . $e->getCidade() . '/' . $e->getUf();
+                        echo $e->getLongradouro() . ', ' . $e->getNumero() . ' - Bairro: ' . $e->getBairro() . ' - ' . $e->getCidade() . '/' . $e->getUf().' - CEP: '.$e->getCep();
                         ?></td>
                 </tr>        
             <?php endforeach; ?>
