@@ -74,7 +74,6 @@ class Carrinho extends Model implements ModelInterface {
         } else {
             $this->removeProduto($produtoId);
         }
-        unset($_SESSION[self::SESSION]);
     }
 
     public function getProduto($produtoId, $deleted = false)
@@ -114,7 +113,6 @@ class Carrinho extends Model implements ModelInterface {
             ':preco_venda' => (float) $p->getPreco(),
             ':vltotal'     => $this->calculateTotal($qtd, $p->getPreco(), $desconto, $juros)
         ]);
-        unset($_SESSION[self::SESSION]);
     }
 
     public function updateProduto(Produto $p, $qtd, $desconto = 0, $juros = 0)
@@ -134,13 +132,12 @@ class Carrinho extends Model implements ModelInterface {
             ':dtdelete'    => NULL,
             ':vltotal'     => $this->calculateTotal($qtd, $p->getPreco(), $desconto, $juros)
         ]);
-        unset($_SESSION[self::SESSION]);
     }
 
     public function removeProduto($produtoId)
     {
         $db = new DB();
-        unset($_SESSION[self::SESSION]);
+
         return $db->query('UPDATE prod_carrinho SET dtdelete = :now, quantidade = 0, vltotal = 0
                            WHERE prod_carrinho.id_produto = :idp
                            AND prod_carrinho.id_carrinho = :idc', [
@@ -186,6 +183,11 @@ class Carrinho extends Model implements ModelInterface {
             $car->create();
         }
         return $car;
+    }
+
+    public function setTotalProdutos($qtd)
+    {
+        $this->data['total_produtos'] = $qtd;
     }
 
     public function getTotalProdutos()
@@ -264,7 +266,7 @@ class Carrinho extends Model implements ModelInterface {
     // ============================================================
     public function setToSession()
     {
-        $_SESSION[self::CAR_SESSION] = serialize($this);
+        $_SESSION[self::SESSION] = $this->getData();
     }
 
     function setIdSession($id_session)

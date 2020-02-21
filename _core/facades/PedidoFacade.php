@@ -86,10 +86,6 @@ class PedidoFacade {
         }
         $pdo->commit();
 
-        // Retira o carrinho da sessão e gera um novo id de sessão
-        unset($_SESSION[Carrinho::SESSION]);
-        session_regenerate_id();
-
         return $this;
     }
 

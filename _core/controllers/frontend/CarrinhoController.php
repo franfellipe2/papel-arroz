@@ -10,6 +10,7 @@ namespace app\controllers\frontend;
 
 use app\models\Carrinho;
 use app\models\Produto;
+use app\facades\CarrinhoFacade;
 
 /**
  * Description of CategoriaController
@@ -36,21 +37,14 @@ class CarrinhoController extends frontController {
         // Tenta pegar o carrinho da sessão, se não tiver cria um
         $this->carrinho = Carrinho::getFromSession();
 
-        $id = (int) $produtoId;
         $qtd = filter_input(INPUT_POST, 'quantidade', FILTER_VALIDATE_INT);
         $increment = filter_input(INPUT_POST, 'increment', FILTER_VALIDATE_BOOLEAN);
-        $pnc = $this->carrinho->getProduto($id, true); // produto no carrinho
-        $p = new Produto();
-
-        if ($qtd == 0) {
-            $this->carrinho->removeProduto($id);
-        } elseif (!$pnc) {
-            $p = (new Produto())->getById($id);
-            $this->carrinho->InsertProduto($p, 1);
-        } elseif ($pnc) {
-            $p->setData($pnc);
-            $this->carrinho->updateProduto($p, ( $increment ? $pnc['quantidade'] + $qtd : $qtd));
-        }
+       
+        $carrinhoFacade = new CarrinhoFacade();
+        $carrinhoFacade->addProduto($produtoId, $this->carrinho, $increment, $qtd);
+        
+        unset($_SESSION[Carrinho::SESSION]);
+        
         header('Location: ' . appUrl('/carrinho'));
         die();
     }
@@ -63,7 +57,11 @@ class CarrinhoController extends frontController {
     {
         $this->carrinho->setData($this->carrinho->getSession());
         $this->carrinho->minusProduto(filter_var($produtoId, FILTER_VALIDATE_INT));
+        
+        unset($_SESSION[Carrinho::SESSION]);
+        
         header('Location: ' . appUrl('/carrinho'));
+        
         die();
     }
 
@@ -75,7 +73,11 @@ class CarrinhoController extends frontController {
     {
         $this->carrinho->setData($this->carrinho->getSession());
         $this->carrinho->removeProduto(filter_var($produtoId, FILTER_VALIDATE_INT));
+       
+        unset($_SESSION[Carrinho::SESSION]);
+        
         header('Location: ' . appUrl('/carrinho'));
+        
         die();
     }
 
@@ -85,9 +87,14 @@ class CarrinhoController extends frontController {
      */
     public function mostrar()
     {
+        
         $carrinho = new Carrinho();
+        
+        // Tenta pegar os dados da sessão
         if (($data = $carrinho->getSession())) {
             $carrinho->setData($data);
+            
+            // Verifica se tem um carrinho cadastrado pelo id de sessão
         } elseif (( $car = (new Carrinho())->getByIdSession(session_id()))) {
             $carrinho = $car;
         }

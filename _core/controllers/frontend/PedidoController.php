@@ -77,6 +77,11 @@ class PedidoController extends frontController {
         if ($pedidoFacade->save()) {
 
             $_SESSION['pedido_cadastrado'] = $pedidoFacade->getPedido()->getData();
+
+            // Retira o carrinho da sessão e gera um novo id de sessão
+            unset($_SESSION[Carrinho::SESSION]);
+            session_regenerate_id();
+
             header('Location: ' . appUrl('/pedido/cadastrado'));
             die();
         } elseif (!empty($errors = $pedidoFacade->getErrors())) {
@@ -125,7 +130,7 @@ class PedidoController extends frontController {
         } elseif ($pedido->getSenhaAcesso() != $senha && $pedido->cliente()->getCpf() != $cpf) {
             $erros = 'Senha ou CPF não corresponde ao número do pedido';
         }
-        
-       require $this->getFilePath('pedido-acompanhar');
+
+        require $this->getFilePath('pedido-acompanhar');
     }
 }
