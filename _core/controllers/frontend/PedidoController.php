@@ -51,7 +51,7 @@ class PedidoController extends frontController {
         $nome = filter_input(INPUT_POST, 'nome');
         $cpf = filter_input(INPUT_POST, 'cpf');
         $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
-        $whatssap = filter_input(INPUT_POST, 'whatssap');
+        $whatssap = filter_input(INPUT_POST, 'whatssap', FILTER_VALIDATE_INT);
         $longradouro = filter_input(INPUT_POST, 'longradouro');
         $numero = filter_input(INPUT_POST, 'numero', FILTER_VALIDATE_INT);
         $complemento = filter_input(INPUT_POST, 'complemento');
