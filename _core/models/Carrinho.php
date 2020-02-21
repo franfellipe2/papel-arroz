@@ -104,13 +104,14 @@ class Carrinho extends Model implements ModelInterface {
     public function InsertProduto(Produto $p, $qtd, $desconto = 0, $juros = 0)
     {
         $db = new DB();
-        $db->query('INSERT INTO prod_carrinho ( id_produto, id_carrinho,  quantidade, desconto, juros, vltotal )
-                                       VALUES(:id_produto, :id_carrinho,  :quantidade, :desconto, :juros, :vltotal)', [
+        $db->query('INSERT INTO prod_carrinho ( id_produto, id_carrinho,  quantidade, desconto, juros, preco_venda, vltotal )
+                                       VALUES(:id_produto, :id_carrinho,  :quantidade, :desconto, :juros, :preco_venda, :vltotal)', [
             ':id_produto'  => $p->getId(),
             ':id_carrinho' => $this->getId(),
             ':quantidade'  => $qtd,
             ':desconto'    => (float) $desconto,
             ':juros'       => (float) $juros,
+            ':preco_venda' => (float) $p->getPreco(),
             ':vltotal'     => $this->calculateTotal($qtd, $p->getPreco(), $desconto, $juros)
         ]);
         unset($_SESSION[self::SESSION]);

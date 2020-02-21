@@ -39,12 +39,12 @@ require appConfig('frontDir') . '/header.php';
             <input class="btn btn-primary" type="submit" value="Mostrar Pedido">
         </form>
 
-<?php if (!empty($erros)) { ?>
+        <?php if (!empty($erros)) { ?>
             <hr>
             <div class="alert alert-warning">
-            <?php echo $erros; ?>
+                <?php echo $erros; ?>
             </div>
-<?php } elseif (!empty($pedido)) { ?>
+        <?php } elseif (!empty($pedido)) { ?>
             <hr>
             <div id="pedido" class="card">
 
@@ -54,7 +54,7 @@ require appConfig('frontDir') . '/header.php';
                 <div class="card-body">
                     <h5>STATUS:</h5>
                     <ul>         
-                            <?php foreach (pStatus::getConstants() as $k => $status) { ?>
+                        <?php foreach (pStatus::getConstants() as $k => $status) { ?>
                             <li>
                                 <?php
                                 if (!empty(($date = $pedido->getStatus($status)))) {
@@ -62,15 +62,15 @@ require appConfig('frontDir') . '/header.php';
                                 } else {
                                     ?>
                                     <span class="text-muted"><?php echo pStatus::getLabel($status); ?></span>
-                            <?php } ?>
+                                <?php } ?>
                             </li>
-    <?php } ?>
+                        <?php } ?>
                     </ul>
                     <h5>DETALHES:</h5>
                     <p><?php echo $pedido->cliente()->getNome(); ?> - CPF <?php echo appFormatCPF($pedido->cliente()->getCpf()); ?></p>
                     <p style="text-transform: capitalize;">
                         <b>Endereço para entrega:</b><br>
-    <?php echo $pedido->endereco()->getLongradouro() . ', ' . $pedido->endereco()->getNumero() . ' - ' . $pedido->endereco()->getComplemento(); ?>                        
+                        <?php echo $pedido->endereco()->getLongradouro() . ', ' . $pedido->endereco()->getNumero() . ' - ' . $pedido->endereco()->getComplemento(); ?>                        
                         <span> | </span>
                         Bairro: <?php echo $pedido->endereco()->getBairro() . ' - ' . $pedido->endereco()->getCidade() . ' / <span style="text-transform: uppercase">' . $pedido->endereco()->getUf() . '</span>'; ?>                        
                         <span> - </span>
@@ -86,29 +86,33 @@ require appConfig('frontDir') . '/header.php';
                         <tr>
                             <th></th>
                             <th>Tipo</th>
+                            <th>Preço</th>
                             <th>Quantidade</th>
+                            <th>Total</th>
                         </tr>
                     </thead>
                     <tbody>
-    <?php foreach ($pedido->carrinho()->getProdutos() as $p): ?>
+                        <?php foreach ($pedido->carrinho()->getProdutos() as $p): ?>
                             <tr>
                                 <td>
                                     <img src="<?php echo appImageUrl($p['imagem'], 'thumb'); ?>" height="45px">
-        <?php echo $p['titulo'] ?>
+                                    <?php echo $p['titulo'] ?>
                                 </td>
                                 <td><?php echo $p['tipo'] == 'papel_arroz' ? 'Papel Arroz' : null; ?></td>
+                                <td>R$ <?php echo appFormPrice($p['preco_venda']); ?></td>
                                 <td><?php echo $p['quantidade']; ?></td>
+                                <td>R$ <?php echo appFormPrice($p['vltotal']); ?></td>
                             </tr>
-    <?php endforeach; ?>
+                        <?php endforeach; ?>
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th colspan="3">Preço Total:  R$<?php echo appFormPrice($pedido->getVltotal()); ?></th>                                   
+                            <th class="h3" colspan="3">Preço Total:  R$<?php echo appFormPrice($pedido->getVltotal()); ?></th>                                   
                         </tr>
                     </tfoot>
                 </table>
             </div>
-<?php } ?>
+        <?php } ?>
     </div><!-- ./container -->
 </section>
 <?php require appConfig('frontDir') . '/footer.php'; ?>

@@ -68,7 +68,7 @@ require __DIR__ . '/../sidebar.php';
                         </td>
                         <td><?php echo $p['titulo']; ?></td>
                         <td><?php echo $p['tipo']; ?></td>
-                        <td>R$ <?php echo appFormPrice($p['preco']); ?></td>
+                        <td>R$ <?php echo appFormPrice($p['preco_venda']); ?></td>
                         <td><?php echo $p['quantidade']; ?></td>
                         <td>R$ <?php echo appFormPrice($p['vltotal']); ?></td>
                     </tr>

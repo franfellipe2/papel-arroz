@@ -12,6 +12,6 @@ class PapelArroz extends Produto {
 
     public function __construct()
     {
-        $this->data['tipo'] = 'papel_arroz';        
+        $this->data['tipo'] = 'Papel Arroz';        
     }
 }
