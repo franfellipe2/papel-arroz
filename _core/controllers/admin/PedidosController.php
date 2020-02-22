@@ -11,7 +11,7 @@ use app\models\Pedido;
  */
 class PedidosController extends AdminController {
 
-    private $page = 'Pedidos';
+    protected $page = 'Pedidos';
 
     /**
      * 

@@ -15,7 +15,7 @@ use app\utils\Images;
  */
 class PapelArrozController extends AdminController implements AdminControllerInterface {
 
-    private $page = 'PapelArroz';
+    protected $page = 'PapelArroz';
 
     /**
      * 

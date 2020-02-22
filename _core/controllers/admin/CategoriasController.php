@@ -14,7 +14,7 @@ use app\utils\CategoriasAninhadas;
  */
 class CategoriasController extends AdminController implements AdminControllerInterface {
 
-    private $page = 'Categorias';
+    protected $page = 'Categorias';
 
     public function gerenciar()
     {
