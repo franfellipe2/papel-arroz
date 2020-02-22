@@ -11,8 +11,8 @@ class homeController extends frontController {
 
     function __construct()
     {
-        $p = new \app\models\Produto();
-        $produtos = $p->getAll();       
+        $p = new \app\models\PapelArroz();
+        $produtos = $p->listAll();       
         require $this->getFilePath('home');
     }
 }

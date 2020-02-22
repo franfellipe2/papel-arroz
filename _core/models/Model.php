@@ -208,7 +208,7 @@ class Model {
             return false;
         } elseif ($returnObjts) {
             foreach ($r as $data) {
-                $p = new Pedido();
+                $p = new $this;
                 $p->setData($data);
                 $objts[] = $p;
             }
