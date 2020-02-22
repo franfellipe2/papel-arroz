@@ -52,14 +52,30 @@ class Categoria extends Model implements ModelInterface {
     /**
      * Retornas todos os produtos
      */
-    public function getProdutos()
+    public function getProdutos($limit = array(), $orderBy = array())
     {
         $db = new DB();
+        
+        $params[':cat_id'] = $this->getId();
+        $args = '';
+        
+        if (!empty($orderBy) && in_array($orderBy[1], ['asc', 'desc']) && in_array($orderBy[0], array_keys($this->data))) {
+            $args .= ' ORDER BY ' . $orderBy[0] . ' ' . $orderBy[1];
+        }       
+        if (!empty($limit)) {
+            $args .= ' LIMIT :start, :offset';
+            $params[':start'] = $limit[0];
+            $params[':offset'] = $limit[1];
+        }
+        
         $sql = 'SELECT produtos.* FROM `produtos` 
                 INNER JOIN prod_cat
                 ON prod_cat.prod_id = `produtos`.`id`
-                AND prod_cat.cat_id = :id';       
-        $r = $db->select($sql, [':id' => $this->getId()]);
+                AND prod_cat.cat_id = :cat_id ' . $args;
+
+
+
+        $r = $db->select($sql, $params);
         foreach ($r as $p => $data) {
             $p = new Produto();
             $p->setData($data);

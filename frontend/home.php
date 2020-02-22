@@ -19,6 +19,7 @@
                     endforeach;
                     ?>
                 </div>
+                <?php $paginate->draw(); ?>
             <?php } ?>
         </div><!-- ./container -->
     </section>

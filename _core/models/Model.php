@@ -199,14 +199,31 @@ class Model {
         return $bindPrams;
     }
 
-    public function listAll($returnObjts = true)
+    public function listAll($returnObjts = true, $limit = array(), $orderBy = array(), $groupBy = null)
     {
         $db = new DB();
-        $r = $db->select('SELECT * FROM `' . $this->getTable() . '`');
-        $objts = array();
+
+        $params = array();
+        $args = '';
+        if (!empty($orderBy) && in_array($orderBy[1], ['asc', 'desc']) && in_array($orderBy[0], array_keys($this->data))) {
+            $args .= ' ORDER BY ' . $orderBy[0] . ' ' . $orderBy[1];
+        }
+        if (!empty($groupBy)) {
+            $args .= ' GORUP BY :groupby ';
+            $params[':groupby'] = $groupBy;
+        }
+        if (!empty($limit)) {
+            $args .= ' LIMIT :start, :offset';
+            $params[':start'] = $limit[0];
+            $params[':offset'] = $limit[1];
+        }
+
+        $r = $db->select('SELECT * FROM `' . $this->getTable() . '` ' . $args, $params);
+     
         if (empty($r)) {
             return false;
         } elseif ($returnObjts) {
+            $objts = array();
             foreach ($r as $data) {
                 $p = new $this;
                 $p->setData($data);

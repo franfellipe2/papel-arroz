@@ -3,20 +3,18 @@
 require '../vendor/autoload.php';
 require '../_core/functions.php';
 
-$id = (int) 'f15.5';
-$r = is_integer('1');
+$_GET['coluna'];
+$_GET['order'];
 
-$ns = ['1', '3', '8', '5', '9'];
+$orderBy = str_replace([';', '\'', ' '], '', $_GET['coluna']);
+$order = in_array($_GET['order'], ['desc', 'asc']) ? $_GET['order'] : 'asc';
 
-function valid($ns)
-{
-    foreach ($ns as $id) {
-        if (((int) $id) == 0) {
-            return false;
-        }
-    }
-    
-    return true;
-}
+$sql = 'SELECT * FROM produtos ORDER BY ' . $orderBy . ' ' . $order;
 
-var_dump(valid($ns));
+$db = new app\DB();
+//$p = $db->select($sql);
+
+
+var_dump($orderBy);
+var_dump($order);
+var_dump($sql);

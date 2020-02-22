@@ -1,7 +1,9 @@
 <article class="card card-papel-arroz">
     <div class="header-img card-img-top">
-        <div class="bg-papel-dobrado"></div>
+        <a href="<?php echo appUrl('/produto/') . $papelArroz->getSlug(); ?>">
+        <span class="bg-papel-dobrado"></span>
         <img src="<?php echo appImageUrl('/' . $papelArroz->getImagem(), 'media'); ?>" class="card-img-top" alt="...">
+        </a>
     </div>
     <div class="card-body">
         <h5 class="card-title"><?php echo $papelArroz->getTitulo(); ?></h5>

@@ -9,6 +9,8 @@
 namespace app\controllers\frontend;
 
 use app\models\Categoria;
+use app\utils\Paginacao;
+use app\models\Produto;
 
 /**
  * Description of CategoriaController
@@ -29,10 +31,17 @@ class CategoriaController extends frontController {
     {
 
         $categoria = $this->categoria->getBySlug($catSlug);
+
         if ($categoria) {
-            $produtos = $categoria->getProdutos();           
+
+            $currentPage = ($pg = filter_input(INPUT_GET, 'paginate')) ? $pg : 1;
+            
+            $paginate = new Paginacao(new Produto(), 9, 8, (int) $currentPage);
+
+            $produtos = $categoria->getProdutos($paginate->limit(), ['id', 'desc']);
+
             require $this->getFilePath('categoria');
-        } else {                     
+        } else {
             $this->getPage404();
         }
     }

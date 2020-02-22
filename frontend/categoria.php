@@ -21,9 +21,10 @@
                 <?php
                 foreach ($produtos as $papelArroz):
                     require __DIR__ . '/template_parts/card-papel-arroz.php';                    
-                endforeach;
+                endforeach;                
                 ?>
             </div>
+        <?php $paginate->draw();?>
         <?php } ?>
     </div><!-- ./container -->
 </section>
