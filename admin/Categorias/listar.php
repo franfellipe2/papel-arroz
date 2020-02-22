@@ -1,7 +1,4 @@
-<?php 
-// Proteje contra acesso direto ao arquivo
-require __DIR__ . '/../protege-arquivo.php';
-?>
+<?php // $this = o controller    ?>
 <table class="table">
     <thead>
         <tr>

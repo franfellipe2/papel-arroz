@@ -1,15 +1,8 @@
-<?php
-
-use app\Config;
+<?php 
+use app\Config; 
 ?>
 <div class="sidebar p1 nao-imprimir">
     <h3 class="title"><a href="<?php echo appConfig('baseUrl'); ?>">SITE</a></h3>
-    <hr>
-    <p class="text-white">
-        Admin: <?php echo $_SESSION['user']['nome']; ?>
-        <span> - </span>
-        <a href="<?php echo appUrl('/admin/logout.php'); ?>">SAIR</a>
-    </p>
     <hr>
     <h3 class="title">Categorias</h3>
     <ul>

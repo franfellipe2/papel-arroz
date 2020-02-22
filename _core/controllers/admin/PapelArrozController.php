@@ -178,5 +178,12 @@ class PapelArrozController extends AdminController implements AdminControllerInt
         }
     }
 
-    
+    /**
+     * 
+     * @return string
+     */
+    public function getPage(): string
+    {
+        return $this->page;
+    }
 }

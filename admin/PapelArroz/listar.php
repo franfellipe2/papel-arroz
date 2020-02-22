@@ -1,8 +1,4 @@
 <?php
-
-// Proteje contra acesso direto ao arquivo
-require __DIR__ . '/../protege-arquivo.php';
-
 $tituloPage = 'Listar Papeis arroz';
 require __DIR__ . '/../header.php';
 require __DIR__ . '/../sidebar.php';

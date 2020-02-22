@@ -1,9 +1,4 @@
-<?php
-// Proteje contra acesso direto ao arquivo
-require __DIR__ . '/../protege-arquivo.php';
-
-if ($categoria->getMsgError()) {
-    ?>
+<?php if ($categoria->getMsgError()) { ?>
     <div class="alert alert-danger" role="alert">
         <?php echo $categoria->getMsgError(); ?>
     </div>

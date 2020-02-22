@@ -23,13 +23,4 @@ class AdminController {
        return '?pg=' . $this->getPage() . '&action=' . $action.$ps;
     }    
     
-    /**
-     * 
-     * @return string
-     */
-    public function getPage(): string
-    {
-        return $this->page;
-    }
-    
 }

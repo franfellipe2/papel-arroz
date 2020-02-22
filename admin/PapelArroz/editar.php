@@ -1,7 +1,4 @@
 <?php
-// Proteje contra acesso direto ao arquivo
-require __DIR__ . '/../protege-arquivo.php';
-
 $tituloPage = 'Categorias';
 require __DIR__ . '/../header.php';
 require __DIR__ . '/../sidebar.php';
