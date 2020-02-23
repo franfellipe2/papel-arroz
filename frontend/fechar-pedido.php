@@ -1,4 +1,5 @@
 <?php
+$pageTitle = 'Fechar pedido';
 require appConfig('frontDir') . '/header.php'; 
 ?>
 <div class="msg-info smg-info-primary text-center">

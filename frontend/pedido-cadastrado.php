@@ -1,4 +1,6 @@
-<?php require appConfig('frontDir') . '/header.php'; ?>
+<?php 
+$pageTitle = 'Pedido Cadastrado com sucesso!';
+require appConfig('frontDir') . '/header.php'; ?>
 <div class="page-content pb-4">    
     <div class="jumbotron jumbotron-fluid bg-success text-white">
         <header class="container text-center">

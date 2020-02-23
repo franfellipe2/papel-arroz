@@ -1,7 +1,7 @@
 <?php
 
 use app\enumerations\PedidoStatus as pStatus;
-
+$pageTitle = 'Acompanhar pedido';
 require appConfig('frontDir') . '/header.php';
 ?>
 
@@ -81,7 +81,7 @@ require appConfig('frontDir') . '/header.php';
                 <table class="table">                   
                     <thead>
                         <tr>
-                            <th colspan="3" class="text-center">PRODUTOS</th>
+                            <th colspan="5" class="text-center">PRODUTOS</th>
                         </tr>
                         <tr>
                             <th></th>
@@ -107,7 +107,7 @@ require appConfig('frontDir') . '/header.php';
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th class="h3" colspan="3">Preço Total:  R$<?php echo appFormPrice($pedido->getVltotal()); ?></th>                                   
+                            <th class="h3" colspan="5">Preço Total:  R$<?php echo appFormPrice($pedido->getVltotal()); ?></th>                                   
                         </tr>
                     </tfoot>
                 </table>

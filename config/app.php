@@ -9,7 +9,7 @@ return [
     
     // SITE
     'baseUrl' => 'http://localhost/papel-arroz',
-    'siteName' => 'Papel Arroz',
+    'siteName' => 'Papel Arroz Frutal',
     
     // Pastas
     'baseDir' => __DIR__.'/../',
