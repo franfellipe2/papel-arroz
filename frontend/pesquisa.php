@@ -28,6 +28,7 @@
                 endforeach;
                 ?>
             </div>
+            <?php echo $pagination->draw();?>
         <?php } ?>
     </div><!-- ./container -->
 </section>

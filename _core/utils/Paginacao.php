@@ -21,12 +21,12 @@ class Paginacao {
     private $model;
     private $limit;
 
-    function __construct(Model $objt, $resultsPerPage, $totalLinks, $currentPage)
+    function __construct(Model $objt, $resultsPerPage, $totalLinks)
     {
+        $this->setCurrentPage();
         $this->model = $objt;
         $this->resultsPerPage = $resultsPerPage;
         $this->totalLinks = $totalLinks;
-        $this->currentPage = $currentPage;
         $this->setTotalRegistros();
         $this->calcTotalPages();
         $this->setLimit();
@@ -99,13 +99,18 @@ class Paginacao {
         // Links right        
         $linksRight = array();
         for ($i = 0; $i <= $this->totalLinks / 2; $i++) {
-            $page = $this->currentPage + $i;            
-            if ($page > $this->currentPage && $page <= $this->getTotalPages() ) {
+            $page = $this->currentPage + $i;
+            if ($page > $this->currentPage && $page <= $this->getTotalPages()) {
                 $linksRight['?paginate=' . ($page) . $qs] = $page;
             }
         }
 
         $callback($previous, array_reverse($linksLeft), $currentLink, $linksRight, $next);
+    }
+
+    public function setCurrentPage()
+    {
+        $this->currentPage = ($p = filter_input(INPUT_GET, 'paginate')) > 0 ? $p : 1;
     }
 
     private function getQueryString()

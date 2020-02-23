@@ -9,6 +9,7 @@
 namespace app\controllers\frontend;
 
 use app\models\Produto;
+use app\utils\Paginacao;
 
 /**
  * Description of CategoriaController
@@ -37,9 +38,10 @@ class ProdutoController extends frontController {
 
     public function pesquisa()
     {
+        $pagination = new Paginacao(new Produto, 3, 8);
         $pesquisa = filter_input(INPUT_GET, 'pesquisa');
-        $produtos = $this->produto->getSearch($pesquisa);
-        
+        $produtos = $this->produto->getSearch($pesquisa, $pagination->limit());
+
         require $this->getFilePath('pesquisa');
     }
 }
