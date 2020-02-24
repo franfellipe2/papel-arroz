@@ -63,7 +63,7 @@ CONTEUDO
 }
 
 .page-produto{
-    
+
 }
 .page-produto img{   
     width: 100%;
@@ -104,6 +104,22 @@ CONTEUDO
     height: 4px;
     width: 45px;
     background: #FF007F;
+}
+
+
+.banner-home{
+
+}
+.banner-home .scroll-to-content-container{
+    position: relative;
+    height: 48px;
+}
+.banner-home .scroll-to-content{
+    position: absolute;
+    color: rgba(0,0,0,0.7);    
+}
+.banner-home .scroll-to-content:hover{
+    bottom: -8px;   
 }
 
 /*
@@ -186,8 +202,55 @@ CARDS
 
 
 /*
+SITE FOOTER
+*/
+.site-footer{
+    background: #33001A;
+    color: #fff;
+    padding: 48px 0;
+    text-align: center;
+}
+.site-footer .brand{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.site-footer .brand p{
+    color: rgba(255,255,255,0.4);
+    max-width: 600px;
+}
+
+.site-footer .contatos .icon {
+    font-size: 1.6em;
+    vertical-align: middle;
+}
+
+.site-footer .contatos a{
+    color: rgba(255,255,255,0.7);
+}
+
+.site-footer .contatos a:hover .fa-facebook{
+    color: #007bff;
+}
+
+.site-footer .fa-whatsapp{ 
+    color: #1c7430;
+}
+
+.site-footer .copy{
+    padding-top: 48px;
+    margin-top: 48px;
+    border-top: 1px solid #fff;
+    opacity: 0.6;
+}
+
+
+/*
 UTILITARIOS
 */
+.bg-none{
+    background: none;
+}
 .msg-info{
     padding: 24px 16px;
 }

@@ -1,6 +1,6 @@
-<?php 
-$pageTitle = 'Produto: '.$produto->getTitulo();
-require appConfig('frontDir') . '/header.php'; 
+<?php
+$pageTitle = 'Produto: ' . $produto->getTitulo();
+require appConfig('frontDir') . '/header.php';
 ?>
 <div class="msg-info smg-info-primary text-center">
     <p>Frutal - MG.    Por Enquanto estamos vendendo somente para a cidade de Frutal - MG.</p>
@@ -18,8 +18,8 @@ require appConfig('frontDir') . '/header.php';
                     <img src="<?php echo appImageUrl($produto->getImagem(), 'grande'); ?>">
                     <p><?php echo $produto->getDescricao() ?></p>
                     <div class="alert alert-light" style="background: none; border: none;">
-                        <?php if ($produto->getTipo() == 'papel_arroz') { ?>
-                            <p>O papel de arroz é utilizado para decoração de alimentos, é impresso com corante comestível a base de água.
+                        <?php if ( strtolower(str_replace('_', ' ', $produto->getTipo())) == 'papel arroz') { ?>
+                            <p>O papel de arroz comestível a base de água.
                                 Pode ser aplicado em: bolos, pirulitos de chocolate, doces, bombons, tortas, salgados, e até mesmo em velas e sabonetes artesanais.</p>
 
                             <p>Validade: 18 meses a partir da data de fabricação.</p>
