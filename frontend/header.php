@@ -10,6 +10,7 @@
         <link href="<?php echo appUrl('/frontend/assets/css/style.css'); ?>" rel="stylesheet" type="text/css"/>        
     </head>
     <body>
+        <div id="site-top"></div>
         <div class="page">
             <div class="site-header">
                 <?php require appConfig('frontDir') . 'menu-header.php'; ?>                

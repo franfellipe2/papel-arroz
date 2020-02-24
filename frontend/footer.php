@@ -1,7 +1,7 @@
 <div class="site-footer">
     <div class="container">
         <div class="brand">
-            <img src="<?php echo appUrl('/frontend/assets/images/logo.png');?>">
+            <img src="<?php echo appUrl('/frontend/assets/images/logo.png'); ?>">
             <p>Eternize suas comemorações  tirando fotos ao lado de suas delícias personalizadas com imagens super realistas.</p>
         </div>
         <div class="contatos card bg-none align-items-center h5">
@@ -19,6 +19,11 @@
         </div>
     </div>
 </div>
+</div>
+<div class="btn-to-top">
+    <div class="content">
+        <i class="fa fa-angle-up"></i>
+    </div>
 </div>
 <script src="<?php echo appUrl('/frontend/assets/js/jquery.js'); ?>"></script>
 <script src="https://code.jquery.com/jquery-migrate-3.1.0.js"></script>
