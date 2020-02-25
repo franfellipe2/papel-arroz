@@ -2,11 +2,8 @@
 $pageTitle = 'Carrinho de compras';
 require appConfig('frontDir') . '/header.php'; 
 ?>
-<div class="msg-info smg-info-primary text-center">
-    <p>Frutal - MG.    Por Enquanto estamos vendendo somente para a cidade de Frutal - MG.</p>
-    <p>Entregas de Segunda a Sexta, das 14:00 as 17:00; e Sábado das 8:00 as 11:00</p>
-</div>
-<section class="page-content">
+<?php require __DIR__.'/alert-msg.php'; ?>
+<section class="page-content mb-4">
     <div class="jumbotron jumbotron-fluid">
         <header class="container text-center">
             <h1 class="display-4 page-title"><i class="fas fa-shopping-cart icon"></i> Seu Carrinho de compras</h1>
@@ -73,9 +70,9 @@ require appConfig('frontDir') . '/header.php';
                                         <h3>R$ <?php echo appFormPrice($carrinho->getPrecoCarrinho()); ?></h3>
                                         <br>
                                         <?php if ($carrinho->getPrecoCarrinho() > 0) { ?>
-                                            <a class="btn btn-convert" href="<?php echo appUrl('/fechar-pedido/'); ?>" title="Ir para finalizar compra.">Fechar Pedido</a>                                                                             
+                                            <a class="btn btn-convert btn-lg" href="<?php echo appUrl('/fechar-pedido/'); ?>" title="Ir para finalizar compra.">Fechar Pedido</a>                                                                             
                                         <?php } ?>
-                                        <a class="btn btn-outline-primary" href="<?php echo appUrl('/'); ?>">Continuar Comprando</a>
+                                        <a class="btn btn-outline-primary btn-lg" href="<?php echo appUrl('/'); ?>">Continuar Comprando</a>
                                     </div>
 
                                     </div><!-- ./container -->

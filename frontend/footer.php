@@ -10,7 +10,7 @@
                     <i class="fab fa-whatsapp icon"></i> (34) 9.9766-9479
                 </li>               
                 <li class="bg-none border-0 list-group-item">
-                    <a href="https://www.facebook.com/papelarrozfrutal" title="pagina-facebook"><i class="fab fa-facebook icon"></i></a>
+                    <a href="https://www.facebook.com/papelarrozfrutal" target="_blank" title="pagina-facebook"><i class="fab fa-facebook icon"></i></a>
                 </li>               
             </ul>
         </div>
