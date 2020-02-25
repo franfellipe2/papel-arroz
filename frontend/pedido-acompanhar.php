@@ -12,7 +12,7 @@ require appConfig('frontDir') . '/header.php';
             <p>Acompanhe aqui seu pedido</p>
         </header>
     </div>
-    <div class="container">
+    <div class="container pb-5">
 
         <form action="<?php echo appUrl('/pedido/acompanhar#pedido'); ?>" method="post">
             <div class="row">
@@ -58,7 +58,7 @@ require appConfig('frontDir') . '/header.php';
                             <li>
                                 <?php
                                 if (!empty(($date = $pedido->getStatus($status)))) {
-                                    echo '<span class="text-success"><i class="fas fa-check"></i> Recebido - ' . date('d/m/Y H:i:s', strtotime($date)) . '</span>';
+                                    echo '<span class="text-success"><i class="fas fa-check"></i> '.pStatus::getLabel($status).' - ' . date('d/m/Y H:i:s', strtotime($date)) . '</span>';
                                 } else {
                                     ?>
                                     <span class="text-muted"><?php echo pStatus::getLabel($status); ?></span>

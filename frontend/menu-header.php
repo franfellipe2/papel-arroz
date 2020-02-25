@@ -25,18 +25,28 @@ if (car::hasSessionValid()) {
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto" style="text-transform: capitalize;">            
-            <?php
-            $c = new app\utils\CategoriasAninhadas();
-            foreach ($c->get() as $r => $c) {
-                ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?php echo appUrl('/categoria') . '/' . appStrSlug($c['nome']); ?>"><?php echo $c['nome']; ?></a>
-                </li>
-            <?php } ?> 
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Categorias
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <?php
+                    $c = new app\utils\CategoriasAninhadas();
+                    foreach ($c->get() as $r => $c) {
+                        ?>
+                        <a class="dropdown-item" href="<?php echo appUrl('/categoria') . '/' . appStrSlug($c['nome']); ?>"><?php echo $c['nome']; ?></a>
+                    <?php } ?> 
+                </div>
+
+            </li>
+
             <li class="nav-item">
-                <span class="nav-link" style="color: #333; font-size: 1.4em; margin-top: -0.3em">
+                <span class="nav-link" style="color: #333; font-size: 1.1em; margin-top: -0.3em">
                     <i class="fab fa-whatsapp"></i> (34) 9.9766-9479
                 </span>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link color-convert" href="<?php echo appUrl('/pedido/acompanhar'); ?>">Acompanhar Pedido</a>
             </li>
         </ul>
 
