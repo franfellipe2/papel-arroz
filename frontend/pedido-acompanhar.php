@@ -84,6 +84,7 @@ require appConfig('frontDir') . '/header.php';
                             <th colspan="5" class="text-center">PRODUTOS</th>
                         </tr>
                         <tr>
+                            <th>ID</th>
                             <th></th>
                             <th>Tipo</th>
                             <th>Preço</th>
@@ -94,6 +95,9 @@ require appConfig('frontDir') . '/header.php';
                     <tbody>
                         <?php foreach ($pedido->carrinho()->getProdutos() as $p): ?>
                             <tr>
+                                <td>                                    
+                                    <?php echo $p['id']; ?>
+                                </td>
                                 <td>
                                     <img src="<?php echo appImageUrl($p['imagem'], 'thumb'); ?>" height="45px">
                                     <?php echo $p['titulo'] ?>
@@ -107,7 +111,7 @@ require appConfig('frontDir') . '/header.php';
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th class="h3" colspan="5">Preço Total:  R$<?php echo appFormPrice($pedido->getVltotal()); ?></th>                                   
+                            <th class="h3" colspan="6">Preço Total:  R$<?php echo appFormPrice($pedido->getVltotal()); ?></th>                                   
                         </tr>
                     </tfoot>
                 </table>

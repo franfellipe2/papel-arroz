@@ -17,6 +17,7 @@ require appConfig('frontDir') . '/header.php';
                 <thead>
                     <tr>
                         <th></th>
+                        <th>ID</th>
                         <th><small>Produto<small></th>
                                     <th><small>Preço</small></th>
                                     <th><small>Q. Produtos</small></th>
@@ -27,6 +28,7 @@ require appConfig('frontDir') . '/header.php';
                                         <?php foreach ($carrinho->getProdutos() as $p) { ?>
                                             <tr>
                                                 <td><a class="btn btn-sm btn-danger" href="<?php echo appUrl('/carrinho/' . $p['id'] . '/remove') ?>" title="Excluir">x</a></td>
+                                                <TD><?php echo $p['id'];?></TD>
                                                 <td class="clearfix">
                                                     <img class="float-left mr-1" width="50" src="<?php echo appImageUrl($p['imagem'], 'thumb'); ?>">
                                                     <a href="<?php echo appUrl('/produto/' . $p['slug']); ?>"><?php echo $p['titulo']; ?></a>
@@ -57,7 +59,7 @@ require appConfig('frontDir') . '/header.php';
                                             <th colspan="2">
                                                 Soma Total
                                             </th>
-                                            <th class="text-right" colspan="3">
+                                            <th class="text-right" colspan="4">
                                                 R$ <?php echo appFormPrice($carrinho->getPrecoCarrinho()); ?>
                                             </th>
                                         </tr>
