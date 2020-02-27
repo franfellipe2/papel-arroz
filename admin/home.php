@@ -1,4 +1,6 @@
-<?php require __DIR__ . '/header.php';
+<?php 
+$tituloPage  = 'Area administrativa';
+require __DIR__ . '/header.php';
 require __DIR__ . '/sidebar.php';
 ?>
 <div class="content-page">

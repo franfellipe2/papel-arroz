@@ -1,7 +1,7 @@
 <div class="site-footer">
     <div class="container">
         <div class="brand">
-            <img src="<?php echo appUrl('/frontend/assets/images/logo.png'); ?>">
+            <img class="img-fluid" src="<?php echo appUrl('/frontend/assets/images/logo.png'); ?>">
             <p>Eternize suas comemorações  tirando fotos ao lado de suas delícias personalizadas com imagens super realistas.</p>
         </div>
         <div class="contatos card bg-none align-items-center h5">

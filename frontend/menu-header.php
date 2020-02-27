@@ -13,7 +13,7 @@ if (car::hasSessionValid()) {
         <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand logo" href="<?php echo appConfig('baseUrl'); ?>">
-        <img src="<?php echo appUrl('/frontend/assets/images/logo.png'); ?>">
+        <img class="img-fluid" src="<?php echo appUrl('/frontend/assets/images/logo.png'); ?>">
     </a>   
 
     <div class="carrinho nav-sm">
