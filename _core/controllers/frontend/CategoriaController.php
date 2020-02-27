@@ -17,7 +17,7 @@ use app\models\Produto;
  *
  * @author franf
  */
-class CategoriaController extends frontController {
+class CategoriaController extends FrontController {
 
     private $categoria;
 

@@ -10,7 +10,7 @@ use app\models\PapelArroz;
  *
  * @author franf
  */
-class homeController extends frontController {
+class HomeController extends FrontController {
 
     function __construct()
     {

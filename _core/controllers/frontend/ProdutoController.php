@@ -16,7 +16,7 @@ use app\utils\Paginacao;
  *
  * @author franf
  */
-class ProdutoController extends frontController {
+class ProdutoController extends FrontController {
 
     private $produto;
 

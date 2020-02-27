@@ -13,7 +13,7 @@ namespace app\controllers\frontend;
  *
  * @author franf
  */
-class frontController {
+class FrontController {
 
     private $request;
     private $response;

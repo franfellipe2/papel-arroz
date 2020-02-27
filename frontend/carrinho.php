@@ -41,7 +41,7 @@ require appConfig('frontDir') . '/header.php';
                                                             <a class="btn btn-sm btn-dark" href="<?php echo appUrl('/carrinho/' . $p['id'] . '/minus') ?>">-</a>
                                                         </div>
                                                         <form name="<?php echo $formName; ?>" action="<?php echo appUrl('/carrinho/' . $p['id']) . '/add'; ?>" method="post">
-                                                            <input name="quantidade" onchange="upQtd('<?php echo $formName; ?>')" type="text" class="form-control form-control-sm" value="<?php echo $p['quantidade']; ?>" style="max-width: 50px">
+                                                            <input name="quantidade" onchange="upQtd('<?php echo $formName; ?>')" type="text" class="form-control form-control-sm" value="<?php echo $p['quantidade']; ?>" style="max-width: 50px; min-width: 30px;">
                                                         </form>
                                                         <form name="<?php echo $formName; ?>" action="<?php echo appUrl('/carrinho/' . $p['id']) . '/add'; ?>" method="post">
                                                             <input type="hidden" name="increment" value="true">

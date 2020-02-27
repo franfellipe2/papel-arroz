@@ -13,5 +13,10 @@ return [
     
     // Pastas
     'baseDir' => __DIR__.'/../',
-    'frontDir' =>  __DIR__.'/../frontend/'
+    'frontDir' =>  __DIR__.'/../frontend/',
+    
+    // Contatos e sociais
+    'whatssap' => '(34) 9.9299-4466',
+    'facebook' => ''
+    
 ];

@@ -17,7 +17,7 @@ use app\facades\CarrinhoFacade;
  *
  * @author franf
  */
-class CarrinhoController extends frontController {
+class CarrinhoController extends FrontController {
 
     private $carrinho;
 

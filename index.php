@@ -16,7 +16,7 @@ $app = new \Slim\App($config);
 
 function controllerFactory($controllerPrifix, $request, $response)
 {
-    $c = 'app\\controllers\\frontend\\' . $controllerPrifix . 'Controller';
+    $c = 'app\\controllers\\frontend\\' . ucfirst($controllerPrifix) . 'Controller';
     return new $c($request, $response);
 }
 // ======================================

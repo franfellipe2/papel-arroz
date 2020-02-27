@@ -102,7 +102,7 @@ require appConfig('frontDir') . '/header.php';
                                     <img src="<?php echo appImageUrl($p['imagem'], 'thumb'); ?>" height="45px">
                                     <?php echo $p['titulo'] ?>
                                 </td>
-                                <td><?php echo $p['tipo'] == 'papel_arroz' ? 'Papel Arroz' : null; ?></td>
+                                <td><?php echo $p['tipo']; ?></td>
                                 <td>R$ <?php echo appFormPrice($p['preco_venda']); ?></td>
                                 <td><?php echo $p['quantidade']; ?></td>
                                 <td>R$ <?php echo appFormPrice($p['vltotal']); ?></td>

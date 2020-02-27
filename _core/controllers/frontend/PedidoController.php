@@ -19,7 +19,7 @@ use app\facades\PedidoFacade;
  *
  * @author franf
  */
-class PedidoController extends frontController {
+class PedidoController extends FrontController {
 
     public function fechar()
     {

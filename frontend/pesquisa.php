@@ -19,7 +19,7 @@ require appConfig('frontDir') . '/header.php';
             <div class="card-columns">
                 <?php
                 foreach ($produtos as $p):
-                    if ($p->getTipo() == 'papel_arroz') {
+                    if ($p->getTipo() == 'Papel Arroz') {
                         $papelArroz = $p;
                         require __DIR__ . '/template_parts/card-papel-arroz.php';
                     } else {

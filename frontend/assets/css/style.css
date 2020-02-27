@@ -158,6 +158,7 @@ CARRINHO DE COMPRAS
     display: block;
 }
 
+
 @media (min-width: 992px){
     .carrinho.nav-lg{
         display: block;
@@ -165,6 +166,38 @@ CARRINHO DE COMPRAS
     .carrinho.nav-sm{
         display: none;
     }
+}
+
+
+/*
+NOSSOS SERVICOS
+*/
+.nossos-servicos{
+    text-align: center;
+}
+.nossos-servicos .icon{
+    display: inline-block;
+    border: 3px solid #FF007F;
+    padding: 26px;
+    font-size: 57px;
+    width: 140px;
+    height: 140px;
+    text-align: center;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    margin-bottom: 16px;
+    color: #FF007F;
+}
+.nossos-servicos .title{
+    font-size: 1.6em;
+    color: #FF007F;
+}
+.nossos-servicos .description{
+    color: #555;
+}
+.nossos-servicos .footer{
+    font-size: 1.4em;
 }
 
 /*

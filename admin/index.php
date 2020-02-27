@@ -14,7 +14,8 @@ if (!Login::checkLogin()) {
 
 // Rotas por $_GET
 if (!empty($_GET['action']) && !empty($_GET['pg'])) {
-    $classController = 'app\\controllers\\admin\\' . $_GET['pg'] . 'Controller';
+    $class = ucfirst($_GET['pg']);
+    $classController = 'app\\controllers\\admin\\' . $class . 'Controller';
     $controller = new $classController;
     $controller->{$_GET['action']}();
 } else {
