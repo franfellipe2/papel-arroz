@@ -1,8 +1,13 @@
 <?php
 $pageTitle = 'Produto: ' . $produto->getTitulo();
+$pageUrl = appUrl('/produto/' . $produto->getSlug());
+$pageImage = appImageUrl($produto->getImagem(), 'grande');
+$pageDescription = substr($produto->getDescricao(), 0, 255);
+$pageDescription .= strlen($produto->getDescricao()) > 255 ? '...' : null;
+$pageType = app\enumerations\SMOTypes::WEBSITE;
 require appConfig('frontDir') . '/header.php';
 ?>
-<?php require __DIR__.'/alert-msg.php'; ?>
+<?php require __DIR__ . '/alert-msg.php'; ?>
 <section class="page-content page-produto">    
     <div class="container my-4">
 
@@ -13,9 +18,9 @@ require appConfig('frontDir') . '/header.php';
             <div class="row">
                 <div  class="produto-content col-md-8">
                     <img src="<?php echo appImageUrl($produto->getImagem(), 'grande'); ?>">
-                    <p><?php echo $produto->getDescricao() ?></p>
+                    <p><?php echo $produto->getDescricao(); ?></p>
                     <div class="alert alert-light" style="background: none; border: none;">
-                        <?php if ( strtolower(str_replace('_', ' ', $produto->getTipo())) == 'papel arroz') { ?>
+                        <?php if (strtolower(str_replace('_', ' ', $produto->getTipo())) == 'papel arroz') { ?>
                             <p>O papel de arroz comestível a base de água.
                                 Pode ser aplicado em: bolos, pirulitos de chocolate, doces, bombons, tortas, salgados, e até mesmo em velas e sabonetes artesanais.</p>
 

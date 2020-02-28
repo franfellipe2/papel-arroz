@@ -1,5 +1,9 @@
 <?php
 $pageTitle = appConfig('siteName');
+$pageUrl = appUrl('/');
+$pageImage = appUrl('/frontend/assets/images/banner-home.png');
+$pageDescription = 'Site de vendas de papel arroz comestível';
+$pageType = app\enumerations\SMOTypes::WEBSITE;
 require appConfig('frontDir') . '/header.php';
 ?>
 <?php require __DIR__ . '/alert-msg.php'; ?>
@@ -10,33 +14,33 @@ require appConfig('frontDir') . '/header.php';
         <img class="img-fluid" 
              src="<?php echo appUrl('/frontend/assets/images/banner-home.png'); ?>" title="banner papel arroz comestível"
              alt="banner papel arroz comestível">
-            <div class="scroll-to-content-container">
-                <a class="scroll-to-content" href="#site-content" onclick="appScrollTo('#site-content')">
-                    <i class="fas fa-angle-down h1"></i>
-                </a>
-            </div>
+        <div class="scroll-to-content-container">
+            <a class="scroll-to-content" href="#site-content" onclick="appScrollTo('#site-content')">
+                <i class="fas fa-angle-down h1"></i>
+            </a>
+        </div>
     </div>
 </div>
 <section class="container nossos-servicos py-5">
     <h2 class="sr-only">Nossos serviços</h3>
-    <div class="row border-bottom pb-5">
-        <div class="col-md-4 py-4">
-            <div class="icon"><i class="fas fa-pencil-ruler"></i></div>
-            <h3 class="title">Projetos Personalizados</h3>
-            <p class="description">Fazemos qualquer tema e foto, para isso entre em contato por meio do nosso Whatssap:</p>            
-            <div class="footer"><?php echo appConfig('whatssap'); ?></div>
-        </div><!-- /.col-lg-4 -->
-        <div class="col-md-4 py-4">
-            <div class="icon"><i class="fas fa-dolly"></i></div>
-            <h3 class="title">Entregas em domicílio</h3>
-            <p class="description">Você não precisa sair de casa para buscar sua encomenda. Fazemos entregas de Segunda a Sexta das 14:00 as 18:00 e sabado das 08:00 as 11:00 </p>          
-        </div><!-- /.col-lg-4 -->        
-        <div class="col-md-4 py-4">
-            <div class="icon"><i class="fas fa-money-bill-wave"></i></div>
-            <h3 class="title">Só Paga quando receber</h3>
-            <p class="description">Receberemos o pagamento no ato da entrega. Por enquanto estamos aceitando somente dinheiro vivo.</p>          
-        </div><!-- /.col-lg-4 -->        
-    </div>
+        <div class="row border-bottom pb-5">
+            <div class="col-md-4 py-4">
+                <div class="icon"><i class="fas fa-pencil-ruler"></i></div>
+                <h3 class="title">Projetos Personalizados</h3>
+                <p class="description">Fazemos qualquer tema e foto, para isso entre em contato por meio do nosso Whatssap:</p>            
+                <div class="footer"><?php echo appConfig('whatssap'); ?></div>
+            </div><!-- /.col-lg-4 -->
+            <div class="col-md-4 py-4">
+                <div class="icon"><i class="fas fa-dolly"></i></div>
+                <h3 class="title">Entregas em domicílio</h3>
+                <p class="description">Você não precisa sair de casa para buscar sua encomenda. Fazemos entregas de Segunda a Sexta das 14:00 as 18:00 e sabado das 08:00 as 11:00 </p>          
+            </div><!-- /.col-lg-4 -->        
+            <div class="col-md-4 py-4">
+                <div class="icon"><i class="fas fa-money-bill-wave"></i></div>
+                <h3 class="title">Só Paga quando receber</h3>
+                <p class="description">Receberemos o pagamento no ato da entrega. Por enquanto estamos aceitando somente dinheiro vivo.</p>          
+            </div><!-- /.col-lg-4 -->        
+        </div>
 </section>
 
 <div class="page-content py-4">   

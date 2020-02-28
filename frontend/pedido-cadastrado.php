@@ -1,6 +1,11 @@
-<?php 
+<?php
 $pageTitle = 'Pedido Cadastrado com sucesso!';
-require appConfig('frontDir') . '/header.php'; ?>
+$pageUrl = appUrl('/pedido/cadastrado');
+$pageImage = null;
+$pageDescription = 'Seu pedido foi cadastrado com sucesso';
+$pageType = app\enumerations\SMOTypes::WEBSITE;
+require appConfig('frontDir') . '/header.php';
+?>
 <div class="page-content pb-4">    
     <div class="jumbotron jumbotron-fluid bg-success text-white">
         <header class="container text-center">
@@ -40,7 +45,7 @@ require appConfig('frontDir') . '/header.php'; ?>
                 <p style="text-transform: capitalize;"><?php echo $pedido->endereco()->getLongradouro() ?>, <?php echo $pedido->endereco()->getNumero() ?> - Complemento: <?php echo $pedido->endereco()->getComplemento() ?></p>
                 <p><b>Bairro:</b> <?php echo $pedido->endereco()->getBairro(); ?></p>
                 <p>
-                    <?php echo $pedido->endereco()->getCidade(); ?>
+<?php echo $pedido->endereco()->getCidade(); ?>
                     <span> - </span>
                     <span style="text-transform: uppercase"><?php echo $pedido->endereco()->getUf(); ?></span>
                 </p>
@@ -58,13 +63,13 @@ require appConfig('frontDir') . '/header.php'; ?>
                     </thead>
 
                     <tbody>
-                        <?php foreach ($pedido->carrinho()->getProdutos() as $item) { ?>
+<?php foreach ($pedido->carrinho()->getProdutos() as $item) { ?>
                             <tr>
                                 <td><?php echo $item['titulo']; ?></td>
                                 <td><?php echo str_replace(['-', '_'], ' ', $item['tipo']); ?></td>
                                 <td><?php echo $item['quantidade']; ?></td>
                             </tr>
-                        <?php } ?>
+<?php } ?>
                     </tbody>
                     <tfoot>
                         <tr>

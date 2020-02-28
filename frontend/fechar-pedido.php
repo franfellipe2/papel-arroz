@@ -1,8 +1,12 @@
 <?php
 $pageTitle = 'Fechar pedido';
-require appConfig('frontDir') . '/header.php'; 
+$pageUrl = appUrl('/fechar-pedido/');
+$pageImage = null;
+$pageDescription = 'Fechar o pedido e finalizar a compra';
+$pageType = app\enumerations\SMOTypes::WEBSITE;
+require appConfig('frontDir') . '/header.php';
 ?>
-<?php require __DIR__.'/alert-msg.php'; ?>
+<?php require __DIR__ . '/alert-msg.php'; ?>
 <div class="page-content pb-4">    
     <?php if (isset($errors) && !empty($errors)) { ?>
         <div class="jumbotron jumbotron-fluid bg-warning text-white">
@@ -178,7 +182,7 @@ require appConfig('frontDir') . '/header.php';
 
             $('#confirmModal').modal('show');
 
-            $('#btn-form-submit').on('click', function () {               
+            $('#btn-form-submit').on('click', function () {
                 form.submit();
             });
 

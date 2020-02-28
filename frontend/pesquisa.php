@@ -1,5 +1,9 @@
 <?php 
 $pageTitle = 'Pesquisa';
+$pageUrl = appUrl('/pesquisa');
+$pageImage = null;
+$pageDescription = 'Pesquisar no site';
+$pageType = app\enumerations\SMOTypes::WEBSITE;
 require appConfig('frontDir') . '/header.php'; 
 ?>
 <?php require __DIR__.'/alert-msg.php'; ?>

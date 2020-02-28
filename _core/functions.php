@@ -2,6 +2,15 @@
 
 use app\utils\Config;
 
+/**
+ * Otimização do site para compatilhamento em midias sociais
+ */
+function appSMO($url, $image, $title, $description, $type)
+{
+    $smo = new \app\utils\SMO($url, $image, $title, $description, $type);
+    return $smo->mount();
+}
+
 function appValidaCep($cep)
 {
     if (preg_match('/^[0-9]{5,5}([- ]?[0-9]{3,3})?$/', $cep)) {
