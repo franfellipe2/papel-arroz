@@ -97,13 +97,13 @@ class Images {
 
             imagecopyresampled($newImage, $oldImage, 0, 0, 0, 0, $nw, $nh, $w, $h);
 
-            imagepng($newImage, appConfig('baseDir') . $srcName);
+            imagepng($newImage, appConfig('baseDir') . $srcName . '.png');
 
             imagedestroy($newImage);
         }
         imagedestroy($oldImage);
 
-        return $newName;
+        return $newName . '.png';
     }
 
     static function getUrl($fileName, $size = 'full')
@@ -116,7 +116,7 @@ class Images {
         if ($size == 'full') {
             return $fileName;
         } else {
-            return substr($fileName, 0, strrpos($fileName, '.')) . '-size(' . $size . ')' . '.jpg';
+            return substr($fileName, 0, strrpos($fileName, '.')) . '-size(' . $size . ')' . '.png';
         }
     }
 
@@ -138,9 +138,9 @@ class Images {
     public function fileNameGenerate($name, $size = null)
     {
         if ($size == null) {
-            return $nName = $this->dirUplaod . '/' . $name . '.jpg';
+            return $nName = $this->dirUplaod . '/' . $name;
         } else {
-            return $nName = $this->dirUplaod . '/' . $name . '-size(' . $size . ')' . '.jpg';
+            return $nName = $this->dirUplaod . '/' . $name . '-size(' . $size . ')';
         }
     }
 

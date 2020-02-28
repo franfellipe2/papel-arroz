@@ -53,9 +53,6 @@ require appConfig('frontDir') . '/header.php';
 
     </div><!-- ./container -->
 </section>
-<div class="page-footer">
-    rodape
-</div>
 <?php require appConfig('frontDir') . '/footer.php'; ?>
 </body>
 </html>
