@@ -1,5 +1,5 @@
 <?php
-$pageTitle = 'Produto: ' . $produto->getTitulo();
+$pageTitle = $produto->getTitulo();
 $pageUrl = appUrl('/produto/' . $produto->getSlug());
 $pageImage = appImageUrl($produto->getImagem(), 'grande');
 $pageDescription = substr($produto->getDescricao(), 0, 255);

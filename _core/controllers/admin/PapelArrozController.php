@@ -34,7 +34,7 @@ class PapelArrozController extends AdminController implements AdminControllerInt
      */
     public function listar()
     {
-        $papelArroz = new PapelArroz();
+        $produtos = (new PapelArroz())->listAll();                
         require $this->page . '/listar.php';
     }
 

@@ -1,5 +1,4 @@
 <?php
-
 // Proteje contra acesso direto ao arquivo
 require __DIR__ . '/../protege-arquivo.php';
 
@@ -26,7 +25,7 @@ require __DIR__ . '/../sidebar.php';
             <div class="card-body">
                 <div class="form-group">
                     <label>Titulo</label>
-                    <input name='titulo' type="text" class="form-control <?php if (!empty($erros['titulo'])) echo 'is-invalid'; ?>" value="<?php echo $papelArroz->getTitulo(); ?>">
+                    <input name='titulo' type="text" class="form-control <?php if (!empty($erros['titulo'])) echo 'is-invalid'; ?>" value="<?php echo ($var = $papelArroz->getTitulo()) ? $var : 'Papel de arroz ...'; ?>">
                     <div class="invalid-feedback">
                         <?php if (!empty($erros['titulo'])) echo $erros['titulo']; ?>
                     </div>
@@ -41,14 +40,14 @@ require __DIR__ . '/../sidebar.php';
                 </div>
                 <div class="form-group">
                     <label>Descrição </label>
-                    <textarea name="descricao" class="form-control <?php if (!empty($erros['descricao'])) echo 'is-invalid'; ?>"><?php echo $papelArroz->getDescricao(); ?></textarea>
+                    <textarea name="descricao" class="form-control <?php if (!empty($erros['descricao'])) echo 'is-invalid'; ?>"><?php echo ($var = $papelArroz->getDescricao()) ? $var : 'Papel de arroz comestível _____ no formato ____ ideal para decoração de ____ etc...'; ?></textarea>
                     <div class="invalid-feedback">
                         <?php if (!empty($erros['descricao'])) echo $erros['descricao']; ?>
                     </div>
                 </div>
                 <div class="form-group">
                     <label>Preço </label>
-                    <input type="text" name="preco" class="form-control <?php if (!empty($erros['preco'])) echo 'is-invalid'; ?>" value="<?php echo $papelArroz->getPreco(); ?>">
+                    <input type="text" name="preco" class="form-control <?php if (!empty($erros['preco'])) echo 'is-invalid'; ?>" value="<?php echo ($var = $papelArroz->getPreco()) ? $var : '7.00'; ?>">
                     <div class="invalid-feedback">
                         <?php if (!empty($erros['preco'])) echo $erros['preco']; ?>
                     </div>
