@@ -26,9 +26,7 @@ class Paginacao {
         $this->setCurrentPage();
         $this->model = $objt;
         $this->resultsPerPage = $resultsPerPage;
-        $this->totalLinks = $totalLinks;
-        $this->setTotalRegistros();
-        $this->calcTotalPages();
+        $this->totalLinks = $totalLinks;       
         $this->setLimit();
     }
 
@@ -63,6 +61,9 @@ class Paginacao {
 
     public function getTotalRegistros()
     {
+        if ($this->totalRegistros == null) {
+            $this->setTotalRegistros();
+        }
         return $this->totalRegistros;
     }
 
@@ -73,6 +74,9 @@ class Paginacao {
 
     public function getTotalPages()
     {
+        if($this->totalPages == NULL){
+            $this->calcTotalPages();
+        }
         return $this->totalPages;
     }
 
@@ -134,18 +138,18 @@ class Paginacao {
 
     public function setLimit()
     {
-        $this->limit = [$this->currentPage > 1 ? ($this->currentPage - 1) * ( $this->resultsPerPage - 1): 0, $this->resultsPerPage];
+        $this->limit = [$this->currentPage > 1 ? ($this->currentPage - 1) * ( $this->resultsPerPage - 1) : 0, $this->resultsPerPage];
     }
 
     private function calcTotalPages()
     {
-        $this->totalPages = $this->totalRegistros > $this->resultsPerPage ? ceil($this->totalRegistros / $this->resultsPerPage) : 0;
+        $this->totalPages = $this->getTotalRegistros() > $this->resultsPerPage ? ceil($this->getTotalRegistros() / $this->resultsPerPage) : 0;
     }
 
     private function setTotalRegistros()
     {
         $db = new DB();
-        $r = $db->select('SELECT count(*) as total FROM ' . $this->model->getTable());
+        $r = $db->select($this->model->getSqlForPaginate(), $this->model->getParamsForPaginate());
         $this->totalRegistros = isset($r[0]) ? $r[0]['total'] : 0;
     }
 }

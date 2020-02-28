@@ -16,8 +16,7 @@ class HomeController extends FrontController {
     {
         $p = new PapelArroz();
         $paginate = new Paginacao($p, 9, 8);
-        $produtos = $p->listAll(true, $paginate->limit(), ['id', 'desc']);
-
+        $produtos = $p->listAll(true, $paginate->limit(), ['id', 'desc']);        
         require $this->getFilePath('home');
     }
 }

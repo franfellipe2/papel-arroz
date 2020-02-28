@@ -31,15 +31,21 @@ class Produto extends Model implements ModelInterface {
         $db = new DB();
 
         $params = [':text' => "%$text%"];
-        $args = '';
+
+        $sql = 'SELECT * FROM produtos WHERE titulo LIKE :text ';
+        $sqlForPaginate = 'SELECT count(*) as total FROM produtos WHERE titulo LIKE :text';
+        $this->setSqlForPaginate($sqlForPaginate);
+        $this->setParamsForPaginate($params);
+        
+        $limits = '';
         if (!empty($limit)) {
-            $args .= ' LIMIT :start, :offset';
+            $limits .= ' LIMIT :start, :offset';
             $params[':start'] = $limit[0];
             $params[':offset'] = $limit[1];
         }
 
-        $sql = 'SELECT * FROM produtos WHERE titulo LIKE :text ' . $args;
-        $r = $db->select($sql, $params);
+        $r = $db->select($sql . ' ' . $limits, $params);
+
         if ($r) {
             $produtos = array();
             foreach ($r as $data) {

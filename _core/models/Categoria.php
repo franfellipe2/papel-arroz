@@ -55,27 +55,36 @@ class Categoria extends Model implements ModelInterface {
     public function getProdutos($limit = array(), $orderBy = array())
     {
         $db = new DB();
-        
+
         $params[':cat_id'] = $this->getId();
         $args = '';
-        
+
         if (!empty($orderBy) && in_array($orderBy[1], ['asc', 'desc']) && in_array($orderBy[0], array_keys($this->data))) {
             $args .= ' ORDER BY ' . $orderBy[0] . ' ' . $orderBy[1];
-        }       
-        if (!empty($limit)) {
-            $args .= ' LIMIT :start, :offset';
-            $params[':start'] = $limit[0];
-            $params[':offset'] = $limit[1];
         }
-        
+
+
         $sql = 'SELECT produtos.* FROM `produtos` 
                 INNER JOIN prod_cat
                 ON prod_cat.prod_id = `produtos`.`id`
                 AND prod_cat.cat_id = :cat_id ' . $args;
 
+        $sqlPaginate = 'SELECT count(*) as total FROM `produtos` 
+                INNER JOIN prod_cat
+                ON prod_cat.prod_id = `produtos`.`id`
+                AND prod_cat.cat_id = :cat_id ' . $args;
 
+        $this->setSqlForPaginate($sqlPaginate);
+        $this->setParamsForPaginate($params);
 
-        $r = $db->select($sql, $params);
+        $limits = '';
+        if (!empty($limit)) {
+            $limits .= ' LIMIT :start, :offset';
+            $params[':start'] = $limit[0];
+            $params[':offset'] = $limit[1];
+        }
+
+        $r = $db->select($sql . ' ' . $limits, $params);
         foreach ($r as $p => $data) {
             $p = new Produto();
             $p->setData($data);

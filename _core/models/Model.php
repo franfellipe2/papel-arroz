@@ -14,6 +14,8 @@ class Model {
     private $errors = array();
     private $errorExistis = false;
     private $msgError;
+    private $sqlForPaginate;
+    private $paramsForPaginate;
 
     public function getAll()
     {
@@ -212,14 +214,21 @@ class Model {
             $args .= ' GORUP BY :groupby ';
             $params[':groupby'] = $groupBy;
         }
+
+        $sql = 'SELECT * FROM `' . $this->getTable() . '` ' . $args;
+        $sqlPaginate = 'SELECT count(*) as total FROM `' . $this->getTable() . '` ' . $args;       
+        $this->setSqlForPaginate($sqlPaginate);
+        $this->setParamsForPaginate($params);
+
+        $strLimit = '';
         if (!empty($limit)) {
-            $args .= ' LIMIT :start, :offset';
+            $strLimit .= ' LIMIT :start, :offset';
             $params[':start'] = $limit[0];
             $params[':offset'] = $limit[1];
         }
 
-        $r = $db->select('SELECT * FROM `' . $this->getTable() . '` ' . $args, $params);
-     
+        $r = $db->select($sql . ' ' . $strLimit, $params);
+
         if (empty($r)) {
             return false;
         } elseif ($returnObjts) {
@@ -232,6 +241,45 @@ class Model {
             return $objts;
         }
         return $r;
+    }
+
+    /**
+     * Passar sql para calcular o total de registros e fazer a paginação
+     * @param type $sql
+     * @param type $params
+     */
+    public function setSqlForPaginate($sql)
+    {        
+        $this->sqlForPaginate = $sql;
+    }
+
+    /**
+     * Sql utilizado para calcular o total de registors
+     * @return type
+     */
+    public function getSqlForPaginate()
+    {
+        return $this->sqlForPaginate;
+    }
+
+    /**
+     * Passar os parametros do sql para calcular o total de registros e fazer a paginação
+     * @param type $sql
+     * @param type $params
+     */
+    public function setParamsForPaginate(array $params)
+    {
+        $this->paramsForPaginate = $params;
+    }
+
+    /**
+     * Pegar os parametros do sql para calcular o total de registros e fazer a paginação
+     * @param type $sql
+     * @param type $params
+     */
+    public function getParamsForPaginate()
+    {
+        return $this->paramsForPaginate;
     }
 
     public function getData(): array

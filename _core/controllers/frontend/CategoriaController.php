@@ -34,7 +34,7 @@ class CategoriaController extends FrontController {
 
         if ($categoria) {
 
-            $paginate = new Paginacao(new Produto(), 9, 8);
+            $paginate = new Paginacao($categoria, 9, 8);
             $produtos = $categoria->getProdutos($paginate->limit(), ['id', 'desc']);
 
             require $this->getFilePath('categoria');

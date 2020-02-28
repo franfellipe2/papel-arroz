@@ -38,9 +38,10 @@ class ProdutoController extends FrontController {
 
     public function pesquisa()
     {
-        $pagination = new Paginacao(new Produto, 9, 8);
-        $pesquisa = filter_input(INPUT_GET, 'pesquisa');
+        $pagination = new Paginacao($this->produto, 9, 8);
+        $pesquisa = filter_input(INPUT_GET, 'pesquisa');       
         $produtos = $this->produto->getSearch($pesquisa, $pagination->limit());
+        
 
         require $this->getFilePath('pesquisa');
     }
