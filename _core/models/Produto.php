@@ -256,6 +256,11 @@ class Produto extends Model implements ModelInterface {
         $this->data['personalizado'] = $personalizado;
     }
 
+    public function getPersonalizado()
+    {
+        return $this->data['personalizado'];
+    }
+
     /**
      * Seta os ids das categorias informados no formulario para cadastro ou atualização
      */
