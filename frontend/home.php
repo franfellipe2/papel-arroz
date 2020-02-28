@@ -7,9 +7,11 @@ require appConfig('frontDir') . '/header.php';
     <div class="container text-center">
         <h1>Papel de arroz comestível</h1>        
         <p>O papel de arroz é utilizado para decoração de alimentos, é impresso com corante comestível a base de água. Pode ser aplicado em: bolos, pirulitos de chocolate, doces, bombons, tortas, salgados, e até mesmo em velas e sabonetes artesanais.</p>                        
-        <img class="img-fluid" src="<?php echo appUrl('/frontend/assets/images/banner-home.png'); ?>" title="banner papel arroz comestível">
+        <img class="img-fluid" 
+             src="<?php echo appUrl('/frontend/assets/images/banner-home.png'); ?>" title="banner papel arroz comestível"
+             alt="banner papel arroz comestível">
             <div class="scroll-to-content-container">
-                <a class="scroll-to-content" href="#" onclick="appScrollTo('#site-content')">
+                <a class="scroll-to-content" href="#site-content" onclick="appScrollTo('#site-content')">
                     <i class="fas fa-angle-down h1"></i>
                 </a>
             </div>

@@ -13,7 +13,7 @@ if (car::hasSessionValid()) {
         <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand logo" href="<?php echo appConfig('baseUrl'); ?>">
-        <img class="img-fluid" src="<?php echo appUrl('/frontend/assets/images/logo.png'); ?>">
+        <img class="img-fluid" src="<?php echo appUrl('/frontend/assets/images/logo.png'); ?>" alt="logo papel arroz frutal">
     </a>   
 
     <div class="carrinho nav-sm">
@@ -42,7 +42,7 @@ if (car::hasSessionValid()) {
 
             <li class="nav-item">
                 <span class="nav-link" style="color: #333; font-size: 1.1em; margin-top: -0.3em">
-                    <i class="fab fa-whatsapp"></i> (34) 9.9766-9479
+                    <i class="fab fa-whatsapp"></i> <?php echo appConfig('whatssap');?>
                 </span>
             </li>
             <li class="nav-item">
