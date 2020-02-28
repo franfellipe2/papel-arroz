@@ -134,7 +134,7 @@ class Paginacao {
 
     public function setLimit()
     {
-        $this->limit = [$this->currentPage > 1 ? $this->currentPage - 1 : 0, $this->resultsPerPage];
+        $this->limit = [$this->currentPage > 1 ? ($this->currentPage - 1) * ( $this->resultsPerPage - 1): 0, $this->resultsPerPage];
     }
 
     private function calcTotalPages()
