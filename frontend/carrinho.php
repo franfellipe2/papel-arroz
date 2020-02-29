@@ -2,6 +2,7 @@
 $pageTitle = 'Carrinho de compras';
 $pageUrl = appUrl('/carrinho');
 $pageImage = null;
+$pageImageAlt = null;
 $pageDescription = 'Carrinho de compras';
 $pageType = app\enumerations\SMOTypes::WEBSITE;
 require appConfig('frontDir') . '/header.php'; 

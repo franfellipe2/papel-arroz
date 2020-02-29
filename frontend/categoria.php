@@ -2,6 +2,7 @@
 $pageTitle = 'Categoria '.$categoria->getNome();
 $pageUrl = appUrl('/categoria/'.$categoria->getSlug());
 $pageImage = null;
+$pageImageAlt = null;
 $pageDescription = $categoria->getDescricao();
 $pageType = app\enumerations\SMOTypes::WEBSITE;
 require appConfig('frontDir') . '/header.php'; 

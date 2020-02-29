@@ -2,6 +2,7 @@
 $pageTitle = 'erro 404';
 $pageUrl = null;
 $pageImage = null;
+$pageImageAlt = null;
 $pageDescription = 'Pagina não encontrada';
 $pageType = app\enumerations\SMOTypes::WEBSITE;
 require appConfig('frontDir') . '/header.php';

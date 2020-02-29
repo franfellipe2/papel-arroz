@@ -2,6 +2,7 @@
 $pageTitle = 'Pesquisa';
 $pageUrl = appUrl('/pesquisa');
 $pageImage = null;
+$pageImageAlt = null;
 $pageDescription = 'Pesquisar no site';
 $pageType = app\enumerations\SMOTypes::WEBSITE;
 require appConfig('frontDir') . '/header.php'; 
@@ -17,7 +18,7 @@ require appConfig('frontDir') . '/header.php';
     <div class="container">
         <?php
         if (empty($produtos)) {
-            echo '<p class="alert alert-info">Opsss... Não encontramos nehum resultado para a sua busca.</p>';
+            echo '<p class="alert alert-info">Opsss... Não encontramos nenhum resultado para a sua busca.</p>';
         } else {
             ?>
             <div class="card-columns">

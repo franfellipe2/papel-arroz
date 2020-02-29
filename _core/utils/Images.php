@@ -137,10 +137,11 @@ class Images {
      */
     public function fileNameGenerate($name, $size = null)
     {
+
         if ($size == null) {
-            return $nName = $this->dirUplaod . '/' . $name;
+            return $nName = $this->dirUplaod . '/' . appStrSlug($name);
         } else {
-            return $nName = $this->dirUplaod . '/' . $name . '-size(' . $size . ')';
+            return $nName = $this->dirUplaod . '/' . appStrSlug($name) . '-size(' . $size . ')';
         }
     }
 

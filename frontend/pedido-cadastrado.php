@@ -2,6 +2,7 @@
 $pageTitle = 'Pedido Cadastrado com sucesso!';
 $pageUrl = appUrl('/pedido/cadastrado');
 $pageImage = null;
+$pageImageAlt = null;
 $pageDescription = 'Seu pedido foi cadastrado com sucesso';
 $pageType = app\enumerations\SMOTypes::WEBSITE;
 require appConfig('frontDir') . '/header.php';

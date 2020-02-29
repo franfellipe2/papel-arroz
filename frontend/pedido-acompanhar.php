@@ -4,6 +4,7 @@ use app\enumerations\PedidoStatus as pStatus;
 $pageTitle = 'Acompanhar pedido';
 $pageUrl = appUrl('/pedido/acompanhar');
 $pageImage = null;
+$pageImageAlt = null;
 $pageDescription = 'Pagina par acompanhar o andamento do pedido';
 $pageType = app\enumerations\SMOTypes::WEBSITE;
 require appConfig('frontDir') . '/header.php';

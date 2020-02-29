@@ -2,7 +2,7 @@
     <div class="header-img card-img-top">
         <a href="<?php echo appUrl('/produto/') . $papelArroz->getSlug(); ?>">
         <span class="bg-papel-dobrado"></span>
-        <img src="<?php echo appImageUrl('/' . $papelArroz->getImagem(), 'media'); ?>" class="card-img-top" alt="..." alt="<?php echo $papelArroz->getTitulo();?>">
+        <img src="<?php echo appImageUrl($papelArroz->getImagem(), 'media'); ?>" class="card-img-top" alt="<?php echo $papelArroz->getTitulo();?>">
         </a>
     </div>
     <div class="card-body">

@@ -5,9 +5,9 @@ use app\utils\Config;
 /**
  * Otimização do site para compatilhamento em midias sociais
  */
-function appSMO($url, $image, $title, $description, $type)
+function appSMO($url, $image, $imageAlt, $title, $description, $type)
 {
-    $smo = new \app\utils\SMO($url, $image, $title, $description, $type);
+    $smo = new \app\utils\SMO($url, $image, $imageAlt, $title, $description, $type);
     return $smo->mount();
 }
 

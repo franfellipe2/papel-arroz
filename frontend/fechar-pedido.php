@@ -2,6 +2,7 @@
 $pageTitle = 'Fechar pedido';
 $pageUrl = appUrl('/fechar-pedido/');
 $pageImage = null;
+$pageImageAlt = null;
 $pageDescription = 'Fechar o pedido e finalizar a compra';
 $pageType = app\enumerations\SMOTypes::WEBSITE;
 require appConfig('frontDir') . '/header.php';

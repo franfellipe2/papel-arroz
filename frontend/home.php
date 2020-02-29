@@ -2,7 +2,8 @@
 $pageTitle = appConfig('siteName');
 $pageUrl = appUrl('/');
 $pageImage = appUrl('/frontend/assets/images/banner-home.png');
-$pageDescription = 'Site de vendas de papel arroz comestível';
+$pageImageAlt = 'banner papel arroz comestível';
+$pageDescription = 'Site de vendas de papel arroz comestível. Ideal para decoração bolos, ovos de pascoa, pirulitos, cupcakes e muito mais!';
 $pageType = app\enumerations\SMOTypes::WEBSITE;
 require appConfig('frontDir') . '/header.php';
 ?>
@@ -22,7 +23,7 @@ require appConfig('frontDir') . '/header.php';
     </div>
 </div>
 <section class="container nossos-servicos py-5">
-    <h2 class="sr-only">Nossos serviços</h3>
+    <h2 class="sr-only">Nossos serviços</h2>
         <div class="row border-bottom pb-5">
             <div class="col-md-4 py-4">
                 <div class="icon"><i class="fas fa-pencil-ruler"></i></div>

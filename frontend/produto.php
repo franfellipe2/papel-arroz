@@ -2,22 +2,23 @@
 $pageTitle = $produto->getTitulo();
 $pageUrl = appUrl('/produto/' . $produto->getSlug());
 $pageImage = appImageUrl($produto->getImagem(), 'grande');
+$pageImageAlt = $produto->getTitulo();
 $pageDescription = substr($produto->getDescricao(), 0, 255);
-$pageDescription .= strlen($produto->getDescricao()) > 255 ? '...' : null;
-$pageType = app\enumerations\SMOTypes::WEBSITE;
+$pageDescription .= strlen($produto->getDescricao()) > 157 ? '...' : null;
+$pageType = app\enumerations\SMOTypes::ARTICLE;
 require appConfig('frontDir') . '/header.php';
 ?>
 <?php require __DIR__ . '/alert-msg.php'; ?>
 <section class="page-content page-produto">    
     <div class="container my-4">
-
+        <h1 class="sr-only"><?php echo $produto->getTitulo() ?></h1>
         <article class="produto">
 
-            <h1 class="page-title h2 mb-4 text-center"><?php echo $produto->getTitulo() ?></h1>   
+            <h2 class="page-title h2 mb-4 text-center"><?php echo $produto->getTitulo() ?></h2>   
 
             <div class="row">
                 <div  class="produto-content col-md-8">
-                    <img src="<?php echo appImageUrl($produto->getImagem(), 'grande'); ?>">
+                    <img src="<?php echo appImageUrl($produto->getImagem(), 'grande'); ?>" alt="<?php echo $produto->getTitulo();?>">
                     <p><?php echo $produto->getDescricao(); ?></p>
                     <div class="alert alert-light" style="background: none; border: none;">
                         <?php if (strtolower(str_replace('_', ' ', $produto->getTipo())) == 'papel arroz') { ?>
